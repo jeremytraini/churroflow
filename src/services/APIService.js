@@ -41,11 +41,14 @@ const getReport = (reportId) => {
   });
 };
 
-
+const checkAliveness = () => {
+  return http.get(URL + "/health_check/v1");
+};
 
 const FileUploadService = {
   uploadText,
   getReport,
+  checkAliveness,
 };
 
 export default FileUploadService;
