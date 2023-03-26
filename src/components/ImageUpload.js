@@ -57,10 +57,18 @@ const ImageUpload = () => {
   return (
     <>
       <div className="row h-100">
-        <div className="col-md-5 col-lg-2 d-md-block bg-light sidebar collapse">
-          <label className="btn btn-success btn-sm">
-            <input type="file" accept=".xml" onChange={upload} />
-          </label>
+        <div className="col-md-5 col-lg-2 d-md-block bg-light sidebar collapse text-center">
+          <label className="btn btn-success btn-sm d-block" for="file-upload">Upload invoice</label>
+          <input id="file-upload" className="d-none" type="file" accept=".xml" onChange={upload} />
+
+          {!invoiceChanged && (
+            <>
+              <button className="btn btn-outline-primary btn-sm w-25">Download as PDF</button>
+              <button className="btn btn-outline-primary btn-sm w-25">Download as CSV</button>
+              <button className="btn btn-outline-primary btn-sm w-25">Download as HTML</button>
+              <button className="btn btn-outline-primary btn-sm w-25">Download as JSON</button>
+            </>
+          )}
 
           {/* {true && (
             <div className="progress my-3">
