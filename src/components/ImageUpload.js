@@ -3,22 +3,18 @@ import APIService from "../services/APIService";
 
 import CodeMirror from '@uiw/react-codemirror';
 import { xml } from '@codemirror/lang-xml';
-import {linter, lintGutter, Diagnostic} from "@codemirror/lint"
-
-
+import {linter, lintGutter, Diagnostic} from "@codemirror/lint";
 
 const ImageUpload = () => {
-  const onChange = React.useCallback((value, viewUpdate) => {
-    setInvoiceChanged(true);
-    setInvoiceData(value);
-    // updateMarkers();
-  }, []);
 
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("");
   const [invoiceData, setInvoiceData] = useState("");
   const [invoiceChanged, setInvoiceChanged] = useState(false);
   const [errorResponse, setErrorResponse] = useState([]);
+
+  const normaliseLineEndings = (str, normalized = '\n') =>
+    str.replace(/\r?\n/g, normalized);
 
   const upload = (event) => {
     if (!event.target.files[0]) {
@@ -30,22 +26,23 @@ const ImageUpload = () => {
     // Set invoiceData to text of xml file in currentFile
     const reader = new FileReader();
     reader.onload = function (e) {
-      setInvoiceData(e.target.result);
+      // Set code mirror value to xml file
+      setInvoiceData(normaliseLineEndings(e.target.result));
+      setInvoiceChanged(true);
     };
 
     reader.readAsText(event.target.files[0]);
 
-    setInvoiceChanged(true);
   };
 
-  const fixXpath = (string) => {
-    const repl = (match, element_name) => {
-      return '/*[local-name()=\'' + element_name + '\'][';
-    }
+  // const fixXpath = (string) => {
+  //   const repl = (match, element_name) => {
+  //     return '/*[local-name()=\'' + element_name + '\'][';
+  //   }
   
-    var pattern = /\/\*\:([A-Za-z]+)\[/g;
-    return string.replace(pattern, repl);
-  }
+  //   var pattern = /\/\*\:([A-Za-z]+)\[/g;
+  //   return string.replace(pattern, repl);
+  // }
 
   // const getCharWithXPath = (xpath) => {
   //   const xml = invoiceData;
@@ -73,6 +70,7 @@ const ImageUpload = () => {
   // }
 
   const updateMarkers = () => {
+    // console.log(invoiceData);
     APIService.getLintReport(invoiceData, (event) => {
       setProgress(Math.round((100 * event.loaded) / event.total));
     }).then((response) => {
@@ -93,12 +91,29 @@ const ImageUpload = () => {
         // console.log(element.to_char);
         // console.log(elementLine);
 
+        // Create element from html
+        let elm = document.createElement("div");
+        let rule = document.createElement("div");
+        rule.innerText = element.rule_id;
+        rule.style.fontWeight = "bold";
+        elm.appendChild(rule);
+        let message = document.createElement("div");
+        message.innerHTML = element.message;
+        elm.appendChild(message);
+
+        if (element.suggestion) {
+          let suggestion = document.createElement("div");
+          suggestion.innerText = "Suggestion: " + element.suggestion;
+          elm.appendChild(suggestion);
+        }
+
         diagnostics.push({
           source: "Churros API",
           from: from,
           to: to,
           message: element.message,
-          severity: element.severity
+          severity: element.severity,
+          renderMessage: () => elm,
         });
       });
 
@@ -133,7 +148,11 @@ const ImageUpload = () => {
               }}
             height="100%"
             extensions={[xml(), linter(errorMarker), lintGutter()]}
-            onChange={onChange}
+            onChange={(value, viewUpdate) => {
+                        setInvoiceChanged(true);
+                        setInvoiceData(value);
+                        // updateMarkers();
+                      }}
           />
   );
 
