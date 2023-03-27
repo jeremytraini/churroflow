@@ -33,11 +33,17 @@ const uploadFile = (file, onUploadProgress) => {
   });
 };
 
-const getReport = (reportId) => {
-  return http.get(URL + "/export/json_report/v1", {
-    params: {
-      report_id: reportId,
+const getLintReport = (text, onUploadProgress) => {
+  return http.post(URL + "/report/lint/v1",
+  {
+    name: "test",
+    text: text
+  },
+  {
+    headers: {
+      "Content-Type": "text/plain",
     },
+    onUploadProgress,
   });
 };
 
@@ -47,7 +53,7 @@ const checkAliveness = () => {
 
 const FileUploadService = {
   uploadText,
-  getReport,
+  getLintReport,
   checkAliveness,
 };
 

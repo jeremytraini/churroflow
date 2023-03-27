@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@codemirror/lang-xml": "^6.0.2",
+    "@codemirror/lint": "^6.2.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.14",
