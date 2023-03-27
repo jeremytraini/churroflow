@@ -80,16 +80,15 @@ const ImageUpload = () => {
       let diagnostics = [];
 
       errors.forEach(element => {
-        // let [from, to] = getCharWithXPath(element.xpath);
-        // const lineNum = from;
-        const invoiceLines = invoiceData.split("\n");
-        const elementLine = invoiceLines[element.from_char];
+        console.log("from_char " + element.from_char);
+        console.log("xpath " + element.xpath);
         
-        const from = invoiceLines.slice(0, element.from_char).join("\n").length + 1 + element.to_char;
-        const to = from + elementLine.length - element.to_char;
-        // console.log(element.from_char);
-        // console.log(element.to_char);
-        // console.log(elementLine);
+        const invoiceLines = invoiceData.split("\n");
+        const elementLine = invoiceLines[element.from_char - 1];
+        const numWhitespace = elementLine.length - elementLine.trimStart().length;
+        
+        const from = invoiceLines.slice(0, element.from_char - 1).join("\n").length + 1 + (element.to_char ? element.to_char : numWhitespace);
+        const to = from + elementLine.length - (element.to_char ? element.to_char : numWhitespace);
 
         // Create element from html
         let elm = document.createElement("div");
