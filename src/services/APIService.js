@@ -1,11 +1,7 @@
 import http from "../http-common";
 
-// const URL = "http://churros.eba-pyyazat7.ap-southeast-2.elasticbeanstalk.com";
-const URL = "http://localhost:8000";
-
 const uploadText = (text, onUploadProgress) => {
-  // Post with parameters name = "hello", and text = "world"
-  return http.post(URL + "/invoice/upload_text/v1",
+  return http.post("/invoice/upload_text/v1",
   {
     name: "test",
     text: text
@@ -23,7 +19,7 @@ const uploadFile = (file, onUploadProgress) => {
 
   formData.append("file", file);
 
-  return http.post(URL + "/invoice/upload_file/v1",
+  return http.post("/invoice/upload_file/v1",
   formData,
   {
     headers: {
@@ -34,7 +30,7 @@ const uploadFile = (file, onUploadProgress) => {
 };
 
 const getLintReport = (text, onUploadProgress) => {
-  return http.post(URL + "/report/lint/v1",
+  return http.post("/report/lint/v1",
   {
     name: "test",
     text: text
@@ -48,7 +44,7 @@ const getLintReport = (text, onUploadProgress) => {
 };
 
 const checkAliveness = () => {
-  return http.get(URL + "/health_check/v1");
+  return http.get("/health_check/v1");
 };
 
 const FileUploadService = {
