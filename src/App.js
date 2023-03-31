@@ -5,17 +5,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import ImageUpload from "./components/ImageUpload";
 import BasicNavbar from "./components/Navbar";
+import { View} from 'react-native';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{
+      backgroundColor: 'lavenderblush'
+    }}>
       <header className="App-header">
         <BasicNavbar />
       </header>
       <div className="content container-fluid">
         <ImageUpload />
+        <View>
+        </View>
       </div>
     </div>
+    
+    
   );
 }
 
