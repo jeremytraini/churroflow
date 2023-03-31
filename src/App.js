@@ -6,12 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ImageUpload from "./components/ImageUpload";
 import BasicNavbar from "./components/Navbar";
 import { View} from 'react-native';
+import SocialFollow from "./SocialFollow"
+// import navbar from "./components/navbar"
+
 
 function App() {
   return (
-    <div className="App" style={{
-      backgroundColor: 'lavenderblush'
-    }}>
+    <div className="App" style={{backgroundColor: 'lavenderblush'}}>
       <header className="App-header">
         <BasicNavbar />
       </header>
@@ -19,6 +20,7 @@ function App() {
         <ImageUpload />
         <View>
         </View>
+        <SocialFollow />
       </div>
     </div>
     
