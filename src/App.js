@@ -7,12 +7,11 @@ import ImageUpload from "./components/ImageUpload";
 import BasicNavbar from "./components/Navbar";
 import { View} from 'react-native';
 import SocialFollow from "./SocialFollow"
-// import navbar from "./components/navbar"
 
 
 function App() {
   return (
-    <div className="App" style={{backgroundColor: 'lavenderblush'}}>
+    <div className="App">
       <header className="App-header">
         <BasicNavbar />
       </header>

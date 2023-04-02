@@ -22,10 +22,12 @@
 
 .social-container {
   background: #fffacd;
-  padding: 50px 25px;
+  padding: 50px 50px;
+  position: 'absolute';
+  bottom:0;
 }
 a.social {
-  margin: 0 8rem;
+  margin: 0 12rem;
   transition: transform 250ms;
   display: inline-block;
 }
