@@ -5,6 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import ImageUpload from "./components/ImageUpload";
 import BasicNavbar from "./components/Navbar";
+import { View} from 'react-native';
+import SocialFollow from "./SocialFollow"
+
 
 function App() {
   return (
@@ -14,8 +17,13 @@ function App() {
       </header>
       <div className="content container-fluid">
         <ImageUpload />
+        <View>
+        </View>
+        <SocialFollow />
       </div>
     </div>
+    
+    
   );
 }
 

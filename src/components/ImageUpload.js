@@ -157,20 +157,25 @@ const ImageUpload = () => {
 
   return (
     <>
-      <div className="row h-100">
-        <div className="col-md-5 col-lg-2 d-md-block bg-light sidebar collapse text-center">
+      <div className="row h-80">
+        <div className="col-md-5 col-lg-2 d-md-block lemonchiffon sidebar collapse text-center" style={{backgroundColor: 'lemonchiffon'}}>
           <label className="btn btn-success btn-sm d-block" for="file-upload">Import invoice</label>
           <input id="file-upload" className="d-none" type="file" accept=".xml" onChange={upload} />
 
           {!invoiceChanged && (
             <>
-              <button className="btn btn-outline-primary btn-sm w-25">Download as PDF</button>
-              <button className="btn btn-outline-primary btn-sm w-25">Download as CSV</button>
-              <button className="btn btn-outline-primary btn-sm w-25">Download as HTML</button>
-              <button className="btn btn-outline-primary btn-sm w-25">Download as JSON</button>
+              <button className="btn btn-outline-primary btn-sm w-20" style={{backgroundColor: 'salmon', color: 'white'}} >Download as PDF</button>
+              <button className="btn btn-outline-primary btn-sm w-20" style={{backgroundColor: 'salmon', color: 'white'}}>Download as CSV</button>
+              <button className="btn btn-outline-primary btn-sm w-20" style={{backgroundColor: 'salmon', color: 'white'}}>Download as HTML</button>
+              <button className="btn btn-outline-primary btn-sm w-20" style={{backgroundColor: 'salmon', color: 'white'}}>Download as JSON</button>
             </>
           )}
-
+          <div>
+               <br></br>
+          </div>
+          <div>
+            <img style={{ width: 180, height: 280 }} src="https://cafedelites.com/wp-content/uploads/2020/05/Churros-Recipe-IMAGE-124.jpg" alt="Churro Image" />
+          </div>
           {/* {true && (
             <div className="progress my-3">
               <div

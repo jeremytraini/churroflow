@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import React, { useState, useEffect } from 'react';
 import APIService from "../services/APIService.js";
+import {  Link } from "react-router-dom";
 
 function BasicNavbar() {
   const [isAlive, setIsAlive] = useState(false);
@@ -24,12 +25,24 @@ function BasicNavbar() {
   }
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar style={{
+      backgroundColor: 'lemonchiffon'
+    }} expand="lg">
       <Container>
-        <Navbar.Brand className="justify-content-start">Churro's Validation Fixer!</Navbar.Brand>
+        <Navbar.Brand className="justify-content-start">🥨Churro's Validation Fixer for the win!🥨</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        
+        <a
+          classname="App-link"
+          href="https://cafedelites.com/wp-content/uploads/2020/05/Churros-Recipe-IMAGE-124.jpg"
+          target="_blank"
+          rel="noreference"
+          >
+            Become the churro!😋
+          </a>
         <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
+            
             <Navbar.Text>
               {isAlive ? (
                 <>
@@ -51,6 +64,7 @@ function BasicNavbar() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    
   );
 }
 
