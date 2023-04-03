@@ -2,6 +2,7 @@
 
 .App {
   height: calc(100vh - 56px);
+  background-color: lemonchiffon;
 }
 
 .content {
@@ -77,7 +78,6 @@ a.instagram {
 }
 
 .modal-content {
-  background-color: #e6e2e2;
   margin: 15% auto;
   padding: 25px;
   border: 0.5px solid #6c6c6c;
