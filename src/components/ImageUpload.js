@@ -4,6 +4,10 @@ import APIService from "../services/APIService";
 import CodeMirror from '@uiw/react-codemirror';
 import { xml } from '@codemirror/lang-xml';
 import {linter, lintGutter, Diagnostic} from "@codemirror/lint";
+// import { EditorState } from "@codemirror/state";
+// import { EditorView } from "@codemirror/view";
+
+const gptAPIKey = "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";
 
 const ImageUpload = () => {
 
@@ -12,6 +16,8 @@ const ImageUpload = () => {
   const [invoiceData, setInvoiceData] = useState("");
   const [invoiceChanged, setInvoiceChanged] = useState(false);
   const [errorResponse, setErrorResponse] = useState([]);
+  const [selectedText, setSelectedText] = useState("");
+  const [msgs, setMsgs] = useState([{message: "empty", sender: "User"}]);
 
   const normaliseLineEndings = (str, normalized = '\n') =>
     str.replace(/\r?\n/g, normalized);
@@ -34,40 +40,6 @@ const ImageUpload = () => {
     reader.readAsText(event.target.files[0]);
 
   };
-
-  // const fixXpath = (string) => {
-  //   const repl = (match, element_name) => {
-  //     return '/*[local-name()=\'' + element_name + '\'][';
-  //   }
-  
-  //   var pattern = /\/\*\:([A-Za-z]+)\[/g;
-  //   return string.replace(pattern, repl);
-  // }
-
-  // const getCharWithXPath = (xpath) => {
-  //   const xml = invoiceData;
-  //   const parser = new DOMParser();
-  //   const xmlDoc = parser.parseFromString(xml, "text/xml");
-  //   // const namespaceResolver = xmlDoc.createNSResolver(xmlDoc.documentElement);
-  //   console.log(xmlDoc);
-  //   console.log(xpath);
-  //   console.log(fixXpath(xpath));
-
-  //   const node = xmlDoc.evaluate(fixXpath(xpath), xmlDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-    
-  //   // Get start and end character of node within xml
-  //   const range = document.createRange();
-  //   range.selectNode(node);
-  //   const nodeStart = range.startOffset + node.parentNode.tagName.length + 2; // add 2 for the opening tag '<' and the space after the tag name
-  //   const nodeEnd = nodeStart + node.toString().length;
-  //   const start = xml.indexOf("<", nodeStart - node.parentNode.tagName.length - 2);
-  //   const end = xml.indexOf(">", nodeEnd - node.parentNode.tagName.length - 1) + 1;
-
-  //   console.log(start);
-  //   console.log(end);
-
-  //   return [start, end];
-  // }
 
   const updateMarkers = () => {
     // console.log(invoiceData);
@@ -124,7 +96,6 @@ const ImageUpload = () => {
       } else {
         setMessage("Could not upload the invoice!");
       }
-
     });
   }
 
@@ -135,24 +106,100 @@ const ImageUpload = () => {
     return diagnostics;
   }
 
+  const sendGptMsg = async (message) => {
+    const newMessage = {
+      message: "Explain this \"" + message + "\"",
+      sender: "user"
+    }
+    const final = [...msgs, newMessage];
+    setMsgs(final);
+    await sendMessageToGpt(final);
 
-  const editor = (
+  }
+
+  const systemMessage = {
+    role: "system",
+    content: "Answer the question as an expert in PEPPOL e-invoicing"
+  }
+
+  async function sendMessageToGpt(all_msgs) {
+    let mapped_messages = all_msgs.map((messageObj) => {
+      return {role: "user", content: messageObj.message};
+    });
+    const apiRequestBody = {
+      "model": "gpt-3.5-turbo",
+      "messages": [systemMessage, ...mapped_messages]
+    }
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + gptAPIKey,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(apiRequestBody)
+    }).then((data) => {
+      return data.json();
+    }).then((data) => {
+      const modal = document.createElement("div");
+      modal.classList.add("modal");
+      const content = document.createElement("div");
+      content.classList.add("modal-content");
+      const closeBtn = document.createElement("span");
+      closeBtn.classList.add("close");
+      closeBtn.innerHTML = "&times;";
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+      const responseText = document.createElement("p");
+
+      responseText.innerHTML = data.choices[0].message.content.trim().replace(/\n/g, "<br/>");
+      content.appendChild(closeBtn);
+      content.appendChild(responseText);
+      modal.appendChild(content);
+      document.body.appendChild(modal);
+
+      modal.style.display = "block";
+    });
+  }
+
+  
+
+  // const handleSelectionChange = (editor) => {
+  //   // const selectedText = editor.getSelection();
+  //   const selectedText = "";
+
+  //   if (selectedText) {
+  //     setHighlightedText(selectedText);
+  //     setShowExplanation(true);
+  //     // setExplanationText(ChatGPT.generateExplanation(selectedText));
+  //   } else {
+  //     setHighlightedText("");
+  //     setShowExplanation(false);
+  //     // setExplanationText("");
+  //   }
+  // };
+  
+  const editor = 
     <CodeMirror
-            value={invoiceData}
-            style={{
-              outline: "none",
-              border: "1px solid silver"
-              }}
-            height="100%"
-            extensions={[xml(), linter(errorMarker), lintGutter()]}
-            onChange={(value, viewUpdate) => {
-                        setInvoiceChanged(true);
-                        setInvoiceData(value);
-                        // updateMarkers();
-                      }}
-          />
-  );
+    value={invoiceData}
+    style={{
+      outline: "none",
+      border: "1px solid silver"
+    }}
+      height="100%"
+      extensions={[xml(), linter(errorMarker), lintGutter()]}
+      onChange={(value, viewUpdate) => {
+        setInvoiceChanged(true);
+        setInvoiceData(value);
+        // updateMarkers();
+      }}
+    />
+  ;
 
+  document.addEventListener("mouseup", function() {
+    var selectedText = window.getSelection().toString();
+    setSelectedText(selectedText);
+  });
   
 
   return (
@@ -198,6 +245,9 @@ const ImageUpload = () => {
           { invoiceChanged && (
             <button className="btn btn-success btn-lg" id="run-button" onClick={updateMarkers}>Run</button>
           )}
+          {selectedText && (
+              <button className="btn btn-info" id="gpt-button" onClick={() => sendGptMsg(selectedText)}>Ask GPT?</button>
+            )}
         </main>
       </div>
     </>
