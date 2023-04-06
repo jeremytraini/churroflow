@@ -27,13 +27,14 @@
   position: 'absolute';
   bottom:0;
 }
+
 a.social {
-  margin: 0 12rem;
-  transition: transform 250ms;
+  margin: 0 11.51rem;
+  transition: transform 333ms;
   display: inline-block;
 }
 a.social:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 a.youtube {
   color: #eb3223;
