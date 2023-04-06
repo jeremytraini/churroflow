@@ -105,6 +105,7 @@ const ImageUpload = () => {
       setProgress(Math.round((100 * event.loaded) / event.total));
     }).then((response) => {
       setInvoiceChanged(false);
+      setMessage(null);
 
       let errors = response.data.report;
       let diagnostics = [];
@@ -145,7 +146,6 @@ const ImageUpload = () => {
       });
 
       setErrorResponse(diagnostics);
-
     }).catch((err) => {
       setProgress(0);
       console.log(err);
