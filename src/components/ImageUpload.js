@@ -17,6 +17,7 @@ const ImageUpload = () => {
   const [errorResponse, setErrorResponse] = useState([]);
   const [selectedText, setSelectedText] = useState("");
   const [msgs, setMsgs] = useState([{message: "empty", sender: "User"}]);
+  const [isGptLoading, setIsGptLoading] = useState(false);
 
   const normaliseLineEndings = (str, normalized = '\n') =>
     str.replace(/\r?\n/g, normalized);
@@ -41,13 +42,14 @@ const ImageUpload = () => {
   };
 
   const sendGptMsg = async (message) => {
-     const newMessage = {
-       message: "Explain this \"" + message + "\"",
-       sender: "user"
-     }
-     const final = [...msgs, newMessage];
-     setMsgs(final);
-     await sendMessageToGpt(final);
+      setIsGptLoading(true);
+      const newMessage = {
+        message: "Explain this \"" + message + "\"",
+        sender: "user"
+      }
+      const final = [...msgs, newMessage];
+      setMsgs(final);
+      await sendMessageToGpt(final);
     }
   const systemMessage = {
     role: "system",
@@ -91,6 +93,7 @@ const ImageUpload = () => {
       document.body.appendChild(modal);
 
       modal.style.display = "block";
+      setIsGptLoading(false);
     });
   }
 
@@ -218,7 +221,11 @@ const ImageUpload = () => {
           { invoiceChanged && (
             <button className="btn btn-success btn-lg" id="run-button" onClick={updateMarkers}>Run</button>
           )}
-          {selectedText && (
+          {isGptLoading && 
+            <button className="btn btn-info" id="gpt-button" disabled> 
+              <span class="spinner-border spinner-border-sm" role="status"></span>
+            </button>}
+          {selectedText && !isGptLoading && (
             <button className="btn btn-info" id="gpt-button" onClick={() => sendGptMsg(selectedText)}>Ask GPT?</button>
           )}
         </main>
