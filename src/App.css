@@ -98,3 +98,27 @@ a.instagram {
   text-decoration: none;
   cursor: pointer;
 }
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 220px;
+  background-color: #1C2434;
+  padding: 10px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.sidebar-link {
+  color: white;
+  white-space: nowrap;
+}
+
+.sidebar-inventory {
+  position: 'absolute';
+  bottom: '0';
+  left: '0';
+  right: '0';
+  padding: '1rem';
+}
