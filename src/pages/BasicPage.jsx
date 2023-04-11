@@ -2,8 +2,10 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import useTitle from '../useTitle';
 
-export const BasicPage = ({ title, icon, children }) => {
+export const BasicPage = ({ title, children }) => {
+  useTitle("ChurroFlow - " + title);
   return (
     <Container component="main" sx={{
       background: 'linear-gradient(180deg, rgba(243, 244, 246, 100), rgb(186 209 255 / 48%))',
@@ -14,10 +16,10 @@ export const BasicPage = ({ title, icon, children }) => {
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center"
+          alignItems: "left",
+          paddingTop: '35px'
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>{icon}</Avatar>
         <Typography component="h1" variant="h5">
           {title}
         </Typography>

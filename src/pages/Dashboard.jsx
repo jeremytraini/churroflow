@@ -7,11 +7,10 @@ const Dashboard = () => {
   const { user } = useAuth();
 
   return (
-  <BasicPage title="Dashboard" icon={<Home />}>
+  <BasicPage title="Dashboard">
     <div>
-      <h1>Dashboard1</h1>
+      {user && <p>Welcome, {user.name}!</p>}
     </div>
-    {user && <p>Welcome, {user.name}!</p>}
   </BasicPage>
   );
 };
