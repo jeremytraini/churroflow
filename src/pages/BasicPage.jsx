@@ -17,14 +17,15 @@ export const BasicPage = ({ title, children }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "left",
-          paddingTop: '35px'
+          paddingTop: '35px',
+          paddingLeft: '5px',
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{ paddingBottom: '10px' }}>
           {title}
         </Typography>
+        {children}
       </Box>
-      {children}
     </Container>
   );
 };
