@@ -13,7 +13,7 @@ import { useLocation } from "react-router-dom"
 import mainlogo from '../assets/mainlogo.jpg';
 import { getPrimaryNavList } from './NavList';
 
-const background = 'rgb(22,27,37)';
+const background = '#1C2434';
 
 export default function Navbar({ drawerWidth }) {
   const primaryNav = getPrimaryNavList();
@@ -63,19 +63,17 @@ export default function Navbar({ drawerWidth }) {
             </Typography>
           </Box>
 
-          <List sx={{ backgroundColor: background }}>
-          {primaryNav.map(({ title, route, Icon, children, loginRequired }, key) => {
-            const clickFn = route ? () => navigate(route) : () => handleClick(key);
+          <List sx={{ backgroundColor: background, marginTop: '70px' }}>
+          {primaryNav.map(({ title, route, Icon, children }, key) => {
+            const clickFn = route ? () => navigate(route) : () => handleClick(key)
             return (
-              <span key={key}>
-                <ListItemButton onClick={clickFn} >
+                <ListItemButton onClick={clickFn} key={key} >
                   <ListItemIcon>
                     <Icon style={{fill: 'white'}} />
                   </ListItemIcon>
                   <ListItemText sx={{ fontWeight: 'bold', color: 'white' }} primary={title} />
                   {children ? open[key] ? <ExpandLess /> : <ExpandMore /> : <></>}
                 </ListItemButton>
-              </span>
             );
           })}
           </List>

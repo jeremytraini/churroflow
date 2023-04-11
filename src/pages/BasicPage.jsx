@@ -5,7 +5,10 @@ import Typography from "@mui/material/Typography";
 
 export const BasicPage = ({ title, icon, children }) => {
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" sx={{
+      background: 'linear-gradient(180deg, rgba(243, 244, 246, 100), rgb(186 209 255 / 48%))',
+      height: '100%'
+    }}>
       <Box
         sx={{
           marginTop: 8,

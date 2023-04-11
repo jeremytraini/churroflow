@@ -11,9 +11,9 @@ const PublicLayout = () => {
   }
 
   return (
-    <div>
+    <>
       {outlet}
-    </div>
+    </>
   );
 };
 

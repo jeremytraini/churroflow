@@ -2,6 +2,7 @@ import { Link, Navigate, useOutlet } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import AppBar from "../components/AppBar";
 import Navbar from "../components/Navbar";
+import Box from "@mui/material/Box";
 
 const ProtectedLayout = () => {
   const { user } = useAuth();
@@ -15,16 +16,16 @@ const ProtectedLayout = () => {
   const navBarHeight = "70px";
 
   return (
-    <div>
+    <>
       <AppBar
         sidebarWidth={sidebarWidth}
         navBarHeight={navBarHeight}
       />
       <Navbar drawerWidth={sidebarWidth}  />
-      <div style={{ marginLeft: sidebarWidth, marginTop: "80px" }}>
+      <Box sx={{ marginLeft: sidebarWidth, marginTop: navBarHeight, height: `calc(100vh - ${navBarHeight})` }}>
         {outlet}
-      </div>
-    </div>
+      </Box>
+    </>
   );
 };
 

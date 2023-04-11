@@ -12,24 +12,22 @@ import PublicLayout from "./layouts/PublicLayout";
 
 const App = () => {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+    <Routes>
+      <Route path="/" element={<Navigate to="/dashboard" />} />
 
-        <Route element={<PublicLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
+      <Route element={<PublicLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
 
-        <Route element={<ProtectedLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/warehouse-planning" element={<WarehousePlanning />} />
-          <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
-          <Route path="/inventory-actions" element={<InventoryActions />} />
-          <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
-        </Route>
-      </Routes>
-    </div>
+      <Route element={<ProtectedLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/warehouse-planning" element={<WarehousePlanning />} />
+        <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
+        <Route path="/inventory-actions" element={<InventoryActions />} />
+        <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
+      </Route>
+    </Routes>
   )
 }
 
