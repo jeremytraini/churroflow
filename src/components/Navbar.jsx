@@ -15,7 +15,7 @@ import { getPrimaryNavList } from './NavList';
 
 const background = 'rgb(22,27,37)';
 
-export default function ClippedDrawer({ drawerWidth }) {
+export default function Navbar({ drawerWidth }) {
   const primaryNav = getPrimaryNavList();
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(Array(primaryNav.length).fill(true));
@@ -34,7 +34,11 @@ export default function ClippedDrawer({ drawerWidth }) {
           width: drawerWidth,
           display: 'block',
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', backgroundColor: background },
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+            backgroundColor: background
+            },
         }}
       >
         <Box sx={{ overflow: 'auto', paddingTop: '60px' }}>
@@ -47,15 +51,14 @@ export default function ClippedDrawer({ drawerWidth }) {
             color: 'white',
             backgroundColor: background,
             zIndex: 999,
-            // borderBottom: '1px solid #333'
             }} onClick={() => navigate(`/`)}>
             <img src={mainlogo} style={{
-              height: '59px',
-              marginBottom: '10px',
+              height: '40px',
+              margin: '15px 0 0 15px',
               float: 'left',
               borderRadius: '15px'
               }} />
-            <Typography sx={{ float: 'left ', fontSize: '1.3em', paddingTop: '15px', paddingLeft: '15px' }}>
+            <Typography sx={{ float: 'left ', fontSize: '1.3em', paddingTop: '20px', paddingLeft: '15px' }}>
               ChurroFlow
             </Typography>
           </Box>

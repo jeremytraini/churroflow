@@ -11,8 +11,8 @@ const ProtectedLayout = () => {
     return <Navigate to="/login" />;
   }
 
-  const sidebarWidth = "260";
-  const navBarHeight = "70";
+  const sidebarWidth = "260px";
+  const navBarHeight = "70px";
 
   return (
     <div>

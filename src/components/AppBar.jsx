@@ -17,44 +17,15 @@ const AppBar = ({ sidebarWidth, navBarHeight }) => {
     <MuiAppBar
       position="fixed"
       sx={{
-        width: `calc(100% - ${sidebarWidth}px)`,
+        width: `calc(100% - ${sidebarWidth})`,
         left: 0,
         minWidth: '200px',
-        ml: `${sidebarWidth}px`,
+        ml: `${sidebarWidth}`,
         height: navBarHeight
       }} >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            ChurroFlow
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              // onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            ChurroFlow
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex", alignContent: "right" } }}>
             {!!user && (
               <Button
                 key={"logout"}
