@@ -22,7 +22,12 @@ const ProtectedLayout = () => {
         navBarHeight={navBarHeight}
       />
       <Navbar drawerWidth={sidebarWidth}  />
-      <Box sx={{ marginLeft: sidebarWidth, marginTop: navBarHeight, height: `calc(100vh - ${navBarHeight})` }}>
+      <Box sx={{
+        marginLeft: sidebarWidth,
+        marginTop: navBarHeight,
+        height: `calc(100vh - ${navBarHeight})`,
+        width: `calc(100% - ${sidebarWidth})`,
+      }}>
         {outlet}
       </Box>
     </>

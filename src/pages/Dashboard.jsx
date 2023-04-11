@@ -6,6 +6,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import StatisticBox from '../components/boxes/StatisticBox';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -25,31 +26,31 @@ const Dashboard = () => {
       // gridTemplateColumns: 'repeat(4, 1fr)',
       gridTemplateColumns: '1fr 1fr 1fr 1fr',
       gridTemplateRows: '1fr 1fr 1fr 1fr',
-      gap: '15px',
+      gap: '20px',
       height: `calc(100vh - 200px)`
       }}>
       <Item sx={{
         gridArea: '1 / 1 / 2 / 2'
       }}>
-      Active Customers
+        <StatisticBox type="activeCustomers" />
       </Item>
 
       <Item sx={{
         gridArea: '1 / 2 / 2 / 3'
       }}>
-      Deliveries
+        <StatisticBox type="deliveries" />
       </Item>
 
       <Item sx={{
         gridArea: '2 / 1 / 3 / 2'
       }}>
-      Delivery Time
+       <StatisticBox type="deliveryTime" />
       </Item>
 
       <Item sx={{
         gridArea: '2 / 2 / 3 / 3'
       }}>
-      Delivery distance
+        <StatisticBox type="deliveryDistance" />
       </Item>
 
       <Item sx={{
