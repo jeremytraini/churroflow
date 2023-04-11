@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import APIService from '../APIService';
+import APIService from '../services/APIService';
 
 function Register ({ onSuccess }) {
   const [email, setEmail] = React.useState('');

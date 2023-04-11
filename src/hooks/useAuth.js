@@ -1,10 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { syncUser } from './syncUser';
+import { SyncUser } from './SyncUser';
 const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = syncUser();
+  const [user, setUser] = SyncUser(JSON.stringify({
+    id: 1,
+    name: 'John Doe',
+    email: 'john@email.com',
+    role: 'admin'
+  }));
   const navigate = useNavigate();
 
   // call this function when you want to authenticate the user

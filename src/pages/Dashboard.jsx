@@ -1,16 +1,20 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import APIService from '../APIService';
+import { BasicPage } from "./BasicPage";
+import Home from "@mui/icons-material/Home";
 
-function Dashboard () {
+const Dashboard = () => {
   const { user } = useAuth();
 
   return (
+  <BasicPage title="Dashboard" icon={<Home />}>
     <div>
       <h1>Dashboard</h1>
-      <p>Welcome, {user.name}!</p>
     </div>
-  )
-}
+    {user && <p>Welcome, {user.user.name}!</p>}
+  </BasicPage>
+  );
+};
 
-export default Register;
+export default Dashboard;
+
