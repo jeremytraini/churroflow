@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const AppBar = ({ sidebarWidth, navBarHeight }) => {
   const { user, logout } = useAuth();
@@ -21,7 +22,9 @@ const AppBar = ({ sidebarWidth, navBarHeight }) => {
         left: 0,
         minWidth: '200px',
         ml: `${sidebarWidth}`,
-        height: navBarHeight
+        height: navBarHeight,
+        backgroundColor: "white",
+        boxShadow: "none",
       }} >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -30,7 +33,7 @@ const AppBar = ({ sidebarWidth, navBarHeight }) => {
               <Button
                 key={"logout"}
                 onClick={logout}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 2, color: "black" }}
               >
                 {"logout"}
               </Button>
