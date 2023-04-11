@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-const uploadText = (text, onUploadProgress) => {
+const login = (email, password) => {
   return http.post("/invoice/upload_text/v1",
   {
     name: "test",
@@ -10,12 +10,11 @@ const uploadText = (text, onUploadProgress) => {
     headers: {
       "Content-Type": "text/plain",
     },
-    onUploadProgress,
   });
 };
 
-const getLintReport = (text, onUploadProgress) => {
-  return http.post("/report/lint/v1",
+const register = (name, email, password) => {
+  return http.post("/invoice/upload_text/v1",
   {
     name: "test",
     text: text
@@ -24,18 +23,12 @@ const getLintReport = (text, onUploadProgress) => {
     headers: {
       "Content-Type": "text/plain",
     },
-    onUploadProgress,
   });
 };
 
-const checkAliveness = () => {
-  return http.get("/health_check/v1");
-};
-
 const FileUploadService = {
-  uploadText,
-  getLintReport,
-  checkAliveness,
+  login,
+  register,
 };
 
 export default FileUploadService;

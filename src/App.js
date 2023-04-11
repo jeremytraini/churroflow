@@ -4,6 +4,9 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import WarehousePlanning from './pages/WarehousePlanning';
+import WarehouseAnalytics from './pages/WarehouseAnalytics';
+import InventoryActions from './pages/InventoryActions';
+import InvoiceDataManager from './pages/InvoiceDataManager';
 import ProtectedLayout from "./layouts/ProtectedLayout";
 import PublicLayout from "./layouts/PublicLayout";
 
@@ -12,7 +15,7 @@ const App = () => {
     <div className="App">
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
-        
+
         <Route element={<PublicLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -21,6 +24,9 @@ const App = () => {
         <Route element={<ProtectedLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/warehouse-planning" element={<WarehousePlanning />} />
+          <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
+          <Route path="/inventory-actions" element={<InventoryActions />} />
+          <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
         </Route>
       </Routes>
     </div>

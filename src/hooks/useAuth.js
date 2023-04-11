@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SyncUser } from './SyncUser';
+import APIService from '../services/APIService';
+
 const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -13,8 +15,24 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   // call this function when you want to authenticate the user
-  const login = (user) => {
-    setUser(user);
+  async function login (email, password) {
+    // const user = await APIService.login(email, password);
+    setUser(JSON.stringify({
+      id: 1,
+      name: 'John Doe',
+      email: 'john@email.com',
+      role: 'admin'
+    }));
+    navigate('/dashboard');
+  };
+
+  const register = (name, email, password) => {
+    setUser(JSON.stringify({
+      id: 1,
+      name: 'John Doe',
+      email: 'john@email.com',
+      role: 'admin'
+    }));
     navigate('/dashboard');
   };
 
@@ -27,6 +45,7 @@ export const AuthProvider = ({ children }) => {
   const value = React.useMemo(
     () => ({
       user,
+      register,
       login,
       logout
     }),

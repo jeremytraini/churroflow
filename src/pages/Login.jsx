@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import APIService from '../services/APIService';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -73,7 +72,7 @@ const Login = () => {
             <Grid item>
               <RouterLink to="/register">
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Don't have an account? Register now"}
                 </Link>
               </RouterLink>
             </Grid>

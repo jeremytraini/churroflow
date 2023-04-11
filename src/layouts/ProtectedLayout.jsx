@@ -11,20 +11,19 @@ const ProtectedLayout = () => {
     return <Navigate to="/login" />;
   }
 
-  const sidebarWidth = "250px";
+  const sidebarWidth = "260";
+  const navBarHeight = "70";
 
   return (
     <div>
       <AppBar
-        position="fixed"
-        pages={[
-          { label: "Settings", path: "settings" },
-          { label: "Profile", path: "profile" }
-        ]}
-        sx={{ width: `calc(100% - ${sidebarWidth}px)`, left: 0, minWidth: '200px', ml: `${sidebarWidth}px`, height: '60px' }}
+        sidebarWidth={sidebarWidth}
+        navBarHeight={navBarHeight}
       />
-      <Navbar drawerWidth={sidebarWidth} />
-      {outlet}
+      <Navbar drawerWidth={sidebarWidth}  />
+      <div style={{ marginLeft: sidebarWidth, marginTop: "80px" }}>
+        {outlet}
+      </div>
     </div>
   );
 };

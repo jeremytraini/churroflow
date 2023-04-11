@@ -1,15 +1,15 @@
-import SubjectIcon from '@mui/icons-material/Subject';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ReceiptIcon from '@mui/icons-material/Receipt';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 
 export const getPrimaryNavList = () => {
   return [
     {
       title: 'Dashboard',
       route: '/dashboard',
-      Icon: SubjectIcon,
+      Icon: SpaceDashboardIcon,
       description: 'ADD DESCRIPTION HERE',
     },
     {
@@ -32,7 +32,7 @@ export const getPrimaryNavList = () => {
     },
     {
       title: 'Invoice Data Manager',
-      route: '/inventory-actions',
+      route: '/invoice-data-manager',
       Icon: ReceiptIcon,
       description: 'ADD DESCRIPTION HERE',
     },
