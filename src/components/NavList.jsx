@@ -1,5 +1,8 @@
-import ForumIcon from '@mui/icons-material/Forum';
 import SubjectIcon from '@mui/icons-material/Subject';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import WarehouseIcon from '@mui/icons-material/Warehouse';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 
 export const getPrimaryNavList = () => {
   return [
@@ -7,13 +10,32 @@ export const getPrimaryNavList = () => {
       title: 'Dashboard',
       route: '/dashboard',
       Icon: SubjectIcon,
-      description: 'View the course outline to get an overview of the course',
+      description: 'ADD DESCRIPTION HERE',
     },
     {
-      title: 'Forum',
-      route: 'https://edstem.org/au/join/cP8yUr',
-      Icon: ForumIcon,
-      description: 'Post questions and get answers about course or content queries',
-    }
+      title: 'Warehouse Planning',
+      route: '/warehouse-planning',
+      Icon: WarehouseIcon,
+      description: 'ADD DESCRIPTION HERE',
+    },
+    {
+      title: 'Warehouse Analytics',
+      route: '/warehouse-analytics',
+      Icon: AnalyticsIcon,
+      description: 'ADD DESCRIPTION HERE',
+    },
+    {
+      title: 'Inventory Actions',
+      route: '/inventory-actions',
+      Icon: InventoryIcon,
+      description: 'ADD DESCRIPTION HERE',
+    },
+    {
+      title: 'Invoice Data Manager',
+      route: '/inventory-actions',
+      Icon: ReceiptIcon,
+      description: 'ADD DESCRIPTION HERE',
+    },
+
   ];
 };
