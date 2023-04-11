@@ -14,21 +14,6 @@ const uploadText = (text, onUploadProgress) => {
   });
 };
 
-const uploadFile = (file, onUploadProgress) => {
-  let formData = new FormData();
-
-  formData.append("file", file);
-
-  return http.post("/invoice/upload_file/v1",
-  formData,
-  {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    onUploadProgress,
-  });
-};
-
 const getLintReport = (text, onUploadProgress) => {
   return http.post("/report/lint/v1",
   {
