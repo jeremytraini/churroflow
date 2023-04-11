@@ -1,9 +1,8 @@
 import { Navigate, useOutlet } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-// import { AppBar } from "./AppBar";
-import AppBar from "@mui/material/AppBar";
+import AppBar from "../components/AppBar";
 
-export const PublicLayout = () => {
+const PublicLayout = () => {
   const { user } = useAuth();
   const outlet = useOutlet();
 
@@ -23,3 +22,5 @@ export const PublicLayout = () => {
     </div>
   );
 };
+
+export default PublicLayout;

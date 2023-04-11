@@ -9,9 +9,9 @@ const Dashboard = () => {
   return (
   <BasicPage title="Dashboard" icon={<Home />}>
     <div>
-      <h1>Dashboard</h1>
+      <h1>Dashboard1</h1>
     </div>
-    {user && <p>Welcome, {user.user.name}!</p>}
+    {user && <p>Welcome, {user.name}!</p>}
   </BasicPage>
   );
 };

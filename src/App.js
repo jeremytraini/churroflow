@@ -4,15 +4,16 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import WarehousePlanning from './pages/WarehousePlanning';
-import { ProtectedLayout } from "./layouts/ProtectedLayout";
-import { PublicLayout } from "./layouts/PublicLayout";
+import ProtectedLayout from "./layouts/ProtectedLayout";
+import PublicLayout from "./layouts/PublicLayout";
 
-function App () {
+const App = () => {
   return (
     <div className="App">
       <Routes>
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+        
         <Route element={<PublicLayout />}>
-          <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>

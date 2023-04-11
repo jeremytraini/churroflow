@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-export const BasicPage = ({ title, icon }) => {
+export const BasicPage = ({ title, icon, children }) => {
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -19,6 +19,7 @@ export const BasicPage = ({ title, icon }) => {
           {title}
         </Typography>
       </Box>
+      {children}
     </Container>
   );
 };
