@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ListItemButton from '@mui/material/ListItemButton';
-import { useLocation } from "react-router-dom"
 import mainlogo from '../assets/mainlogo.jpg';
 import { getPrimaryNavList } from './NavList';
 

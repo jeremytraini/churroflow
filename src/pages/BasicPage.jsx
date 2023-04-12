@@ -1,9 +1,6 @@
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import useTitle from '../useTitle';
-import { filledInputClasses } from "@mui/material";
 
 export const BasicPage = ({ title, children }) => {
   useTitle("ChurroFlow - " + title);

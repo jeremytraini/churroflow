@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SyncUser } from './SyncUser';
-import APIService from '../services/APIService';
+// import APIService from '../services/APIService';
 
 const AuthContext = React.createContext();
 

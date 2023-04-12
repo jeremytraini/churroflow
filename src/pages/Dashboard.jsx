@@ -1,23 +1,24 @@
 import React from 'react';
-import { useAuth } from '../hooks/useAuth';
+// import { useAuth } from '../hooks/useAuth';
 import { BasicPage } from "./BasicPage";
-import Home from "@mui/icons-material/Home";
-import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import StatisticBox from '../components/boxes/StatisticBox';
+import DataTableBox from '../components/boxes/DataTableBox';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: 'center',
+  position: 'relative',
+  overflow: 'hidden',
   color: theme.palette.text.secondary,
 }));
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   return (
   <BasicPage title="Dashboard">
@@ -62,13 +63,13 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '3 / 1 / 5 / 3'
       }}>
-      Client
+        <DataTableBox type="client" />
       </Item>
 
       <Item sx={{
         gridArea: '3 / 3 / 5 / 5'
       }}>
-      Suburb
+        <DataTableBox type="suburb" />
       </Item>
     </Box>
   </BasicPage>

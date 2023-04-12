@@ -19,6 +19,7 @@
     "@uiw/react-codemirror": "^4.19.10",
     "axios": "^0.27.2",
     "bootstrap": "^4.6.2",
+    "mui-datatables": "^4.3.0",
     "normalize-newline": "^4.1.0",
     "openai": "^3.2.1",
     "react": "^18.2.0",
