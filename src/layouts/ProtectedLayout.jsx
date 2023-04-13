@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Box from "@mui/material/Box";
 
 const ProtectedLayout = () => {
+  console.log("ProtectedLayout");
   const { user } = useAuth();
   const outlet = useOutlet();
 

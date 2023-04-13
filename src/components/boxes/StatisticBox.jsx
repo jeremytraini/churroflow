@@ -1,45 +1,64 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import ChangeHistoryOutlinedIcon from '@mui/icons-material/ChangeHistoryOutlined';
+import APIService from '../../services/APIService';
 
 const StatisticBox = ({type, from_date, to_date}) => {
   let timePeriod = "12 months";
 
-  let title = "Test";
-  let value = "100";
-  let unit = " km";
-  let change = "100";
-  let is_positive = true;
+  const [title, setTitle] = React.useState("Test");
+  const [unit, setUnit] = React.useState("");
+  const [value, setValue] = React.useState("-");
+  const [change, setChange] = React.useState("-");
+  const [is_positive, setIsPositive] = React.useState("+");
+  const [update, setUpdate] = React.useState(false);
 
-  switch (type) {
-    case "activeCustomers":
-      title = "Number of active customers";
-      value = "100";
-      unit = " km";
-      change = "100";
-      is_positive = false;
-      break;
-    case "deliveries":
-      title = "Deliveries";
-      value = "100";
-      unit = "";
-      change = "100";
-      is_positive = true;
-      break;
-    case "deliveryTime":
-      title = "Delivery Time";
-      value = "100";
-      unit = " minutes";
-      change = "100";
-      is_positive = true;
-      break;
-    case "deliveryDistance":
-      title = "Delivery Distance";
-      value = "100";
-      unit = " km";
-      change = "100";
-      is_positive = true;
-      break;
+  React.useEffect(() => {
+    switch (type) {
+      case "numActiveCustomers":
+        setTitle("Number of active customers");
+        setUnit("");
+        fetchQuery(type, true);
+        break;
+      case "numInvoices":
+        setTitle("Number of invoices");
+        setUnit("");
+        fetchQuery(type, true);
+        break;
+      case "averageDeliveryTime":
+        setTitle("Delivery Time");
+        setUnit(" minutes");
+        fetchQuery(type, false);
+        break;
+      case "deliveryDistance":
+        setTitle("Delivery Distance");
+        setUnit(" km");
+        setValue("100");
+        setChange("100");
+        setIsPositive("+");
+        break;
+    }
+  }, [update]);
+
+  async function fetchQuery (query, is_int) {
+    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date);
+    const data = response.data;
+
+    if (data == null) {
+      setValue("-");
+      setChange("-");
+      setIsPositive("+");
+      return;
+    }
+    
+    if (is_int) {
+      setValue(data.value.toFixed(0));
+    } else {
+      setValue(Math.round(data.value * 10) / 10);
+    }
+
+    setChange(data.change);
+    setIsPositive(data.change > 0 ? "+" : "-")
   }
 
   return (
@@ -67,9 +86,9 @@ const StatisticBox = ({type, from_date, to_date}) => {
       </Box>
       <Box sx={{
         fontSize: '0.8rem',
-        color: is_positive ? 'green' : 'red',
+        color: is_positive === '+' ? 'green' : 'red',
       }}>
-        {is_positive ? (
+        {is_positive === '+' ? (
           <ChangeHistoryOutlinedIcon sx={{
             color: 'green',
             fontSize: '0.8rem',
@@ -87,8 +106,8 @@ const StatisticBox = ({type, from_date, to_date}) => {
             transform: 'rotate(180deg)'
           }} />
         )}
-        
-        {change+"%"}
+        {/* Rounded change */}
+        {Math.round(change)}{"%"}
       </Box>
       <Box sx={{
         fontSize: '0.7rem',

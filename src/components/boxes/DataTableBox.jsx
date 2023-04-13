@@ -66,6 +66,7 @@ const DataTableBox = ({type, from_date, to_date}) => {
       </Box>
       <Box sx={{
           flexGrow: 1,
+          marginBottom: '20px',
         }}>
         <DataGrid
           density="compact"
@@ -74,7 +75,7 @@ const DataTableBox = ({type, from_date, to_date}) => {
           initialState={{
               pagination: {
                 paginationModel: {
-                  pageSize: 5,
+                  pageSize: 20,
                 },
               },
               sorting: {
@@ -86,8 +87,7 @@ const DataTableBox = ({type, from_date, to_date}) => {
                 ],
               },
             }}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
+          // rowsPerPageOptions={[5]}
           disableRowSelectionOnClick
           hideFooterSelectedRowCount
           hideFooterPagination

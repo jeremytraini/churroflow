@@ -19,6 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Dashboard = () => {
   // const { user } = useAuth();
+  console.log("Dashboard");
 
   return (
   <BasicPage title="Dashboard">
@@ -33,25 +34,25 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '1 / 1 / 2 / 2'
       }}>
-        <StatisticBox type="activeCustomers" />
+        <StatisticBox type="numActiveCustomers" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       </Item>
 
       <Item sx={{
         gridArea: '1 / 2 / 2 / 3'
       }}>
-        <StatisticBox type="deliveries" />
+        <StatisticBox type="numInvoices" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       </Item>
 
       <Item sx={{
         gridArea: '2 / 1 / 3 / 2'
       }}>
-       <StatisticBox type="deliveryTime" />
+       <StatisticBox type="averageDeliveryTime" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       </Item>
 
       <Item sx={{
         gridArea: '2 / 2 / 3 / 3'
       }}>
-        <StatisticBox type="deliveryDistance" />
+        <StatisticBox type="deliveryDistance" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       </Item>
 
       <Item sx={{
