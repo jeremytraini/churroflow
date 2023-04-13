@@ -5,17 +5,35 @@ import { withStyles } from "@mui/styles";
 import { createMuiTheme } from "@mui/styles";
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
+import APIService from '../../services/APIService';
 
 const DataTableBox = ({type, from_date, to_date}) => {
-  let title = "Test";
+  const [title, setTitle] = React.useState("Test");
+  const [rows, setRows] = React.useState([]);
+  const [update, setUpdate] = React.useState(false);
 
-  switch (type) {
-    case "client":
-      title = "Data by client";
-      break;
-    case "suburb":
-      title = "Data by suburb";
-      break;
+  React.useEffect(() => {
+    switch (type) {
+      case "clientDataTable":
+        setTitle("Data by client");
+        fetchQuery(type);
+        break;
+      case "suburbDataTable":
+        setTitle("Data by suburb");
+        fetchQuery(type);
+        break;
+    }
+  }, [update]);
+
+  async function fetchQuery (query) {
+    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date);
+    const data = response.data;
+
+    if (data == null) {
+      return;
+    }
+
+    setRows(data.data);
   }
 
   const columns = [
@@ -39,19 +57,6 @@ const DataTableBox = ({type, from_date, to_date}) => {
     },
    ];
 
-  const rows = [
-    { id: 1, name: 'Jaden Collins', 'total-deliveries': 10000, 'total-revenue': 10000 },
-    { id: 2, name: 'Franky Rees', 'total-deliveries': 10000, 'total-revenue': 10000 },
-    { id: 3, name: 'Aaren Rose', 'total-deliveries': 100, 'total-revenue': 10000 },
-    { id: 4, name: 'Johnny Jones', 'total-deliveries': 10000, 'total-revenue': 10000 },
-    { id: 5, name: 'Jimmy Johns', 'total-deliveries': 10000, 'total-revenue': 10000 },
-    { id: 6, name: 'Jack Jackson', 'total-deliveries': 20000, 'total-revenue': 10000 },
-    { id: 7, name: 'Joe Jones', 'total-deliveries': 30000, 'total-revenue': 10000 },
-    { id: 8, name: 'Jacky Jackson', 'total-deliveries': 10000, 'total-revenue': 10000 },
-    { id: 9, name: 'Jo Jo', 'total-deliveries': 10000, 'total-revenue': 10000 },
-    { id: 10, name: 'Donna Marie', 'total-deliveries': 10000, 'total-revenue': 10000 },
-  ]
-
   return (
     <Box sx={{
       margin: '10px 10px',
@@ -70,7 +75,7 @@ const DataTableBox = ({type, from_date, to_date}) => {
         }}>
         <DataGrid
           density="compact"
-          rows={rows}
+          rows={rows ?? []}
           columns={columns}
           initialState={{
               pagination: {

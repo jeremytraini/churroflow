@@ -30,12 +30,10 @@ const StatisticBox = ({type, from_date, to_date}) => {
         setUnit(" minutes");
         fetchQuery(type, false);
         break;
-      case "deliveryDistance":
+      case "avgDeliveryDistance":
         setTitle("Delivery Distance");
         setUnit(" km");
-        setValue("100");
-        setChange("100");
-        setIsPositive("+");
+        fetchQuery(type, false);
         break;
     }
   }, [update]);
@@ -45,9 +43,6 @@ const StatisticBox = ({type, from_date, to_date}) => {
     const data = response.data;
 
     if (data == null) {
-      setValue("-");
-      setChange("-");
-      setIsPositive("+");
       return;
     }
     
