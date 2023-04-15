@@ -122,3 +122,13 @@ a.instagram {
   right: '0';
   padding: '1rem';
 }
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  width: 20px;
+  height: 20px;
+}

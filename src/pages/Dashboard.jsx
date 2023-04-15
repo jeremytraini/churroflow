@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import StatisticBox from '../components/boxes/StatisticBox';
 import DataTableBox from '../components/boxes/DataTableBox';
+import InteractiveMap from "../components/InteractiveMap";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -72,6 +73,7 @@ const Dashboard = () => {
         <DataTableBox type="suburb" />
       </Item>
     </Box>
+    <InteractiveMap />
   </BasicPage>
   );
 };
