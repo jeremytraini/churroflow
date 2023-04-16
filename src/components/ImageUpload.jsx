@@ -194,7 +194,7 @@ const ImageUpload = () => {
 
           {!invoiceChanged && (
             <>
-              <button className="btn btn-outline-primary btn-sm w-20" style={{backgroundColor: 'salmon', color: 'white'}} >Download as PDF</button>
+              <button className="btn btn-outline-primary btn-sm w-20" style={{backgroundColor: 'salmon', color: 'white'}}>Download as PDF</button>
               <button className="btn btn-outline-primary btn-sm w-20" style={{backgroundColor: 'salmon', color: 'white'}}>Download as CSV</button>
               <button className="btn btn-outline-primary btn-sm w-20" style={{backgroundColor: 'salmon', color: 'white'}}>Download as HTML</button>
               <button className="btn btn-outline-primary btn-sm w-20" style={{backgroundColor: 'salmon', color: 'white'}}>Download as JSON</button>

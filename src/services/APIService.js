@@ -4,7 +4,7 @@ const login = (email, password) => {
   return http.post("/invoice/upload_text/v1",
   {
     name: "test",
-    text: text
+    text: "text"
   },
   {
     headers: {
@@ -17,7 +17,7 @@ const register = (name, email, password) => {
   return http.post("/invoice/upload_text/v1",
   {
     name: "test",
-    text: text
+    text: "text"
   },
   {
     headers: {
