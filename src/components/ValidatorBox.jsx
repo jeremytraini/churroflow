@@ -11,6 +11,7 @@ import WarningIcon from '@mui/icons-material/Error';
 import ErrorIcon from '@mui/icons-material/Cancel';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
+import InfoIcon from '@mui/icons-material/Info';
 
 const gptAPIKey = "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";
 
@@ -292,6 +293,25 @@ const ValidatorBox = (props) => {
             </Box>
           </>
         }
+        {selectedText && (
+          <Fab
+            size="large"
+            variant="extended"
+            color="primary"
+            style={{
+                margin: 0,
+                top: 'auto',
+                right: 60,
+                bottom: 120,
+                left: 'auto',
+                position: 'fixed',
+            }}
+            onClick={() => sendGptMsg(selectedText)}
+          >
+            Ask GPT
+            <InfoIcon sx={{ ml: 1 }} />
+          </Fab>
+        )}
         <Fab
           size="large"
           variant="extended"
@@ -312,13 +332,6 @@ const ValidatorBox = (props) => {
       </Box>
       
     </Box>
-    
-      // {/* {invoiceChanged && (
-      //   <button className="btn btn-success btn-lg" id="run-button" onClick={updateMarkers}>Run</button>
-      // )}
-      // {selectedText && (
-      //   <button className="btn btn-info" id="gpt-button" onClick={() => sendGptMsg(selectedText)}>Ask GPT?</button>
-      // )} */}
   );
 };
 

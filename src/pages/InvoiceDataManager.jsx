@@ -104,6 +104,7 @@ const InvoiceDataManager = () => {
         sx={{
           marginBottom: '20px',
           minHeight: '300px',
+          backgroundColor: 'white',
           }}
         columns={[
           {
@@ -135,6 +136,7 @@ const InvoiceDataManager = () => {
         onRowClick={(event) => {
           navigate('/invoice-validator/' + event.row.id);
         }}
+        
       />
       <Typography component="h1" variant="h6" sx={{ marginBottom: '10px' }}>
         Processed Invoices
@@ -143,6 +145,7 @@ const InvoiceDataManager = () => {
         sx={{
           marginBottom: '20px',
           minHeight: '500px',
+          backgroundColor: 'white',
           }}
         columns={[
           {
@@ -173,6 +176,7 @@ const InvoiceDataManager = () => {
           toolbar: GridToolbar,
         }}
         checkboxSelection
+        backgroundColor='white'
       />
     </BasicPage>
   );
