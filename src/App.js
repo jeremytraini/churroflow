@@ -9,6 +9,8 @@ import InventoryActions from './pages/InventoryActions';
 import InvoiceDataManager from './pages/InvoiceDataManager';
 import ProtectedLayout from "./layouts/ProtectedLayout";
 import PublicLayout from "./layouts/PublicLayout";
+import Upgrade from './pages/Upgrade';
+import Validator from './pages/Validator';
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
         <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
         <Route path="/inventory-actions" element={<InventoryActions />} />
         <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
+        <Route path="/invoice-validator/:invoiceId" element={<Validator />} />
+        <Route path="/upgrade-account" element={<Upgrade />} />
       </Route>
     </Routes>
   )
