@@ -11,6 +11,8 @@ import ProtectedLayout from "./layouts/ProtectedLayout";
 import PublicLayout from "./layouts/PublicLayout";
 import Upgrade from './pages/Upgrade';
 import Validator from './pages/Validator';
+import WelcomePage from './pages/WelcomePage';
+
 
 const App = () => {
   return (
@@ -30,6 +32,7 @@ const App = () => {
         <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
         <Route path="/invoice-validator/:invoiceId" element={<Validator />} />
         <Route path="/upgrade-account" element={<Upgrade />} />
+        <Route path="/welcome-page" element={<WelcomePage />} />
       </Route>
     </Routes>
   )
