@@ -70,8 +70,7 @@ export default function Navbar({ drawerWidth }) {
                   <ListItemIcon>
                     <Icon style={{fill: 'white'}} />
                   </ListItemIcon>
-                  <ListItemText sx={{ fontWeight: 'bold', color: 'white' }} primary={title} />
-                  {children ? open[key] ? <ExpandLess /> : <ExpandMore /> : <></>}
+                  <ListItemText sx={{ fontWeight: 'bold', color: 'white' }}>{title}</ListItemText>
                 </ListItemButton>
             );
           })}
