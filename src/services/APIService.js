@@ -37,7 +37,7 @@ const invoiceProcessingQuery = (query, from_date, to_date) => {
     },
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer 7154eec1ef1ea9237c1376b93f645d39bd237fafc0a01d3c69fcfab74225f3af"
+      "Authorization": "Bearer b0a39099231244bcb72c0198187cbcd7c9090eef9a15ce209d96a9240e6a520b"
     }
   })
 };
