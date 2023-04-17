@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import StatisticBox from '../components/boxes/StatisticBox';
 import DataTableBox from '../components/boxes/DataTableBox';
 import { useParams } from 'react-router-dom';
+import ValidatorBox from '../components/ValidatorBox';
 
 const Validator = () => {
   // const { user } = useAuth();
@@ -15,16 +16,12 @@ const Validator = () => {
   return (
   <BasicPage title="Invoice Validator" backButton={true} >
     <Box sx={{
-      display: 'grid',
-      // gridTemplateColumns: 'repeat(4, 1fr)',
-      gridTemplateColumns: '1fr 1fr 1fr 1fr',
-      gridTemplateRows: '1fr 1fr 1fr 1fr',
-      gap: '20px',
-      height: `calc(100vh - 200px)`
+      display: 'flex',
+      flexDirection: 'column',
       }}>
       Test validator {invoiceId}
     </Box>
-
+    <ValidatorBox invoiceId={invoiceId} />
   </BasicPage>
   );
 };

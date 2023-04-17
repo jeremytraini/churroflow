@@ -11,7 +11,6 @@ export const BasicPage = ({ title, backButton, children }) => {
 
   return (
     <Container component="main" sx={{
-      background: 'linear-gradient(180deg, rgba(243, 244, 246, 100), rgb(186 209 255 / 48%))',
       height: '100%',
       width: '100%',
       maxWidth: false,

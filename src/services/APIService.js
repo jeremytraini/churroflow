@@ -1,6 +1,5 @@
 import http from "../http-common";
 
-const token = "06a23824a2e10ddb4518745522d9eebc75e4a392f8e06636f6df0658e0950156"
 
 const login = (email, password) => {
   return http.post("/invoice/upload_text/v1",
@@ -20,11 +19,6 @@ const register = (name, email, password) => {
   {
     name: "test",
     text: email
-  },
-  {
-    headers: {
-      "Content-Type": "text/plain",
-    },
   });
 };
 
@@ -34,10 +28,6 @@ const listValidInvoices = (verbose) => {
     params: {
       is_valid: true,
       verbose: verbose,
-    },
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + token
     }
   })
 };
@@ -48,10 +38,6 @@ const listInvalidInvoices = (verbose) => {
     params: {
       is_valid: false,
       verbose: verbose,
-    },
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + token
     }
   })
 };
@@ -63,10 +49,6 @@ const invoiceProcessingQuery = (query, from_date, to_date) => {
       query: query,
       from_date: from_date,
       to_date: to_date
-    },
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + token
     }
   })
 };
@@ -76,12 +58,33 @@ const uploadInvoice = (name, invoice) => {
   {
     name: name,
     text: invoice
+  });
+};
+
+const getInvoice = (id) => {
+  // curl -X 'POST' \
+  // 'http://churros.eba-pyyazat7.ap-southeast-2.elasticbeanstalk.com/invoice_processing/get/v2?invoice_id=1&verbose=true' \
+  // -H 'accept: application/json' \
+  // -H 'Authorization: Bearer eaa925a1e2fab3b35ccae15e430283b066ff8173d33e1ea27afb715c087472dd' \
+  // -d ''
+  return http.post("/invoice_processing/get/v2",
+  {},
+  {
+    params: {
+      invoice_id: parseInt(id),
+      verbose: true
+    }
+  });
+};
+
+const getLintReport = (id, newInvoice) => {
+  // newInvoice in body
+  return http.post("/invoice_processing/lint/v2",
+  {
+    [newInvoice ? "new_invoice" : ""]: newInvoice,
   },
   {
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + token
-    },
+    invoice_id: parseInt(id),
   });
 };
 
@@ -92,6 +95,8 @@ const FileUploadService = {
   listValidInvoices,
   listInvalidInvoices,
   uploadInvoice,
+  getInvoice,
+  getLintReport
 };
 
 export default FileUploadService;

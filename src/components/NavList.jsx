@@ -38,7 +38,7 @@ export const getPrimaryNavList = () => {
       description: 'ADD DESCRIPTION HERE',
     },
     {
-      title: 'Upgrade Your Account',
+      title: 'Upgrade Account',
       route: '/upgrade-account',
       Icon: KeyboardDoubleArrowUpIcon,
       description: 'ADD DESCRIPTION HERE',

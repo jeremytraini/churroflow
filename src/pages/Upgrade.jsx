@@ -56,7 +56,7 @@ const tiers = [
 
 const Dashboard = () => {
   return (
-  <BasicPage title="Upgrade Your Account">
+  <BasicPage title="Upgrade Account">
     <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
     <CssBaseline />
     {/* Hero unit */}
