@@ -12,45 +12,67 @@ import StarIcon from '@mui/icons-material/StarBorder';
 import Typography from '@mui/material/Typography';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
 
 // Inspired by https://mui.com/material-ui/getting-started/templates/pricing/
 const tiers = [
   {
     title: 'Starter',
     price: '0',
-    description: [
-      '100 invoices uploaded',
-      '100 invoices uploaded',
-      '100 invoices uploaded',
-      '100 invoices uploaded',
+    enabled: [
+      'Upload, Store, Render, and Send 15 Invoices',
+      'Invoice Data Manager',
+    ],
+    disabled: [
+      'Invoice Validator Interface',
+      'Download Validation Report',
+      'Inventory Actions',
+      'Warehouse Analytics',
+      'Ask GPT',
+      'Warehouse Planning',
+      'Delivery Heatmap View',
     ],
     buttonText: 'Currently Active',
     buttonVariant: 'outlined',
   },
   {
-    title: 'Pro',
-    subheader: 'Reccomended for small businesses',
-    price: '15',
-    description: [
-      '100 invoices uploaded',
-      '100 invoices uploaded',
-      '100 invoices uploaded',
-      '100 invoices uploaded',
+    title: 'Standard',
+    price: '39.99',
+    enabled: [
+      'Upload, Store, Render, and Send 200 Invoices',
+      'Invoice Data Manager',
+      'Invoice Validator Interface',
+      'Download Validation Report',
+      'Inventory Actions',
+    ],
+    disabled: [
+      'Warehouse Analytics',
+      'Ask GPT',
+      'Warehouse Planning',
+      'Delivery Heatmap View',
     ],
     buttonText: 'Upgrade now',
     buttonVariant: 'contained',
   },
   {
-    title: 'Enterprise',
-    price: '30',
-    description: [
-      '100 invoices uploaded',
-      '100 invoices uploaded',
-      '100 invoices uploaded',
-      '100 invoices uploaded',
+    title: 'Ultimate',
+    subheader: 'Our Most Popular Plan',
+    price: '79.99',
+    enabled: [
+      'Upload, Store, Render, and Send Unlimited Invoices',
+      'Invoice Data Manager',
+      'Invoice Validator Interface',
+      'Download Validation Report',
+      'Inventory Actions',
+      'Warehouse Analytics',
+      'Ask GPT',
+      'Warehouse Planning',
+      'Delivery Heatmap View',
     ],
-    buttonText: 'Try it out',
-    buttonVariant: 'outlined',
+    disabled: [],
+    buttonText: 'Upgrade now',
+    buttonVariant: 'contained',
   },
 ];
 
@@ -83,7 +105,7 @@ const Dashboard = () => {
             item
             key={tier.title}
             xs={12}
-            sm={tier.title === 'Enterprise' ? 12 : 6}
+            sm={tier.title === 'Ultimate' ? 12 : 6}
             md={4}
           >
             <Card>
@@ -91,7 +113,7 @@ const Dashboard = () => {
                 title={tier.title}
                 subheader={tier.subheader}
                 titleTypographyProps={{ align: 'center' }}
-                action={tier.title === 'Pro' ? <StarIcon /> : null}
+                action={tier.title === 'Ultimate' ? <StarIcon /> : null}
                 subheaderTypographyProps={{
                   align: 'center',
                   fontSize: 'small',
@@ -120,14 +142,32 @@ const Dashboard = () => {
                   </Typography>
                 </Box>
                 <ul>
-                  {tier.description.map((line) => (
+                  {tier.enabled.map((line) => (
                     <Typography
                       component="li"
                       variant="subtitle1"
-                      align="center"
+                      align="left"
                       key={line}
                     >
-                      {line}
+                      <Grid style={{ display: "flex" }}>
+                          <DoneIcon />
+                          <Typography>{line}</Typography>
+                      </Grid>
+                    </Typography>
+                  ))}
+                </ul>
+                <ul>
+                  {tier.disabled.map((line) => (
+                    <Typography
+                      component="li"
+                      variant="subtitle1"
+                      align="left"
+                      key={line}
+                    >
+                      <Grid style={{ display: "flex", opacity: 0.5}}>
+                          <CloseIcon />
+                          <Typography>{line}</Typography>
+                      </Grid>
                     </Typography>
                   ))}
                 </ul>
@@ -150,4 +190,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
