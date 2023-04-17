@@ -31,4 +31,8 @@ const FileUploadService = {
   register,
 };
 
+const checkAliveness = () => {
+  return http.get("/health_check/v1");
+};
+
 export default FileUploadService;

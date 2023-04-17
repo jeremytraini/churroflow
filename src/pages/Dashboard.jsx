@@ -59,6 +59,7 @@ const Dashboard = () => {
         gridArea: '1 / 3 / 3 / 5'
       }}>
       Heatmap
+      <InteractiveMap />
       </Item>
 
       <Item sx={{
@@ -73,7 +74,7 @@ const Dashboard = () => {
         <DataTableBox type="suburb" />
       </Item>
     </Box>
-    <InteractiveMap />
+
   </BasicPage>
   );
 };

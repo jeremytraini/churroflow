@@ -9,16 +9,11 @@ import InventoryActions from './pages/InventoryActions';
 import InvoiceDataManager from './pages/InvoiceDataManager';
 import ProtectedLayout from "./layouts/ProtectedLayout";
 import PublicLayout from "./layouts/PublicLayout";
-// import ImageUpload from "./components/ImageUpload";
-// import BasicNavbar from "./components/Navbar";
-// import InteractiveMap from "./components/InteractiveMap";
-// import { View} from 'react-native';
-// import SocialFollow from "./SocialFollow"
 import {Helmet} from 'react-helmet';
 
 const App = () => {
   return (
-    <Routes>
+    <>
       <Helmet>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
         integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
@@ -26,24 +21,26 @@ const App = () => {
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
         crossorigin=""></script>
-        {/* <script src="leaflet-heat.js"></script> */}
-        {/* <script src="leaflet-heat.js"></script> */}
       </Helmet>
-      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Routes>
 
-      <Route element={<PublicLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Route>
+        <Route path="/" element={<Navigate to="/dashboard" />} />
 
-      <Route element={<ProtectedLayout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/warehouse-planning" element={<WarehousePlanning />} />
-        <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
-        <Route path="/inventory-actions" element={<InventoryActions />} />
-        <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
-      </Route>
-    </Routes>
+        <Route element={<PublicLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+
+        <Route element={<ProtectedLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/warehouse-planning" element={<WarehousePlanning />} />
+          <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
+          <Route path="/inventory-actions" element={<InventoryActions />} />
+          <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
+        </Route>
+      </Routes>
+    
+    </>
   )
 }
 
