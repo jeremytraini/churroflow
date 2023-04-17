@@ -12,67 +12,45 @@ import StarIcon from '@mui/icons-material/StarBorder';
 import Typography from '@mui/material/Typography';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import DoneIcon from '@mui/icons-material/Done';
-import CloseIcon from '@mui/icons-material/Close';
 
 // Inspired by https://mui.com/material-ui/getting-started/templates/pricing/
 const tiers = [
   {
     title: 'Starter',
     price: '0',
-    enabled: [
-      'Upload, Store, Render, and Send 15 Invoices',
-      'Invoice Data Manager',
-    ],
-    disabled: [
-      'Invoice Validator Interface',
-      'Download Validation Report',
-      'Inventory Actions',
-      'Warehouse Analytics',
-      'Ask GPT',
-      'Warehouse Planning',
-      'Delivery Heatmap View',
+    description: [
+      '100 invoices uploaded',
+      '100 invoices uploaded',
+      '100 invoices uploaded',
+      '100 invoices uploaded',
     ],
     buttonText: 'Currently Active',
     buttonVariant: 'outlined',
   },
   {
-    title: 'Standard',
-    price: '39.99',
-    enabled: [
-      'Upload, Store, Render, and Send 200 Invoices',
-      'Invoice Data Manager',
-      'Invoice Validator Interface',
-      'Download Validation Report',
-      'Inventory Actions',
-    ],
-    disabled: [
-      'Warehouse Analytics',
-      'Ask GPT',
-      'Warehouse Planning',
-      'Delivery Heatmap View',
+    title: 'Pro',
+    subheader: 'Reccomended for small businesses',
+    price: '15',
+    description: [
+      '100 invoices uploaded',
+      '100 invoices uploaded',
+      '100 invoices uploaded',
+      '100 invoices uploaded',
     ],
     buttonText: 'Upgrade now',
     buttonVariant: 'contained',
   },
   {
-    title: 'Ultimate',
-    subheader: 'Our Most Popular Plan',
-    price: '79.99',
-    enabled: [
-      'Upload, Store, Render, and Send Unlimited Invoices',
-      'Invoice Data Manager',
-      'Invoice Validator Interface',
-      'Download Validation Report',
-      'Inventory Actions',
-      'Warehouse Analytics',
-      'Ask GPT',
-      'Warehouse Planning',
-      'Delivery Heatmap View',
+    title: 'Enterprise',
+    price: '30',
+    description: [
+      '100 invoices uploaded',
+      '100 invoices uploaded',
+      '100 invoices uploaded',
+      '100 invoices uploaded',
     ],
-    disabled: [],
-    buttonText: 'Upgrade now',
-    buttonVariant: 'contained',
+    buttonText: 'Try it out',
+    buttonVariant: 'outlined',
   },
 ];
 
@@ -105,7 +83,7 @@ const Dashboard = () => {
             item
             key={tier.title}
             xs={12}
-            sm={tier.title === 'Ultimate' ? 12 : 6}
+            sm={tier.title === 'Enterprise' ? 12 : 6}
             md={4}
           >
             <Card>
@@ -113,7 +91,7 @@ const Dashboard = () => {
                 title={tier.title}
                 subheader={tier.subheader}
                 titleTypographyProps={{ align: 'center' }}
-                action={tier.title === 'Ultimate' ? <StarIcon /> : null}
+                action={tier.title === 'Pro' ? <StarIcon /> : null}
                 subheaderTypographyProps={{
                   align: 'center',
                   fontSize: 'small',
@@ -142,32 +120,14 @@ const Dashboard = () => {
                   </Typography>
                 </Box>
                 <ul>
-                  {tier.enabled.map((line) => (
+                  {tier.description.map((line) => (
                     <Typography
                       component="li"
                       variant="subtitle1"
-                      align="left"
+                      align="center"
                       key={line}
                     >
-                      <Grid style={{ display: "flex" }}>
-                          <DoneIcon />
-                          <Typography>{line}</Typography>
-                      </Grid>
-                    </Typography>
-                  ))}
-                </ul>
-                <ul>
-                  {tier.disabled.map((line) => (
-                    <Typography
-                      component="li"
-                      variant="subtitle1"
-                      align="left"
-                      key={line}
-                    >
-                      <Grid style={{ display: "flex", opacity: 0.5}}>
-                          <CloseIcon />
-                          <Typography>{    line}</Typography>
-                      </Grid>
+                      {line}
                     </Typography>
                   ))}
                 </ul>
