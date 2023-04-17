@@ -11,6 +11,7 @@ import ProtectedLayout from "./layouts/ProtectedLayout";
 import PublicLayout from "./layouts/PublicLayout";
 import Upgrade from './pages/Upgrade';
 import Validator from './pages/Validator';
+import Welcome from './pages/Welcome';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
       </Route>
 
       <Route element={<ProtectedLayout />}>
+        <Route path="/welcome" element={<Welcome />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/warehouse-planning" element={<WarehousePlanning />} />
         <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
