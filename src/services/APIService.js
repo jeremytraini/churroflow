@@ -77,15 +77,36 @@ const getInvoice = (id) => {
   });
 };
 
-const getLintReport = (id, newInvoice) => {
-  // newInvoice in body
-  return http.post("/invoice_processing/lint/v2",
-  {
-    [newInvoice ? "new_invoice" : ""]: newInvoice,
-  },
-  {
-    invoice_id: parseInt(id),
-  });
+// curl -X 'POST' \
+//   'http://churros.eba-pyyazat7.ap-southeast-2.elasticbeanstalk.com/invoice_processing/lint/v2?invoice_id=1' \
+//   -H 'accept: application/json' \
+//   -H 'Authorization: Bearer eaa925a1e2fab3b35ccae15e430283b066ff8173d33e1ea27afb715c087472dd' \
+//   -H 'Content-Type: application/json' \
+//   -d '{
+//   "name": "string",
+//   "text": "string"
+// }'
+const getLintReport = (invoice_id, newInvoice) => {
+  if (newInvoice) {
+    return http.post("/invoice_processing/lint/v2",
+    {
+      name: 'test',
+      text: newInvoice
+    },
+    {
+      params: {
+        invoice_id: invoice_id,
+      }
+    });
+  } else {
+    return http.post("/invoice_processing/lint/v2",
+    null,
+    {
+      params: {
+        invoice_id: invoice_id,
+      }
+    });
+  }
 };
 
 const FileUploadService = {

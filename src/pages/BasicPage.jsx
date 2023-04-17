@@ -13,7 +13,8 @@ export const BasicPage = ({ title, backButton, children }) => {
     <Container component="main" sx={{
       height: '100%',
       width: '100%',
-      maxWidth: false,
+      // maxWidth: false,
+      minWidth: '850px',
       marginTop: 8,
       display: "flex",
       flexDirection: "column",

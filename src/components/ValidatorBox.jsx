@@ -1,30 +1,57 @@
 import React from "react";
 import APIService from "../services/APIService";
-
+import Box from '@mui/material/Box';
 import CodeMirror from '@uiw/react-codemirror';
 import { xml } from '@codemirror/lang-xml';
 import {linter, lintGutter, Diagnostic} from "@codemirror/lint";
+import Typography from '@mui/material/Typography';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import Fab from '@mui/material/Fab';
+import WarningIcon from '@mui/icons-material/Error';
+import ErrorIcon from '@mui/icons-material/Cancel';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
 
 const gptAPIKey = "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";
 
-const ValidatorBox = ({invoiceId}) => {
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#f5f5f9',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9',
+  },
+}));
+
+const ValidatorBox = (props) => {
   const [progress, setProgress] = React.useState(0);
   const [message, setMessage] = React.useState("");
   const [invoiceData, setInvoiceData] = React.useState("");
-  const [invoiceChanged, setInvoiceChanged] = React.useState(false);
+  const [invoiceExtracted, setInvoiceExtracted] = React.useState(null);
+  const [invoiceChanged, setInvoiceChanged] = React.useState(true);
   const [errorResponse, setErrorResponse] = React.useState([]);
   const [selectedText, setSelectedText] = React.useState("");
+  const [diagnostics, setDiagnostics] = React.useState(null);
   const [msgs, setMsgs] = React.useState([{message: "empty", sender: "User"}]);
 
-  const fetchInvoice = async () => {
-    const response = await APIService.getInvoice(invoiceId);
-    if (response.data) {
-      setInvoiceData(response.data.text_content);
-    }
+
+
+  const fetchInvoice = () => {
+    APIService.getInvoice(props.invoiceId)
+    .then((response) => {
+      if (response.data) {
+        setInvoiceExtracted(response.data);
+        setInvoiceData(normaliseLineEndings(response.data.text_content));
+      }
+    })
   }
 
   React.useEffect(() => {
     fetchInvoice();
+    // updateMarkers();
   }, []);
 
   const normaliseLineEndings = (str, normalized = '\n') =>
@@ -91,11 +118,10 @@ const ValidatorBox = ({invoiceId}) => {
   });
 
   const updateMarkers = () => {
-    APIService.getLintReport(invoiceData, (event) => {
-      setProgress(Math.round((100 * event.loaded) / event.total));
-    }).then((response) => {
+    APIService.getLintReport(props.invoiceId, invoiceData)
+    .then((response) => {
       setInvoiceChanged(false);
-
+      setDiagnostics(response.data);
       let errors = response.data.report;
       let diagnostics = [];
 
@@ -156,12 +182,20 @@ const ValidatorBox = ({invoiceId}) => {
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        margin: '20px 0',
+      }}
+    >
       <CodeMirror
         value={invoiceData}
         style={{
           outline: "none",
-          border: "1px solid silver"
+          border: "1px solid silver",
+          width: "70%",
           }}
         height="100%"
         extensions={[xml(), linter(errorMarker), lintGutter()]}
@@ -170,13 +204,121 @@ const ValidatorBox = ({invoiceId}) => {
                     setInvoiceData(value);
                   }}
       />
-      {invoiceChanged && (
-        <button className="btn btn-success btn-lg" id="run-button" onClick={updateMarkers}>Run</button>
-      )}
-      {selectedText && (
-        <button className="btn btn-info" id="gpt-button" onClick={() => sendGptMsg(selectedText)}>Ask GPT?</button>
-      )}
-    </>
+      <Box
+        sx={{
+          width: '30%',
+          backgroundColor: 'white',
+          borderRadius: '0 30px 30px 0',
+          border: '1px solid silver',
+          borderLeft: 'none',
+          padding: '20px',
+        }}
+      >
+        <Typography component="h1" variant="h5" sx={{ marginBottom: '20px' }}>
+          Invoice Details
+        </Typography>
+        {!!invoiceExtracted &&
+          <>
+            <Typography variant="body1" gutterBottom>
+              <b>Name: </b>{invoiceExtracted.name}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              <b>Added: </b>{invoiceExtracted.date_added}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              <b>Last edited: </b>{invoiceExtracted.date_last_modified}
+            </Typography>
+            <Typography variant="body1" marginBottom={'20px'} gutterBottom>
+              <b>Valid: </b>{invoiceExtracted.valid ? "Yes" : "No"}
+            </Typography>
+            <Box>
+              {!!diagnostics &&
+                <Typography variant="body1" gutterBottom>
+                  <b>Errors found:</b>
+                </Typography>}
+              {!!diagnostics && 
+                diagnostics.report.sort((a, b) => {
+                  if (a.severity === b.severity) {
+                    return 0;
+                  } else if (a.severity === 'warning') {
+                    return 1;
+                  } else {
+                    return -1;
+                  }
+                }).map((error, index) => {
+                return (
+                  <HtmlTooltip
+                    title={
+                      !!error.suggestion &&
+                        <>
+                          <Typography color="inherit" variant="body2" fontWeight='bold'>Suggestion</Typography>
+                          <Typography color="inherit" variant="body2">{error.suggestion}</Typography>
+                        </>
+                    }
+                    arrow
+                    placement="left"
+                    
+                  >
+                    <Box
+                      key={index}
+                      sx={{
+                        backgroundColor: error.severity === 'warning' ? '#FFF5E5' : '#FFE7E5',
+                        borderRadius: '10px',
+                        padding: '10px',
+                        marginBottom: '10px',
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {error.severity === 'warning'
+                          ? <WarningIcon sx={{ color: '#FFC048' }} />
+                          : <ErrorIcon sx={{ color: '#EA2D3F' }} />}
+                        <Typography variant="body1" fontWeight='bold' sx={{ pl: '5px' }}>
+                          {error.rule_id}
+                        </Typography>
+                      </Box>
+                      <Typography variant="body2" gutterBottom>
+                        {error.message}
+                      </Typography>
+                    </Box>
+                  </HtmlTooltip>
+                )
+              })}
+            </Box>
+          </>
+        }
+        <Fab
+          size="large"
+          variant="extended"
+          color="success"
+          style={{
+              margin: 0,
+              top: 'auto',
+              right: 60,
+              bottom: 60,
+              left: 'auto',
+              position: 'fixed',
+          }}
+          onClick={updateMarkers}
+        >
+          Run
+          <PlayArrowIcon sx={{ ml: 1 }} />
+        </Fab>
+      </Box>
+      
+    </Box>
+    
+      // {/* {invoiceChanged && (
+      //   <button className="btn btn-success btn-lg" id="run-button" onClick={updateMarkers}>Run</button>
+      // )}
+      // {selectedText && (
+      //   <button className="btn btn-info" id="gpt-button" onClick={() => sendGptMsg(selectedText)}>Ask GPT?</button>
+      // )} */}
   );
 };
 

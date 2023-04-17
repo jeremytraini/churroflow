@@ -15,13 +15,9 @@ const Validator = () => {
 
   return (
   <BasicPage title="Invoice Validator" backButton={true} >
-    <Box sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      }}>
-      Test validator {invoiceId}
-    </Box>
-    <ValidatorBox invoiceId={invoiceId} />
+    <ValidatorBox
+      invoiceId={invoiceId}
+    />
   </BasicPage>
   );
 };
