@@ -94,8 +94,11 @@ function Welcome() {
               Support
             </Link>
           </nav>
+          <Button href="/register" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+            SIGN UP
+          </Button>
           <Button href="/login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-            Login
+            LOG ON
           </Button>
         </Toolbar>
       </AppBar>
