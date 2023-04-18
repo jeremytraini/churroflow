@@ -26,8 +26,8 @@ export const AuthProvider = ({ children }) => {
       id: 1,
       name: 'John Doe',
       email: email,
-      tier: 'starter',
-      token: user.data.token
+      tier: 'Starter',
+      token: user.data.access_token
     });
 
     navigate('/dashboard');
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       id: 1,
       name: name,
       email: email,
-      tier: 'starter',
+      tier: 'Starter',
       token: user.data.token
     });
 

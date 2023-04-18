@@ -23,17 +23,17 @@ const APIService = () => {
   }
 
   const login = (email, password) => {
+    const formData = new FormData();
+    formData.append("username", email);
+    formData.append("password", password);
+
     return getBase().post("/auth_login/v2",
-    {
-      username: email,
-      password: password,
-    },
+    formData,
     {
       headers: {
-        "Content-Type": "text/plain",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-    }
-    );
+    });
   };
 
   const register = (name, email, password) => {
