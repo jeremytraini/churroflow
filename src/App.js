@@ -16,7 +16,9 @@ import Welcome from './pages/Welcome';
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Route path="/" element={<Navigate to="/welcome" />} />
+
+      <Route path="/welcome" element={<Welcome />} />
 
       <Route element={<PublicLayout />}>
         <Route path="/login" element={<Login />} />
@@ -24,7 +26,6 @@ const App = () => {
       </Route>
 
       <Route element={<ProtectedLayout />}>
-        <Route path="/welcome" element={<Welcome />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/warehouse-planning" element={<WarehousePlanning />} />
         <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
