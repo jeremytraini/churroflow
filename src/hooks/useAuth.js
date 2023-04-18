@@ -1,38 +1,53 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SyncUser } from './SyncUser';
-// import APIService from '../services/APIService';
+import getAPI from '../services/APIService';
 
 const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = SyncUser(JSON.stringify({
-    id: 1,
-    name: 'John Doe',
-    email: 'john@email.com',
-    role: 'admin'
-  }));
+  const [user, setUser] = SyncUser(null);
   const navigate = useNavigate();
+  const APIService = getAPI();
+
+  const setPlan = (plan) => {
+    setUser({...user, tier: plan});
+  };
 
   // call this function when you want to authenticate the user
-  async function login (email, password) {
-    // const user = await APIService.login(email, password);
-    setUser(JSON.stringify({
+  const login = async (email, password) => {
+    const user = await APIService.login(email, password);
+
+    if (!user.data) {
+      return;
+    }
+
+    setUser({
       id: 1,
       name: 'John Doe',
-      email: 'john@email.com',
-      role: 'admin'
-    }));
+      email: email,
+      tier: 'Starter',
+      token: user.data.access_token
+    });
+
     navigate('/dashboard');
   };
 
-  const register = (name, email, password) => {
-    setUser(JSON.stringify({
+  const register = async (name, email, password) => {
+    const user = await APIService.register(name, email, password);
+
+    if (!user.data) {
+      return;
+    }
+
+    setUser({
       id: 1,
-      name: 'John Doe',
-      email: 'john@email.com',
-      role: 'admin'
-    }));
+      name: name,
+      email: email,
+      tier: 'Starter',
+      token: user.data.token
+    });
+
     navigate('/dashboard');
   };
 
@@ -47,7 +62,8 @@ export const AuthProvider = ({ children }) => {
       user,
       register,
       login,
-      logout
+      logout,
+      setPlan
     }),
     [user]
   );

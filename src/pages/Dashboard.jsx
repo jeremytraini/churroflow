@@ -1,11 +1,12 @@
 import React from 'react';
-// import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { BasicPage } from "./BasicPage";
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import StatisticBox from '../components/boxes/StatisticBox';
 import DataTableBox from '../components/boxes/DataTableBox';
+import BlurredBox from '../components/boxes/BlurredBox';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -18,7 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Dashboard = () => {
-  // const { user } = useAuth();
+  const { user } = useAuth();
 
   return (
   <BasicPage title="Dashboard">
@@ -33,25 +34,31 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '1 / 1 / 2 / 2'
       }}>
-        <StatisticBox type="activeCustomers" />
+        <StatisticBox type="numActiveCustomers" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       </Item>
 
       <Item sx={{
         gridArea: '1 / 2 / 2 / 3'
       }}>
-        <StatisticBox type="deliveries" />
+        <StatisticBox type="numInvoices" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       </Item>
 
       <Item sx={{
         gridArea: '2 / 1 / 3 / 2'
       }}>
-       <StatisticBox type="deliveryTime" />
+        {user.tier === 'Starter'
+        ? <BlurredBox type="Delivery time stat" />
+        : <StatisticBox type="averageDeliveryTime" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+        }
       </Item>
 
       <Item sx={{
         gridArea: '2 / 2 / 3 / 3'
       }}>
-        <StatisticBox type="deliveryDistance" />
+        {user.tier === 'Starter'
+        ? <BlurredBox type="Delivery distance stat" />
+        : <StatisticBox type="avgDeliveryDistance" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+        }
       </Item>
 
       <Item sx={{
@@ -63,13 +70,16 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '3 / 1 / 5 / 3'
       }}>
-        <DataTableBox type="client" />
+      <DataTableBox type="clientDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       </Item>
 
       <Item sx={{
         gridArea: '3 / 3 / 5 / 5'
       }}>
-        <DataTableBox type="suburb" />
+      {user.tier === 'Starter'
+        ? <BlurredBox type="Suburb data table" />
+        : <DataTableBox type="suburbDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+      }
       </Item>
     </Box>
   </BasicPage>
@@ -77,4 +87,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

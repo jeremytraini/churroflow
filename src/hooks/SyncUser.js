@@ -9,7 +9,7 @@ export const SyncUser = (defaultValue) => {
       if (value) {
         return JSON.parse(value);
       } else {
-        window.localStorage.setItem('user', defaultValue);
+        window.localStorage.setItem('user', JSON.stringify(defaultValue));
         return defaultValue;
       }
     } catch (err) {

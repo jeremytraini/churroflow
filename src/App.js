@@ -9,6 +9,9 @@ import InventoryActions from './pages/InventoryActions';
 import InvoiceDataManager from './pages/InvoiceDataManager';
 import ProtectedLayout from "./layouts/ProtectedLayout";
 import PublicLayout from "./layouts/PublicLayout";
+import Upgrade from './pages/Upgrade';
+import Validator from './pages/Validator';
+import Welcome from './pages/Welcome';
 
 const App = () => {
   return (
@@ -21,11 +24,14 @@ const App = () => {
       </Route>
 
       <Route element={<ProtectedLayout />}>
+        <Route path="/welcome" element={<Welcome />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/warehouse-planning" element={<WarehousePlanning />} />
         <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
         <Route path="/inventory-actions" element={<InventoryActions />} />
         <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
+        <Route path="/invoice-validator/:invoiceId" element={<Validator />} />
+        <Route path="/upgrade-account" element={<Upgrade />} />
       </Route>
     </Routes>
   )
