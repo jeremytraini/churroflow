@@ -211,7 +211,9 @@ const Plan = () => {
                   variant={"contained"}
                   onClick={() => <Navigate to="/register" />}
                 >
-                  {"Sign up now"}
+                  <Link color="inherit" href="/register">
+                    Sign up now
+                  </Link>{' '}
                 </Button>
               </CardActions>
             </Card>
