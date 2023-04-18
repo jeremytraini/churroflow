@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Popover from '@mui/material/Popover';
 
 const InventoryActions = () => {
   
@@ -37,7 +36,7 @@ const InventoryActions = () => {
           <Button variant="contained" color="success" sx={{ height: 30, width: 200 }}>
             Notify Warehouse
           </Button>
-          <Popover
+          {/* <Popover
             id={id}
             open={open}
             anchorEl={anchorEl}
@@ -48,7 +47,7 @@ const InventoryActions = () => {
             }}
           >
             <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
-          </Popover>
+          </Popover> */}
         </Box>
       </Container>
 
