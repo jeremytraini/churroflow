@@ -14,6 +14,7 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
+import { useAuth } from "../hooks/useAuth";
 
 // Inspired by https://mui.com/material-ui/getting-started/templates/pricing/
 const tiers = [
@@ -37,7 +38,8 @@ const tiers = [
     buttonVariant: 'outlined',
   },
   {
-    title: 'Standard',
+    title: 'Premium',
+    subheader: 'Reccomended for small businesses',
     price: '39.99',
     enabled: [
       'Upload, Store, Render, and Send 200 Invoices',
@@ -57,7 +59,6 @@ const tiers = [
   },
   {
     title: 'Ultimate',
-    subheader: 'Our Most Popular Plan',
     price: '79.99',
     enabled: [
       'Upload, Store, Render, and Send Unlimited Invoices',
@@ -77,12 +78,14 @@ const tiers = [
 ];
 
 const Dashboard = () => {
+  const { user, setPlan } = useAuth();
+
   return (
-  <BasicPage title="Upgrade Account">
+  <BasicPage title="">
     <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
     <CssBaseline />
     {/* Hero unit */}
-    <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
+    <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 0, pb: 6 }}>
       <Typography
         component="h1"
         variant="h4"
@@ -113,7 +116,7 @@ const Dashboard = () => {
                 title={tier.title}
                 subheader={tier.subheader}
                 titleTypographyProps={{ align: 'center' }}
-                action={tier.title === 'Ultimate' ? <StarIcon /> : null}
+                action={tier.title === 'Premium' ? <StarIcon /> : null}
                 subheaderTypographyProps={{
                   align: 'center',
                   fontSize: 'small',
@@ -176,6 +179,7 @@ const Dashboard = () => {
                 <Button
                   fullWidth
                   variant={tier.buttonVariant}
+                  onClick={() => setPlan(tier.title)}
                 >
                   {tier.buttonText}
                 </Button>
@@ -190,4 +194,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

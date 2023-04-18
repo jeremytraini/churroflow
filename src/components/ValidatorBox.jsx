@@ -1,5 +1,5 @@
 import React from "react";
-import APIService from "../services/APIService";
+import getAPI from "../services/APIService";
 import Box from '@mui/material/Box';
 import CodeMirror from '@uiw/react-codemirror';
 import { xml } from '@codemirror/lang-xml';
@@ -55,6 +55,8 @@ const ValidatorBox = (props) => {
   const [open, setOpen] = React.useState(false);
   const [gptAnswer, setGptAnswer] = React.useState(null);
   const [gptLoading, setGptLoading] = React.useState(false);
+  const APIService = getAPI();
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 

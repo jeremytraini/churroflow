@@ -10,6 +10,10 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const APIService = getAPI();
 
+  const setPlan = (plan) => {
+    setUser({...user, tier: plan});
+  };
+
   // call this function when you want to authenticate the user
   const login = async (email, password) => {
     const user = await APIService.login(email, password);
@@ -21,7 +25,7 @@ export const AuthProvider = ({ children }) => {
     setUser({
       id: 1,
       name: 'John Doe',
-      email: 'john@email.com',
+      email: email,
       tier: 'starter',
       token: user.data.token
     });
@@ -38,8 +42,8 @@ export const AuthProvider = ({ children }) => {
 
     setUser({
       id: 1,
-      name: 'John Doe',
-      email: 'john@email.com',
+      name: name,
+      email: email,
       tier: 'starter',
       token: user.data.token
     });
@@ -58,7 +62,8 @@ export const AuthProvider = ({ children }) => {
       user,
       register,
       login,
-      logout
+      logout,
+      setPlan
     }),
     [user]
   );
