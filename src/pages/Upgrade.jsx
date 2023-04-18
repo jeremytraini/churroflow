@@ -166,7 +166,7 @@ const Dashboard = () => {
                     >
                       <Grid style={{ display: "flex", opacity: 0.5}}>
                           <CloseIcon />
-                          <Typography>{    line}</Typography>
+                          <Typography>{line}</Typography>
                       </Grid>
                     </Typography>
                   ))}
@@ -190,4 +190,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
