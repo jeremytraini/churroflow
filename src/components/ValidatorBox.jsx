@@ -12,6 +12,8 @@ import ErrorIcon from '@mui/icons-material/Cancel';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
+import Modal from '@mui/material/Modal';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const gptAPIKey = "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";
 
@@ -27,6 +29,19 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  border: '1px solid silver',
+  borderRadius: '20px',
+  boxShadow: 24,
+  p: 4,
+};
+
 const ValidatorBox = (props) => {
   const [progress, setProgress] = React.useState(0);
   const [message, setMessage] = React.useState("");
@@ -37,8 +52,11 @@ const ValidatorBox = (props) => {
   const [selectedText, setSelectedText] = React.useState("");
   const [diagnostics, setDiagnostics] = React.useState(null);
   const [msgs, setMsgs] = React.useState([{message: "empty", sender: "User"}]);
-
-
+  const [open, setOpen] = React.useState(false);
+  const [gptAnswer, setGptAnswer] = React.useState(null);
+  const [gptLoading, setGptLoading] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const fetchInvoice = () => {
     APIService.getInvoice(props.invoiceId)
@@ -81,6 +99,9 @@ const ValidatorBox = (props) => {
       "model": "gpt-3.5-turbo",
       "messages": [systemMessage, ...mapped_messages]
     }
+    handleOpen();
+    setGptLoading(true);
+    setGptAnswer("Answer");
     await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -91,25 +112,8 @@ const ValidatorBox = (props) => {
     }).then((data) => {
       return data.json();
     }).then((data) => {
-      const modal = document.createElement("div");
-      modal.classList.add("modal");
-      const content = document.createElement("div");
-      content.classList.add("modal-content");
-      const closeBtn = document.createElement("span");
-      closeBtn.classList.add("close");
-      closeBtn.innerHTML = "&times;";
-      closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-      });
-      const responseText = document.createElement("p");
-
-      responseText.innerHTML = data.choices[0].message.content.trim().replace(/\n/g, "<br/>");
-      content.appendChild(closeBtn);
-      content.appendChild(responseText);
-      modal.appendChild(content);
-      document.body.appendChild(modal);
-
-      modal.style.display = "block";
+      setGptAnswer(data.choices[0].message.content.trim().replace(/\\n/g,'\n'));
+      setGptLoading(false);
     });
   }
 
@@ -390,7 +394,23 @@ const ValidatorBox = (props) => {
           <PlayArrowIcon sx={{ ml: 1 }} />
         </Fab>
       </Box>
-      
+      <Modal
+        open={open}
+        onClose={handleClose}
+      >
+        <Box sx={style}>
+          <Typography variant="h6" component="h2">
+            GPT Answer
+          </Typography>
+          {(gptLoading || !gptAnswer)
+          ? <CircularProgress />
+          : (
+            <pre style={{ mt: 2, whiteSpace: 'pre-wrap' }}>
+              {gptAnswer}
+            </pre>
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 };
