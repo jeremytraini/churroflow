@@ -27,7 +27,7 @@ const StatisticBox = ({type, from_date, to_date}) => {
         break;
       case "averageDeliveryTime":
         setTitle("Delivery Time");
-        setUnit(" minutes");
+        setUnit(" days");
         fetchQuery(type, false);
         break;
       case "avgDeliveryDistance":
