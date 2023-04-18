@@ -109,6 +109,15 @@ const getLintReport = (invoice_id, newInvoice) => {
   }
 };
 
+const deleteInvoice = (id) => {
+  return http.delete('/invoice_processing/delete/v2',
+  {
+    params: {
+      invoice_id: parseInt(id),
+    }
+  });
+};
+
 const FileUploadService = {
   login,
   register,
@@ -117,7 +126,8 @@ const FileUploadService = {
   listInvalidInvoices,
   uploadInvoice,
   getInvoice,
-  getLintReport
+  getLintReport,
+  deleteInvoice
 };
 
 export default FileUploadService;

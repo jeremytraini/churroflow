@@ -162,7 +162,12 @@ const ValidatorBox = (props) => {
       });
 
       setErrorResponse(diagnostics);
-
+      APIService.getInvoice(props.invoiceId)
+      .then((response) => {
+        if (response.data) {
+          setInvoiceExtracted(response.data);
+        }
+      })
     }).catch((err) => {
       setProgress(0);
       console.log(err);
@@ -230,10 +235,65 @@ const ValidatorBox = (props) => {
               <b>Last edited: </b>{invoiceExtracted.date_last_modified}
             </Typography>
             <Typography variant="body1" marginBottom={'20px'} gutterBottom>
-              <b>Valid: </b>{invoiceExtracted.valid ? "Yes" : "No"}
+              <b>Validity: </b>
+              {(!!diagnostics && diagnostics.report.every((diagnostic) => diagnostic.severity !== "error") || (!diagnostics && invoiceExtracted.is_valid))
+              ? <span style={{
+                backgroundColor: "#56cb32",
+                color: 'white',
+                padding: '4px',
+                margin: '2px',
+                borderRadius: '3px',
+                width: '80px',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                }}>VALID</span>
+              : <span style={{
+                backgroundColor: "#f44336",
+                color: 'white',
+                padding: '4px',
+                margin: '2px',
+                borderRadius: '3px',
+                width: '80px',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                }}>INVALID</span>}
             </Typography>
+            {invoiceExtracted.is_valid &&
+              <>
+                <Typography variant="body1" gutterBottom>
+                  <b>Extracted data: </b>
+                </Typography>
+                {[
+                  ['customer_abn', 'Customer ABN'],
+                  ['customer_contact_email', 'Customer Contact Email'],
+                  ['customer_contact_name', 'Customer Contact Name'],
+                  ['customer_contact_phone', 'Customer Contact Phone'],
+                  ['customer_name', 'Customer Name'],
+                  ['delivery_date', 'Delivery Date'],
+                  ['delivery_latitude', 'Delivery Latitude'],
+                  ['delivery_longitude', 'Delivery Longitude'],
+                  ['due_date', 'Due Date'],
+                  ['invoice_end_date', 'Invoice End Date'],
+                  ['invoice_start_date', 'Invoice Start Date'],
+                  ['invoice_title', 'Invoice Title'],
+                  ['issue_date', 'Issue Date'],
+                  ['order_id', 'Order ID'],
+                  ['supplier_abn', 'Supplier ABN'],
+                  ['supplier_latitude', 'Supplier Latitude'],
+                  ['supplier_longitude', 'Supplier Longitude'],
+                  ['supplier_name', 'Supplier Name']
+                ].map((field) => {
+                  return (
+                    <Typography variant="body2" gutterBottom>
+                      <b>{field[1]}: </b><pre style={{ display: 'inline' }}>{invoiceExtracted[field[0]]}</pre>
+                    </Typography>
+                  )
+                })}
+
+              </>
+            }
             <Box>
-              {!!diagnostics &&
+              {!!diagnostics && diagnostics.report.length > 0 &&
                 <Typography variant="body1" gutterBottom>
                   <b>Errors found:</b>
                 </Typography>}
