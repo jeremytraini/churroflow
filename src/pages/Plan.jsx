@@ -119,7 +119,7 @@ const Plan = () => {
         component="h1"
         variant="h4"
         align="center"
-        marginTop={"1.5em"}
+        marginTop={"6em"}
         color="text.primary"
         gutterBottom
       >
