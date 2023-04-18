@@ -112,3 +112,6 @@ const StatisticBox = ({type, from_date, to_date}) => {
       </Box>
     </Box>
   );
+}
+
+export default StatisticBox;

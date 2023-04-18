@@ -25,14 +25,9 @@ const ProtectedLayout = () => {
       <Box sx={{
         marginLeft: sidebarWidth,
         marginTop: navBarHeight,
-<<<<<<< HEAD
         minHeight: `calc(100vh - ${navBarHeight})`,
         width: `calc(100% - ${sidebarWidth})`,
         background: 'linear-gradient(180deg, rgba(243, 244, 246, 100), rgb(186 209 255 / 48%))',
-=======
-        height: `calc(100vh - ${navBarHeight})`,
-        width: `calc(100% - ${sidebarWidth})`,
->>>>>>> main
       }}>
         {outlet}
       </Box>
