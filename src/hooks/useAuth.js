@@ -6,12 +6,7 @@ import getAPI from '../services/APIService';
 const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = SyncUser(JSON.stringify({
-    id: 1,
-    name: 'John Doe',
-    email: 'john@email.com',
-    role: 'admin'
-  }));
+  const [user, setUser] = SyncUser(null);
   const navigate = useNavigate();
   const APIService = getAPI();
 
@@ -23,13 +18,13 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
-    setUser(JSON.stringify({
+    setUser({
       id: 1,
       name: 'John Doe',
       email: 'john@email.com',
       tier: 'starter',
       token: user.data.token
-    }));
+    });
 
     navigate('/dashboard');
   };
@@ -41,13 +36,13 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
-    setUser(JSON.stringify({
+    setUser({
       id: 1,
       name: 'John Doe',
       email: 'john@email.com',
       tier: 'starter',
       token: user.data.token
-    }));
+    });
 
     navigate('/dashboard');
   };

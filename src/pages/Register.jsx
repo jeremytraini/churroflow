@@ -19,11 +19,7 @@ const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    register({
-      name: data.get("name"),
-      email: data.get("email"),
-      password: data.get("password")
-    });
+    register(data.get("name"), data.get("email"), data.get("password"));
   };
 
   return (
@@ -48,7 +44,7 @@ const Register = () => {
             required
             fullWidth
             id="name"
-            label="Email Address"
+            label="Name"
             name="name"
             autoComplete="text"
             autoFocus

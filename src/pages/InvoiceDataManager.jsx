@@ -3,7 +3,7 @@ import { BasicPage } from "./BasicPage";
 import { Box } from "@mui/system";
 import { Button, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import APIService from '../services/APIService';
+import getAPI from '../services/APIService';
 import LinearProgress from '@mui/material/LinearProgress';
 import { useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/material';
@@ -18,6 +18,7 @@ const InvoiceDataManager = () => {
   const [numberUploaded, setNumberUploaded] = React.useState(0);
   const [numberToUpload, setNumberToUpload] = React.useState(0);
   const navigate = useNavigate();
+  const APIService = getAPI();
 
   const fetchInvoices = async () => {
     const invalidResponse = await APIService.listInvalidInvoices(true);
