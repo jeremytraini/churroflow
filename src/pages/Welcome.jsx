@@ -19,7 +19,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="/">
         ChurroFlow
       </Link>{' '}
       {new Date().getFullYear()}
@@ -36,20 +36,15 @@ const footers = [
   {
     title: 'Features',
     description: [
-      'Cool stuff',
-      'Random feature',
-      'Team feature',
-      'Developer stuff',
-      'Another one',
+      'Warehouse Planning',
+      'Warehouse Analytics',
+      'Inventory Actions',
+      'Invoice Data Manager',
     ],
   },
   {
-    title: 'Resources',
-    description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-  },
-  {
     title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
+    description: ['Privacy Policy', 'Terms of Use'],
   },
 ];
 
@@ -65,17 +60,22 @@ function Welcome() {
         sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
       >
         <Toolbar sx={{ flexWrap: 'wrap' }}>
+          <Button href="/welcome" variant="none" sx={{ my: 1, mx: 1.5 }}>
+            <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+              ChurroFlow
+            </Typography>
+          </Button>
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            ChurroFlow
+            
           </Typography>
           <nav>
             <Link
               variant="button"
               color="text.primary"
-              href="#"
+              href="/plans"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Features
+              Plans
             </Link>
             <Link
               variant="button"
