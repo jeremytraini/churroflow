@@ -14,6 +14,11 @@ import { styled } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
 import Modal from '@mui/material/Modal';
 import CircularProgress from '@mui/material/CircularProgress';
+import DoneIcon from '@mui/icons-material/Done';
+import Grid from '@mui/material/Grid';
+import { useAuth } from "../hooks/useAuth";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const gptAPIKey = "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";
 
@@ -29,19 +34,6 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 500,
-  bgcolor: 'background.paper',
-  border: '1px solid silver',
-  borderRadius: '20px',
-  boxShadow: 24,
-  p: 4,
-};
-
 const ValidatorBox = (props) => {
   const [progress, setProgress] = React.useState(0);
   const [message, setMessage] = React.useState("");
@@ -56,9 +48,16 @@ const ValidatorBox = (props) => {
   const [gptAnswer, setGptAnswer] = React.useState(null);
   const [gptLoading, setGptLoading] = React.useState(false);
   const APIService = getAPI();
+  const navigate = useNavigate();
+
+  const [showUpgradeModal, setShowUpgradeModal] = React.useState(false);
+  const { user } = useAuth();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleOpenUpgrade = () => setShowUpgradeModal(true);
+  const handleCloseUpgrade = () => setShowUpgradeModal(false);
 
   const fetchInvoice = () => {
     APIService.getInvoice(props.invoiceId)
@@ -390,7 +389,13 @@ const ValidatorBox = (props) => {
               left: 'auto',
               position: 'fixed',
           }}
-          onClick={updateMarkers}
+          onClick={() => {
+            if (user.tier === 'Starter') {
+              setShowUpgradeModal(true);
+            } else {
+              updateMarkers();
+            }
+          }}
         >
           Run
           <PlayArrowIcon sx={{ ml: 1 }} />
@@ -400,7 +405,18 @@ const ValidatorBox = (props) => {
         open={open}
         onClose={handleClose}
       >
-        <Box sx={style}>
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 500,
+          bgcolor: 'background.paper',
+          border: '1px solid silver',
+          borderRadius: '20px',
+          boxShadow: 24,
+          p: 4,
+        }}>
           <Typography variant="h6" component="h2">
             GPT Answer
           </Typography>
@@ -411,6 +427,91 @@ const ValidatorBox = (props) => {
               {gptAnswer}
             </pre>
           )}
+        </Box>
+      </Modal>
+
+      <Modal
+        open={showUpgradeModal}
+        onClose={handleCloseUpgrade}
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 420,
+          bgcolor: 'white',
+          border: '2px solid #FFE7E5',
+          borderRadius: '20px',
+          boxShadow: 24,
+          p: 4,
+        }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            mb: '20px'
+          }}
+        >
+          <ErrorIcon fontSize='large' sx={{ color: '#EA2D3F', pr: '10px' }} />
+          <Typography variant="h6">
+            Your must upgrade your account to use the validator!
+          </Typography>
+          </Box>
+          <Typography variant="body1">
+            Upgrading gets you awesome features like:
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'baseline',
+              mb: 2,
+            }}
+          >
+            <ul style={{listStyle: 'none'}}>
+            {[
+              'Upload, Store, Render, and Send Unlimited Invoices',
+              'Invoice Data Manager',
+              'Invoice Validator Interface',
+              'Download Validation Report',
+              'Inventory Actions',
+              'Warehouse Analytics',
+              'Ask GPT',
+              'Warehouse Planning',
+              'Delivery Heatmap View',
+            ].map((line) => (
+                <Typography
+                  component="li"
+                  variant="subtitle1"
+                  align="left"
+                  key={line}
+                >
+                  <Grid style={{ display: "flex" }}>
+                      <DoneIcon />
+                      <Typography>{line}</Typography>
+                  </Grid>
+                </Typography>
+              ))}
+            </ul>
+            
+          </Box>
+          <Button
+            variant="contained"
+            color="success"
+            sx={{
+              m: 'auto',
+              display: 'block',
+              textAlign: 'center',
+              width: '100%',
+            }}
+            onClick={() => {
+              navigate('/upgrade-account');
+            }}
+          >
+            Upgrade Now!
+          </Button>
         </Box>
       </Modal>
     </Box>

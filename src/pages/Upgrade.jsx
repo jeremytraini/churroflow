@@ -34,8 +34,6 @@ const tiers = [
       'Warehouse Planning',
       'Delivery Heatmap View',
     ],
-    buttonText: 'Currently Active',
-    buttonVariant: 'outlined',
   },
   {
     title: 'Premium',
@@ -54,8 +52,6 @@ const tiers = [
       'Warehouse Planning',
       'Delivery Heatmap View',
     ],
-    buttonText: 'Upgrade now',
-    buttonVariant: 'contained',
   },
   {
     title: 'Ultimate',
@@ -72,8 +68,6 @@ const tiers = [
       'Delivery Heatmap View',
     ],
     disabled: [],
-    buttonText: 'Upgrade now',
-    buttonVariant: 'contained',
   },
 ];
 
@@ -169,7 +163,7 @@ const Dashboard = () => {
                     >
                       <Grid style={{ display: "flex", opacity: 0.5}}>
                           <CloseIcon />
-                          <Typography>{    line}</Typography>
+                          <Typography>{line}</Typography>
                       </Grid>
                     </Typography>
                   ))}
@@ -178,10 +172,10 @@ const Dashboard = () => {
               <CardActions>
                 <Button
                   fullWidth
-                  variant={tier.buttonVariant}
+                  variant={user.tier === tier.title ? "outlined" : "contained"}
                   onClick={() => setPlan(tier.title)}
                 >
-                  {tier.buttonText}
+                  {user.tier === tier.title ? "Currently active" : "Select Plan"}
                 </Button>
               </CardActions>
             </Card>
