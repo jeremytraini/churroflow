@@ -111,7 +111,7 @@ const Plan = () => {
   return (
     <React.Fragment>
     <Navigation />
-    <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
+    <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' },  }} />
     <CssBaseline />
     {/* Hero unit */}
     <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 0, pb: 6 }}>
@@ -125,7 +125,7 @@ const Plan = () => {
       >
         ChurroFlow Plans
       </Typography>
-      <Typography variant="h5" align="center" color="text.secondary" component="p">
+      <Typography variant="h5" align="center" color="text.secondary" component="p" marginTop={10}>
         Be on top of your warehousing strategy and inventory with our premium features.
       </Typography>
     </Container>
