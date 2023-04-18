@@ -17,6 +17,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Link from '@mui/material/Link';
+import { Navigation } from "../components/PlanNavigation";
 
 // Inspired by https://mui.com/material-ui/getting-started/templates/pricing/
 const tiers = [
@@ -111,57 +112,7 @@ const Plan = () => {
 
   return (
     <React.Fragment>
-    <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
-    <CssBaseline />
-    <AppBar
-      position="static"
-      color="default"
-      elevation={0}
-      sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-    >
-      <Toolbar sx={{ flexWrap: 'wrap' }}>
-        <Button href="/welcome" variant="none" sx={{ my: 1, mx: 1.5 }}>
-          <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            ChurroFlow
-          </Typography>
-        </Button>
-        <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-           
-        </Typography>
-        <nav>
-          <Link
-            variant="button"
-            color="text.primary"
-            href="/plans"
-            sx={{ my: 1, mx: 1.5 }}
-          >
-            Plans
-          </Link>
-          <Link
-            variant="button"
-            color="text.primary"
-            href="#"
-            sx={{ my: 1, mx: 1.5 }}
-          >
-            Enterprise
-          </Link>
-          <Link
-            variant="button"
-            color="text.primary"
-            href="#"
-            sx={{ my: 1, mx: 1.5 }}
-          >
-            Support
-          </Link>
-        </nav>
-        <Button href="/register" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-          SIGN UP
-        </Button>
-        <Button href="/login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-          LOG ON
-        </Button>
-      </Toolbar>
-    </AppBar>
+    <Navigation />
     <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
     <CssBaseline />
     {/* Hero unit */}
