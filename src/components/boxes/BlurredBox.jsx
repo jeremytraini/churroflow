@@ -17,7 +17,6 @@ const BlurredBox = ({type}) => {
     >
       <Box sx={{
         display: 'block',
-        position: 'relative',
       }}
       >
         <Box sx={{
@@ -67,28 +66,35 @@ const BlurredBox = ({type}) => {
           position: 'absolute',
           top: 0,
           left: 0,
+          margin: '0',
           width: '100%',
           height: '100%',
           color: 'black',
           zIndex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}>
-          <LockIcon fontSize='medium' />
-          <Typography fontWeight='bold' variant="body1" sx={{
-          }}>
-            {type}
-          </Typography>
-          <Typography fontWeight='bold' variant="body1" sx={{
-          }}>
-            is locked.
-          </Typography>
-          <Button variant="contained" color="success" size='small' sx={{
-              marginTop: '10px',
-              color: 'white',
-            }}
-            onClick={() => navigate('/upgrade-account')}
-          >
-            Upgrade Now
-          </Button>
+          <Box>
+            <LockIcon fontSize='medium' />
+            <Typography fontWeight='bold' variant="body1" sx={{
+            }}>
+              {type}
+            </Typography>
+            <Typography fontWeight='bold' variant="body1" sx={{
+            }}>
+              is locked.
+            </Typography>
+            <Button variant="contained" color="success" size='small' sx={{
+                marginTop: '10px',
+                color: 'white',
+              }}
+              onClick={() => navigate('/upgrade-account')}
+            >
+              Upgrade Now
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Tooltip>

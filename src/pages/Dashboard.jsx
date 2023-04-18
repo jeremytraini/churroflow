@@ -77,7 +77,7 @@ const Dashboard = () => {
         gridArea: '3 / 3 / 5 / 5'
       }}>
       {user.tier === 'Starter'
-        ? <BlurredBox type="Client data table" />
+        ? <BlurredBox type="Suburb data table" />
         : <DataTableBox type="suburbDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       }
       </Item>
