@@ -19,10 +19,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    login({
-      email: data.get("email"),
-      password: data.get("password")
-    });
+    login(data.get("email"), data.get("password"));
   };
 
   return (
