@@ -5,7 +5,11 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+<<<<<<< HEAD
 import { useNavigate, useLocation } from 'react-router-dom';
+=======
+import { useNavigate } from 'react-router-dom';
+>>>>>>> main
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -15,7 +19,10 @@ import { getPrimaryNavList } from './NavList';
 const background = '#1C2434';
 
 export default function Navbar({ drawerWidth }) {
+<<<<<<< HEAD
   const location = useLocation();
+=======
+>>>>>>> main
   const primaryNav = getPrimaryNavList();
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(Array(primaryNav.length).fill(true));
@@ -71,6 +78,7 @@ export default function Navbar({ drawerWidth }) {
                   <ListItemIcon>
                     <Icon style={{fill: 'white'}} />
                   </ListItemIcon>
+<<<<<<< HEAD
                   <ListItemText
                       disableTypography
                       primary={
@@ -81,6 +89,10 @@ export default function Navbar({ drawerWidth }) {
                           {title}
                         </Typography>}
                       />
+=======
+                  <ListItemText sx={{ fontWeight: 'bold', color: 'white' }} primary={title} />
+                  {children ? open[key] ? <ExpandLess /> : <ExpandMore /> : <></>}
+>>>>>>> main
                 </ListItemButton>
             );
           })}

@@ -109,11 +109,6 @@ const StatisticBox = ({type, from_date, to_date}) => {
         fontSize: '0.7rem',
         color: 'grey'
       }}>
-        {timePeriod}
       </Box>
     </Box>
   );
-};
-
-export default StatisticBox;
-
