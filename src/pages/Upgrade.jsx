@@ -36,8 +36,7 @@ const tiers = [
     ],
   },
   {
-    title: 'Premium',
-    subheader: 'Reccomended for small businesses',
+    title: 'Standard',
     price: '39.99',
     enabled: [
       'Upload, Store, Render, and Send 200 Invoices',
@@ -55,6 +54,7 @@ const tiers = [
   },
   {
     title: 'Ultimate',
+    subheader: 'Our Most Popular Plan',
     price: '79.99',
     enabled: [
       'Upload, Store, Render, and Send Unlimited Invoices',
@@ -110,7 +110,7 @@ const Dashboard = () => {
                 title={tier.title}
                 subheader={tier.subheader}
                 titleTypographyProps={{ align: 'center' }}
-                action={tier.title === 'Premium' ? <StarIcon /> : null}
+                action={tier.title === 'Ultimate' ? <StarIcon /> : null}
                 subheaderTypographyProps={{
                   align: 'center',
                   fontSize: 'small',
