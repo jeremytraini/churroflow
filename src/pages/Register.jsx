@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import useTitle from '../useTitle';
+import { Navigation } from "../components/LoginNavigation";
 
 const Register = () => {
   useTitle("ChurroFlow - Register");
@@ -23,10 +24,12 @@ const Register = () => {
   };
 
   return (
+    <React.Fragment>
+    <Navigation />
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: "10em",
           display: "flex",
           flexDirection: "column",
           alignItems: "center"
@@ -89,6 +92,7 @@ const Register = () => {
         </Box>
       </Box>
     </Container>
+    </React.Fragment>
   );
 };
 
