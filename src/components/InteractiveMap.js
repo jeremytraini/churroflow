@@ -7,7 +7,7 @@ import APIService from '../services/APIService';
 import HeatmapOverlay from "leaflet-heatmap";
 
 const InteractiveMap = () => {
-  const [heatmapData, setHeatmapData] = useState({ max: 10000, data: [] });
+  const [heatmapData, setHeatmapData] = useState({ max: 300, data: [] });
   const [virtualWarehouseCoords, setVirutalWarehouseCoords] = useState({});
   const [actualWarehousesCoords, setActualWarehousesCoords] = useState([]);
   const [numClusters, setNumClusters] = useState(1);
@@ -21,7 +21,7 @@ const InteractiveMap = () => {
       try {
         const a = await APIService.invoiceProcessingQuery("heatmapCoords", startDate, endDate)
           .then(data => {
-            return { max: 10000, data: data.data.data.map((item) => { return { lat: item.lat, lng: item.lng, count: item.count } }) }; // This is fun
+            return { max: 300, data: data.data.data.map((item) => { return { lat: item.lat, lng: item.lng, count: item.count } }) }; // This is fun
           });
         setHeatmapData(a);
 
@@ -111,13 +111,13 @@ const InteractiveMap = () => {
   const b = heatmapData;
 
   var myData = {
-    max: 10000,
+    max: 300,
     data: b.data
   };
 
   var gradientColors = {
-    0.05: '#0000FF',
-    0.1: '#00FF00',
+    0.005: '#0000FF',
+    0.05: '#00FF00',
     0.2: '#FFFF00',
     0.4: '#FFA500',
     1.0: '#FF0000'
