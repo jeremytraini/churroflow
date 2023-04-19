@@ -4,7 +4,7 @@ const login = (email, password) => {
   return http.post("/invoice/upload_text/v1",
   {
     name: "test",
-    text: text
+    text: email
   },
   {
     headers: {
@@ -17,7 +17,7 @@ const register = (name, email, password) => {
   return http.post("/invoice/upload_text/v1",
   {
     name: "test",
-    text: text
+    text: email
   },
   {
     headers: {
@@ -26,13 +26,26 @@ const register = (name, email, password) => {
   });
 };
 
+
+const invoiceProcessingQuery = (query, from_date, to_date) => {
+  return http.get("/invoice_processing/query/v2",
+  {
+    params: {
+      query: query,
+      from_date: from_date,
+      to_date: to_date
+    },
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer b0a39099231244bcb72c0198187cbcd7c9090eef9a15ce209d96a9240e6a520b"
+    }
+  })
+};
+
 const FileUploadService = {
   login,
   register,
-};
-
-const checkAliveness = () => {
-  return http.get("/health_check/v1");
+  invoiceProcessingQuery
 };
 
 export default FileUploadService;

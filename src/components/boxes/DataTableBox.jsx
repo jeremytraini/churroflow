@@ -2,105 +2,115 @@ import React from 'react';
 import MUIDataTable from "mui-datatables";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { withStyles } from "@mui/styles";
-import { createMuiTheme } from "@mui/styles"
-
-const customTheme = createTheme({
-  overrides: {
-    MUIDataTable: {
-      paper: {
-        boxShadow: "none"
-      }
-    }
-  }
-});
+import { createMuiTheme } from "@mui/styles";
+import { DataGrid } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
+import APIService from '../../services/APIService';
 
 const DataTableBox = ({type, from_date, to_date}) => {
-  let title = "Test";
+  const [title, setTitle] = React.useState("Test");
+  const [rows, setRows] = React.useState([]);
+  const [update, setUpdate] = React.useState(false);
 
-  switch (type) {
-    case "client":
-      title = "Data by client";
-      break;
-    case "suburb":
-      title = "Data by suburb";
-      break;
+  React.useEffect(() => {
+    switch (type) {
+      case "clientDataTable":
+        setTitle("Data by client");
+        fetchQuery(type);
+        break;
+      case "suburbDataTable":
+        setTitle("Data by suburb");
+        fetchQuery(type);
+        break;
+    }
+  }, [update]);
+
+  async function fetchQuery (query) {
+    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date);
+    const data = response.data;
+
+    if (data == null) {
+      return;
+    }
+
+    setRows(data.data);
   }
-
-  const options = {
-    selectableRows: false,
-    search: true,
-    download: false,
-    print: false,
-    viewColumns: false,
-    filter: true,
-    filterType: "dropdown",
-    responsive: "standard",
-    tableBodyHeight: "100%",
-    // onTableChange: (action, state) => {
-    //   console.log(action);
-    //   console.dir(state);
-    // },
-    setTableProps: () => {
-      return {
-        size: 'small',
-      };
-    },
-    
-  };
 
   const columns = [
     {
-     name: "name",
-     label: "Name",
-     options: {
-      filter: true,
-      sort: false,
-      fullWidth: true,
-     }
+      field: "name",
+      headerName: "Client",
+      type: 'string',
+      width: 120,
     },
     {
-     name: "total-deliveries",
-     label: "Total Deliveries",
-     options: {
-      filter: true,
-      sort: true,
-     }
+      field: "total-deliveries",
+      headerName: "Total Deliveries",
+      type: 'number',
+      width: 150,
     },
     {
-     name: "total-revenue",
-     label: "Total Revenue",
-     options: {
-      filter: true,
-      sort: true,
-     }
+      field: "total-revenue",
+      headerName: "Total Revenue",
+      type: 'number',
+      width: 150,
     },
    ];
 
-
-  const data = [
-    ["Jaden Collins", 10000, 10000],
-    ["Franky Rees", 10000, 10000],
-    ["Aaren Rose", null, 10000],
-    ["Johnny Jones", 10000, 10000],
-    ["Jimmy Johns", 10000, 10000],
-    ["Jack Jackson", 10000, 10000],
-    ["Joe Jones", 10000, 10000],
-    ["Jacky Jackson", 10000, 10000],
-    ["Jo Jo", 10000, 10000],
-    ["Donna Marie", 10000, 10000]
-  ];
-
-  
-
   return (
-    <ThemeProvider theme={customTheme}>
-      <MUIDataTable
-          title={title}
-          data={data}
+    <Box sx={{
+      margin: '10px 10px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      height: '100%',
+      textAlign: 'left',
+    }}>
+      <Box>
+        {title}
+      </Box>
+      <Box sx={{
+          flexGrow: 1,
+          marginBottom: '20px',
+        }}>
+        <DataGrid
+          density="compact"
+          rows={rows ?? []}
           columns={columns}
-          options={options}
+          initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20,
+                },
+              },
+              sorting: {
+                sortModel: [
+                  {
+                    field: 'total-deliveries',
+                    sort: 'desc',
+                  },
+                ],
+              },
+            }}
+          // rowsPerPageOptions={[5]}
+          disableRowSelectionOnClick
+          hideFooterSelectedRowCount
+          hideFooterPagination
+          hideFooter
+          sx={{
+            '& .RaDatagrid-clickableRow': { cursor: 'default' },
+            // Remove inner borders
+            '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+              borderRight: 'none',
+              borderBottom: 'none',
+            },
+            // Remove the outer borders
+            border: 0
+
+          }}
         />
-    </ThemeProvider>
+      </Box>
+    </Box>
   );
 };
 
