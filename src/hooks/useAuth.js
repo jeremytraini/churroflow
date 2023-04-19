@@ -16,36 +16,36 @@ export const AuthProvider = ({ children }) => {
 
   // call this function when you want to authenticate the user
   const login = async (email, password) => {
-    const user = await APIService.login(email, password);
+    const result = await APIService.login(email, password);
 
-    if (!user.data) {
+    if (!result.data) {
       return;
     }
 
     setUser({
-      id: 1,
-      name: 'John Doe',
+      id: result.data.id,
+      name: result.data.name,
       email: email,
       tier: 'Starter',
-      token: user.data.access_token
+      token: result.data.access_token
     });
 
     navigate('/dashboard');
   };
 
   const register = async (name, email, password) => {
-    const user = await APIService.register(name, email, password);
+    const result = await APIService.register(name, email, password);
 
-    if (!user.data) {
+    if (!result.data) {
       return;
     }
 
     setUser({
-      id: 1,
+      id: result.data.id,
       name: name,
       email: email,
       tier: 'Starter',
-      token: user.data.token
+      token: result.data.token
     });
 
     navigate('/dashboard');
