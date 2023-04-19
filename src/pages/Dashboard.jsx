@@ -58,7 +58,6 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '1 / 3 / 3 / 5'
       }}>
-      Heatmap
       <InteractiveMap />
       </Item>
 
