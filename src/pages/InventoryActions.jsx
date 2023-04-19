@@ -27,8 +27,8 @@ const InventoryActions = () => {
   };
   
   return <BasicPage>
-      <h1 style={{ color: 'black' }}>Inventory Actions</h1>
-      <h2>Churro's Metro Warehouse</h2>
+      <h1 style={{ color: 'black', fontSize: '2em' }}>Inventory Actions</h1>
+      <h2 style={{ color: 'black', fontSize: '1.5em', marginTop: '1em' }}>Churro's Metro Warehouse</h2>
 
       
       <Container maxWidth="lg" maxHeight = "md" style={{ background: '#ffffff' }}>
@@ -117,7 +117,7 @@ const InventoryActions = () => {
         
       </Container>
 
-      <h2>Churro's West Warehouse</h2>
+      <h2 style={{ color: 'black', fontSize: '1.5em', marginTop: '1em' }}>Churro's West Warehouse</h2>
 
 
       <Container maxWidth="lg" maxHeight = "sm" style={{ background: '#ffffff' }}>
@@ -205,7 +205,7 @@ const InventoryActions = () => {
       </Box>
     </Container>
       
-    <h2>Churro's East Warehouse</h2>
+    <h2 style={{ color: 'black', fontSize: '1.5em', marginTop: '1em' }}>Churro's East Warehouse</h2>
     <Container maxWidth="lg" maxHeight = "md" style={{ background: '#ffffff' }}>
 
     <FormControlLabel
