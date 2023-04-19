@@ -37,7 +37,22 @@ const invoiceProcessingQuery = (query, from_date, to_date) => {
     },
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer b0a39099231244bcb72c0198187cbcd7c9090eef9a15ce209d96a9240e6a520b"
+      "Authorization": "Bearer 759f3507cd066016a233d89ceb4bf952c4c1dcfab64396ae6f0a60607c9235b9"
+    }
+  })
+};
+
+const virtualWarehouseCoords = (n_clusters, from_date, to_date) => {
+  return http.get("/virtual_warehouse_coords",
+  {
+    params: {
+      n_clusters: n_clusters,
+      from_date: from_date,
+      to_date: to_date
+    },
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 759f3507cd066016a233d89ceb4bf952c4c1dcfab64396ae6f0a60607c9235b9"
     }
   })
 };
@@ -45,7 +60,8 @@ const invoiceProcessingQuery = (query, from_date, to_date) => {
 const FileUploadService = {
   login,
   register,
-  invoiceProcessingQuery
+  invoiceProcessingQuery,
+  virtualWarehouseCoords
 };
 
 export default FileUploadService;
