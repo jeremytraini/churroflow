@@ -2,7 +2,8 @@ import L from 'leaflet';
 import { useEffect, useRef, useState } from "react";
 import warehouseLogo from '../assets/warehouse.png';
 import physicalWarehouse from '../assets/selfWarehouse.png';
-import APIService from '../services/APIService';
+// import APIService from '../services/APIService';
+import getAPI from '../services/APIService';
 
 import HeatmapOverlay from "leaflet-heatmap";
 
@@ -14,6 +15,7 @@ const InteractiveMap = () => {
   const [startDate, setStartDate] = useState('2000-1-1');
   const [endDate, setEndDate] = useState('2023-4-4');
   const mapRef = useRef(null);
+  const APIService = getAPI();
 
 
   async function getHeatmapData(startDate, endDate) {

@@ -16,7 +16,8 @@ const APIService = () => {
     console.log(user)
     
     return axios.create({
-      baseURL: "http://churros.eba-pyyazat7.ap-southeast-2.elasticbeanstalk.com/",
+      // baseURL: "http://churros.eba-pyyazat7.ap-southeast-2.elasticbeanstalk.com/",
+      baseURL:"http://localhost:8000/",
       headers: headers,
       mode: 'cors',
     });
