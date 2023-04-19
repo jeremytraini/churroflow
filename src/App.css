@@ -1,5 +1,3 @@
-
-
 .App {
   height: calc(100vh - 56px);
 }
@@ -131,11 +129,4 @@ body {
 #map {
   width: 20px;
   height: 20px;
-}
-
-.legend p {
-  display: inline-block;
-  width: 200px;
-  height: 10px;
-  color: red;
 }
