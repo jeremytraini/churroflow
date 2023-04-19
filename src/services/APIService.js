@@ -16,7 +16,8 @@ const APIService = () => {
     console.log(user)
     
     return axios.create({
-      baseURL: "http://churros.eba-pyyazat7.ap-southeast-2.elasticbeanstalk.com/",
+      // baseURL: "http://churros.eba-pyyazat7.ap-southeast-2.elasticbeanstalk.com/",
+      baseURL:"http://localhost:8000/",
       headers: headers,
       mode: 'cors',
     });
@@ -131,6 +132,17 @@ const APIService = () => {
       }
     });
   };
+  
+  const virtualWarehouseCoords = (n_clusters, from_date, to_date) => {
+    return getBase().get("/virtual_warehouse_coords",
+    {
+      params: {
+        n_clusters: n_clusters,
+        from_date: from_date,
+        to_date: to_date
+      }
+    })
+  };
 
   return {
     login,
@@ -141,7 +153,8 @@ const APIService = () => {
     uploadInvoice,
     getInvoice,
     getLintReport,
-    deleteInvoice
+    deleteInvoice,
+    virtualWarehouseCoords
   };
 }
 

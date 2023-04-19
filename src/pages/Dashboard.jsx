@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import StatisticBox from '../components/boxes/StatisticBox';
 import DataTableBox from '../components/boxes/DataTableBox';
+import InteractiveMap from "../components/InteractiveMap";
 import BlurredBox from '../components/boxes/BlurredBox';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -64,7 +65,7 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '1 / 3 / 3 / 5'
       }}>
-      Heatmap
+      <InteractiveMap />
       </Item>
 
       <Item sx={{
@@ -82,6 +83,7 @@ const Dashboard = () => {
       }
       </Item>
     </Box>
+
   </BasicPage>
   );
 };
