@@ -12,11 +12,16 @@ import PublicLayout from "./layouts/PublicLayout";
 import Upgrade from './pages/Upgrade';
 import Validator from './pages/Validator';
 import Welcome from './pages/Welcome';
+import Plan from './pages/Plan';
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Route path="/" element={<Navigate to="/welcome" />} />
+
+      <Route path="/welcome" element={<Welcome />} />
+
+      <Route path="/plans" element={<Plan />} />
 
       <Route element={<PublicLayout />}>
         <Route path="/login" element={<Login />} />
@@ -24,7 +29,6 @@ const App = () => {
       </Route>
 
       <Route element={<ProtectedLayout />}>
-        <Route path="/welcome" element={<Welcome />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/warehouse-planning" element={<WarehousePlanning />} />
         <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />

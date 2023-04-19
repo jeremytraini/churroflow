@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import useTitle from '../useTitle';
+import { Navigation } from "../components/LoginNavigation";
 
 const Login = () => {
   useTitle("ChurroFlow - Login");
@@ -23,10 +24,12 @@ const Login = () => {
   };
 
   return (
+    <React.Fragment>
+    <Navigation />
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: "10em",
           display: "flex",
           flexDirection: "column",
           alignItems: "center"
@@ -65,7 +68,7 @@ const Login = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Login In
+            Login
           </Button>
           <Grid container>
             <Grid item>
@@ -79,6 +82,7 @@ const Login = () => {
         </Box>
       </Box>
     </Container>
+    </React.Fragment>
   );
 };
 
