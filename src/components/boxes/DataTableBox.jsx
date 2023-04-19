@@ -5,12 +5,13 @@ import { withStyles } from "@mui/styles";
 import { createMuiTheme } from "@mui/styles";
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
-import APIService from '../../services/APIService';
+import getAPI from '../../services/APIService';
 
 const DataTableBox = ({type, from_date, to_date}) => {
   const [title, setTitle] = React.useState("Test");
   const [rows, setRows] = React.useState([]);
   const [update, setUpdate] = React.useState(false);
+  const APIService = getAPI();
 
   React.useEffect(() => {
     switch (type) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import ChangeHistoryOutlinedIcon from '@mui/icons-material/ChangeHistoryOutlined';
-import APIService from '../../services/APIService';
+import getAPI from '../../services/APIService';
 
 const StatisticBox = ({type, from_date, to_date}) => {
   let timePeriod = "12 months";
@@ -12,6 +12,7 @@ const StatisticBox = ({type, from_date, to_date}) => {
   const [change, setChange] = React.useState("-");
   const [is_positive, setIsPositive] = React.useState("+");
   const [update, setUpdate] = React.useState(false);
+  const APIService = getAPI();
 
   React.useEffect(() => {
     switch (type) {
@@ -27,7 +28,7 @@ const StatisticBox = ({type, from_date, to_date}) => {
         break;
       case "averageDeliveryTime":
         setTitle("Delivery Time");
-        setUnit(" minutes");
+        setUnit(" days");
         fetchQuery(type, false);
         break;
       case "avgDeliveryDistance":
@@ -108,11 +109,9 @@ const StatisticBox = ({type, from_date, to_date}) => {
         fontSize: '0.7rem',
         color: 'grey'
       }}>
-        {timePeriod}
       </Box>
     </Box>
   );
-};
+}
 
 export default StatisticBox;
-
