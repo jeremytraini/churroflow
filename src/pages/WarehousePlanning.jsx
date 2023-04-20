@@ -5,6 +5,8 @@ import Box from '@mui/material/Box';
 import InteractiveMap from "../components/InteractiveMap";
 import SliderWithToggle from "../components/Sliders";
 import ItemFilter from "../components/HeatmapOptionDropdown"
+import BlurredBox from "../components/boxes/BlurredBox";
+import { useAuth } from '../hooks/useAuth';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -18,6 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const WarehousePlanning = () => {
+  const { user } = useAuth();
   return (
     <BasicPage title="Warehouse Planning" >
       <Box sx={{
@@ -32,7 +35,13 @@ const WarehousePlanning = () => {
           gridArea: '1 / 1 / 5 / 5',
         }}>
 
-          <InteractiveMap />
+          
+          {user.tier !== 'Ultimate'
+          ? <BlurredBox type="Interactive heatmap">
+            <InteractiveMap />
+            </BlurredBox>
+          : <InteractiveMap />
+          }
 
         </Item>
 

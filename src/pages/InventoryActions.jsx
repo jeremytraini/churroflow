@@ -7,9 +7,12 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import BlurredBox from "../components/boxes/BlurredBox";
+import { useAuth } from '../hooks/useAuth';
 
 
 const InventoryActions = () => {
+  const { user } = useAuth();
   const [alerts, setAlerts] = useState([]);
 
   const handleClick = (message, severity) => {
@@ -26,8 +29,13 @@ const InventoryActions = () => {
     setAlerts((prevAlerts) => prevAlerts.filter((alert) => alert.id !== id)); // Remove alert from the alerts array
   };
   
-  return <BasicPage>
-      <h1 style={{ color: 'black', fontSize: '2em' }}>Inventory Actions</h1>
+  return <BasicPage title="Inventory Actions">
+      {user.tier === 'Starter'
+          ? <BlurredBox type="Inventory Actions page">
+              <Container maxWidth="lg" maxHeight = "md" style={{ background: '#ffffff' }}>
+              </Container>
+            </BlurredBox>
+          : <>
       <h2 style={{ color: 'black', fontSize: '1.5em', marginTop: '1em' }}>Churro's Metro Warehouse</h2>
 
       
@@ -289,6 +297,8 @@ const InventoryActions = () => {
           </div>
       </Box>
     </Container>
+    </>
+    }
     </BasicPage>
 };
 
