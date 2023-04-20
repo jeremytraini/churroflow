@@ -80,9 +80,16 @@ const InvoiceDataManager = () => {
         sx={{ marginBottom: '20px' }}
       >
         Upload Your Invoices
-        <input type="file" hidden multiple accept='xml/*' name="invoices" onChange={(event) => {
-          uploadInvoices(event);
-        }} />
+        <input
+          type="file"
+          hidden
+          className='hidden'
+          multiple
+          accept='xml/*'
+          name="invoices"
+          onChange={(event) => {
+            uploadInvoices(event);
+          }} />
       </Button>
       {numberToUpload !== 0 &&
         <Box

@@ -7,8 +7,10 @@ import getAPI from '../services/APIService';
 
 import HeatmapOverlay from "leaflet-heatmap";
 
+const max = 1000;
+
 const InteractiveMap = () => {
-  const [heatmapData, setHeatmapData] = useState({ max: 300, data: [] });
+  const [heatmapData, setHeatmapData] = useState({ max: max, data: [] });
   const [virtualWarehouseCoords, setVirutalWarehouseCoords] = useState({});
   const [actualWarehousesCoords, setActualWarehousesCoords] = useState([]);
   const [numClusters, setNumClusters] = useState(1);
@@ -23,7 +25,7 @@ const InteractiveMap = () => {
       try {
         const a = await APIService.invoiceProcessingQuery("heatmapCoords", startDate, endDate)
           .then(data => {
-            return { max: 300, data: data.data.data.map((item) => { return { lat: item.lat, lng: item.lng, count: item.count } }) }; // This is fun
+            return { max: max, data: data.data.data.map((item) => { return { lat: item.lat, lng: item.lng, count: item.count } }) }; // This is fun
           });
         setHeatmapData(a);
 
@@ -113,15 +115,14 @@ const InteractiveMap = () => {
   const b = heatmapData;
 
   var myData = {
-    max: 300,
+    max: max,
     data: b.data
   };
 
   var gradientColors = {
-    0.005: '#0000FF',
-    0.05: '#00FF00',
-    0.2: '#FFFF00',
-    0.4: '#FFA500',
+    0.005: '#00FF00',
+    0.5: '#FFFF00',
+    0.93: '#FFA500',
     1.0: '#FF0000'
   };
 
@@ -142,8 +143,8 @@ const InteractiveMap = () => {
 
   useEffect(() => {
     const map_init = L.map(mapRef.current, {
-      center: [-33.8677, 151.2089],
-      zoom: 11
+      center: [-33.8358, 150.9282],
+      zoom: 10
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -205,6 +206,9 @@ const InteractiveMap = () => {
 
 
     L.control.layers(Overlaymaps).addTo(map_init);
+
+    // Make this defualt
+    map_init.addLayer(layerGroup);
 
     // That's for da memory leaks
     return () => {

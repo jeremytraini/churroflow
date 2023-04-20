@@ -48,7 +48,9 @@ const Dashboard = () => {
         gridArea: '2 / 1 / 3 / 2'
       }}>
         {user.tier === 'Starter'
-        ? <BlurredBox type="Delivery time stat" />
+        ? <BlurredBox type="Delivery time stat">
+            <StatisticBox type="averageDeliveryTime" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+          </BlurredBox>
         : <StatisticBox type="averageDeliveryTime" from_date={"2021-12-12"} to_date={"2023-12-12"} />
         }
       </Item>
@@ -57,7 +59,9 @@ const Dashboard = () => {
         gridArea: '2 / 2 / 3 / 3'
       }}>
         {user.tier === 'Starter'
-        ? <BlurredBox type="Delivery distance stat" />
+        ? <BlurredBox type="Delivery distance stat">
+            <StatisticBox type="avgDeliveryDistance" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+          </BlurredBox>
         : <StatisticBox type="avgDeliveryDistance" from_date={"2021-12-12"} to_date={"2023-12-12"} />
         }
       </Item>
@@ -65,7 +69,12 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '1 / 3 / 3 / 5'
       }}>
-      <InteractiveMap />
+        {user.tier === 'Starter'
+          ? <BlurredBox type="Interactive heatmap">
+              <InteractiveMap />
+            </BlurredBox>
+          : <InteractiveMap />
+        }
       </Item>
 
       <Item sx={{
@@ -77,8 +86,10 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '3 / 3 / 5 / 5'
       }}>
-      {user.tier === 'Starter'
-        ? <BlurredBox type="Suburb data table" />
+      {user.tier !== 'Ultimate+'
+        ? <BlurredBox type="Suburb data table">
+            <DataTableBox type="suburbDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+          </BlurredBox>
         : <DataTableBox type="suburbDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       }
       </Item>

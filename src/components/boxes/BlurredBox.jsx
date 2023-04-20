@@ -6,7 +6,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { useNavigate } from "react-router-dom";
 import Tooltip from '@mui/material/Tooltip';
 
-const BlurredBox = ({type}) => {
+const BlurredBox = ({type, children}) => {
   const navigate = useNavigate();
   
   return (
@@ -20,15 +20,11 @@ const BlurredBox = ({type}) => {
       }}
       >
         <Box sx={{
-          margin: '10px 10px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          height: '90%',
-          color: 'black',
+          height: '100%',
           filter: 'blur(8px)'
         }}>
-          <Box sx={{
+          {children}
+          {/* <Box sx={{
             fontSize: '0.9rem',
             textAlign: 'left',
             paddingBottom: '10px'
@@ -60,7 +56,7 @@ const BlurredBox = ({type}) => {
             color: 'grey'
           }}>
             12 months
-          </Box>
+          </Box> */}
         </Box>
         <Box sx={{
           position: 'absolute',
