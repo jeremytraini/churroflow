@@ -109,6 +109,7 @@ const StatisticBox = ({type, from_date, to_date}) => {
         fontSize: '0.7rem',
         color: 'grey'
       }}>
+        12 months
       </Box>
     </Box>
   );
