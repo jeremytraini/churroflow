@@ -4,16 +4,19 @@ import warehouseLogo from '../assets/warehouse.png';
 import physicalWarehouse from '../assets/selfWarehouse.png';
 // import APIService from '../services/APIService';
 import getAPI from '../services/APIService';
-
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 import HeatmapOverlay from "leaflet-heatmap";
 
-const max = 1000;
+const max = 4000;
+const radius = 0.04;
 
 const InteractiveMap = () => {
   const [heatmapData, setHeatmapData] = useState({ max: max, data: [] });
   const [virtualWarehouseCoords, setVirutalWarehouseCoords] = useState({});
   const [actualWarehousesCoords, setActualWarehousesCoords] = useState([]);
-  const [numClusters, setNumClusters] = useState(1);
+  const [numClusters, setNumClusters] = useState(2);
   const [startDate, setStartDate] = useState('2000-1-1');
   const [endDate, setEndDate] = useState('2023-4-4');
   const mapRef = useRef(null);
@@ -55,6 +58,7 @@ const InteractiveMap = () => {
       cooldown_c2 = true;
       setTimeout(() => {
         if (event.target.value !== '') {
+          console.log(event.target.value);
           setStartDate(event.target.value);
         }
         cooldown_c2 = false;
@@ -68,6 +72,7 @@ const InteractiveMap = () => {
       cooldown_c3 = true;
       setTimeout(() => {
         if (event.target.value !== '') {
+          console.log(event.target.value);
           setEndDate(event.target.value);
         }
         cooldown_c3 = false;
@@ -95,7 +100,7 @@ const InteractiveMap = () => {
       try {
         const a = await APIService.invoiceProcessingQuery("warehouseCoords", startDate, endDate)
           .then(data => {
-            return data.data.data.map((item) => { return { lat: item.lat, lng: item.lon, count: item.value } });
+            return data.data.data.map((item) => { return { lat: item.lat, lng: item.lon, count: item.value, name: item.name } });
           });
         setActualWarehousesCoords(a);
       } catch (err) {
@@ -120,15 +125,16 @@ const InteractiveMap = () => {
   };
 
   var gradientColors = {
-    0.005: '#00FF00',
-    0.5: '#FFFF00',
-    0.93: '#FFA500',
+    0: '#00FF00',
+    0.1: '#00FF00',
+    0.35: '#FFFF00',
+    0.6: '#FFA500',
     1.0: '#FF0000'
   };
 
 
   var cfg = {
-    radius: 0.05,
+    radius: radius,
     gradient: gradientColors,
     maxOpacity: 1,
     scaleRadius: true,
@@ -144,7 +150,10 @@ const InteractiveMap = () => {
   useEffect(() => {
     const map_init = L.map(mapRef.current, {
       center: [-33.8358, 150.9282],
-      zoom: 10
+      zoom: 10,
+      attributionControl: false,
+      minZoom: 6,
+      maxZoom: 15,
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -170,7 +179,7 @@ const InteractiveMap = () => {
       var popupContent = document.createElement('div');
       popupContent.innerHTML = "<p>Type: <span style=\"color: red;\">Virtual Warehouse</span></p> <p>Coordinates: " + lat + ", " + lng + "</p>";
       marker.bindPopup(popupContent);
-      marker.on('click', function () {
+      marker.on('hover', function () {
         marker.openPopup();
       });
 
@@ -181,14 +190,14 @@ const InteractiveMap = () => {
     const actualWarehouses = L.featureGroup();
     actualWarehousesCoords.map((warehouse) => {
 
-      const { lat, lng, count } = warehouse;
+      const { lat, lng, count, name } = warehouse;
       const markerPhysical = L.marker([lat, lng], {
         icon: actualWarehouse
       }).addTo(map_init);
       var popupStuff = document.createElement('div');
-      popupStuff.innerHTML = "<p>Type: <span style=\"color: red;\">Physical Warehouse</span></p> <p>Coordinates: " + lat + ", " + lng + "</p><p>Total Invoices Value:</p><span style=\"color: red;\"> $" + count + "</span>";
+      popupStuff.innerHTML = "<p>Type: <span style=\"color: red;\">Physical Warehouse</span></p> <p>Name: "+name+"</p> <p>Coordinates: " + lat + ", " + lng + "</p><p>Total Invoices Value:</p><span style=\"color: red;\"> $" + count + "</span>";
       markerPhysical.bindPopup(popupStuff);
-      markerPhysical.on('click', function () {
+      markerPhysical.on('hover', function () {
         markerPhysical.openPopup();
       });
       actualWarehouses.addLayer(markerPhysical);
@@ -205,7 +214,7 @@ const InteractiveMap = () => {
     };
 
 
-    L.control.layers(Overlaymaps).addTo(map_init);
+    // L.control.layers(Overlaymaps).addTo(map_init);
 
     // Make this defualt
     map_init.addLayer(layerGroup);
@@ -217,36 +226,64 @@ const InteractiveMap = () => {
   });
 
   return (
-    <>
-      <label htmlFor="clusterCount">Virtual Warehouses</label>
-      <input type="number" id="clusterCount" name="clusterCount" min="1" max="10" defaultValue="1"
+    <Box
+      sx={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
+      <Box
         sx={{
-          position: 'absolute',
-          top: '-30px',
-          left: '10px',
-          width: '80px',
-          padding: '5px'
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center'
         }}
-        onChange={handleChangeClusters}
-      />
-      <label htmlFor="startTime">Start Time:</label>
-      <input type="date" id="startTime" name="startTime"
-        onChange={handleChangeDateStart}
-        sx={{
-          marginLeft: '10px'
+      >
+        <TextField
+          label="No. Virtual Warehouses"
+          type="number"
+          name="clusterCount"
+          InputProps={{ inputProps: { min: 1, max: 10 } }}
+          defaultValue={numClusters}
+          onChange={handleChangeClusters}
+          variant="outlined"
+        />
+        <DatePicker
+          label="From Date"
+          type="date"
+          name="startTime"
+          onChange={handleChangeDateStart}
+          defaultValue={startDate}
+          sx={{
+            marginLeft: '10px'
+          }}
+        />
+        <DatePicker
+          label="To Date"
+          type="date"
+          name="endTime"
+          onChange={handleChangeDateEnd}
+          defaultValue={endDate}
+          sx={{
+            marginLeft: '10px'
+          }}
+        />
+      </Box>
+      <Box
+        ref={mapRef}
+        style={{
+          flexGrow: 1,
+          width: '100%',
+          zIndex: 999999,
         }}
       />
-
-      <label htmlFor="endTime">End Time:</label>
-      <input type="date" id="endTime" name="endTime"
-        onChange={handleChangeDateEnd}
-        sx={{
-          marginLeft: '10px'
-        }}
-      />
-
-      <div ref={mapRef} style={{ height: '90%', width: '100%' }}></div>
-    </>
+    </Box>
   );
 };
 
