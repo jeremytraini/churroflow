@@ -40,8 +40,15 @@ const StatisticBox = ({type, from_date, to_date}) => {
   }, [update]);
 
   async function fetchQuery (query, is_int) {
-    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date);
-    const data = response.data;
+    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date).catch((err) => {
+      console.log(err);
+      return;
+    });
+    if (response == null) {
+      return;
+    }
+    
+    const data = response.data
 
     if (data == null) {
       return;

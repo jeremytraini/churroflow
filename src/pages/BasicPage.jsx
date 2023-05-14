@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { useNavigate } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 export const BasicPage = ({ title, backButton, children }) => {
   useTitle("ChurroFlow - " + title);
@@ -24,7 +24,7 @@ export const BasicPage = ({ title, backButton, children }) => {
       paddingTop: '35px',
       paddingLeft: '5px',
     }}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Box
           sx={{
             display: 'flex',

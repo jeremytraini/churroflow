@@ -250,26 +250,22 @@ const InteractiveMap = () => {
           type="number"
           name="clusterCount"
           InputProps={{ inputProps: { min: 1, max: 10 } }}
-          defaultValue={numClusters}
           onChange={handleChangeClusters}
           variant="outlined"
+          defaultValue={numClusters}
         />
         <DatePicker
           label="From Date"
-          type="date"
           name="startTime"
           onChange={handleChangeDateStart}
-          defaultValue={startDate}
           sx={{
             marginLeft: '10px'
           }}
         />
         <DatePicker
           label="To Date"
-          type="date"
           name="endTime"
           onChange={handleChangeDateEnd}
-          defaultValue={endDate}
           sx={{
             marginLeft: '10px'
           }}
@@ -280,7 +276,6 @@ const InteractiveMap = () => {
         style={{
           flexGrow: 1,
           width: '100%',
-          zIndex: 999999,
         }}
       />
     </Box>

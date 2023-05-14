@@ -26,6 +26,7 @@ const ProtectedLayout = () => {
         marginLeft: sidebarWidth,
         marginTop: navBarHeight,
         minHeight: `calc(100vh - ${navBarHeight})`,
+        height: '100%',
         width: `calc(100% - ${sidebarWidth})`,
         background: 'linear-gradient(180deg, rgba(243, 244, 246, 100), rgb(186 209 255 / 48%))',
       }}>
