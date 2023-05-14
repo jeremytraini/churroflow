@@ -16,7 +16,7 @@ const APIService = () => {
     console.log(user)
     
     return axios.create({
-      baseURL:"https://cors-anywhere.herokuapp.com/http://churroflowapi-dev.ap-southeast-2.elasticbeanstalk.com/",
+      baseURL:"https://churroflow.jeremytraini.com/",
       headers: headers,
       mode: 'cors',
     });
