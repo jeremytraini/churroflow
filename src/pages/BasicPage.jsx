@@ -5,11 +5,10 @@ import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { useNavigate } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
-export const BasicPage = ({ title, backButton, children }) => {
+export const BasicPage = ({ title, action, children }) => {
   useTitle("ChurroFlow - " + title);
-  const navigate = useNavigate();
 
   return (
     <Container component="main" sx={{
@@ -28,19 +27,13 @@ export const BasicPage = ({ title, backButton, children }) => {
             display: 'flex',
             alignItems: 'center',
             paddingBottom: '15px',
+            justifyContent: "space-between",
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ paddingBottom: '0' }}>
+          <Typography component="h1" variant="h5" sx={{ paddingBottom: '0', color: 'grey' }}>
             {title}
           </Typography>
-          {!!backButton && 
-            <Button
-              variant="outlined"
-              onClick={() => navigate(-1)}
-            >
-              Back
-            </Button>
-          }
+          {action}
         </Box>
         {children}
       </LocalizationProvider>
