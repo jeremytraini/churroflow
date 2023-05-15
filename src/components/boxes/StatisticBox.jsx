@@ -8,6 +8,7 @@ const StatisticBox = ({type, from_date, to_date}) => {
 
   const [title, setTitle] = React.useState("Test");
   const [unit, setUnit] = React.useState("");
+  const [isOpposite, setIsOpposite] = React.useState(false);
   const [value, setValue] = React.useState("-");
   const [change, setChange] = React.useState("-");
   const [is_positive, setIsPositive] = React.useState("+");
@@ -34,6 +35,7 @@ const StatisticBox = ({type, from_date, to_date}) => {
       case "avgDeliveryDistance":
         setTitle("Delivery Distance");
         setUnit(" km");
+        setIsOpposite(true);
         fetchQuery(type, false);
         break;
     }
@@ -60,8 +62,8 @@ const StatisticBox = ({type, from_date, to_date}) => {
       setValue(Math.round(data.value * 10) / 10);
     }
 
-    setChange(data.change);
-    setIsPositive(data.change > 0 ? "+" : "-")
+    setIsPositive(data.change > 0);
+    setChange(data.change > 0 ? data.change : -data.change);
   }
 
   return (
@@ -81,7 +83,7 @@ const StatisticBox = ({type, from_date, to_date}) => {
         {title}
       </Box>
       <Box sx={{
-        fontSize: '2rem',
+        fontSize: '2.2rem',
         alignItems: 'center',
         flexGrow: 1,
       }}>
@@ -89,11 +91,10 @@ const StatisticBox = ({type, from_date, to_date}) => {
       </Box>
       <Box sx={{
         fontSize: '0.8rem',
-        color: is_positive === '+' ? 'green' : 'red',
+        color: (is_positive && !isOpposite) || (!is_positive && !isOpposite) ? 'green' : 'red',
       }}>
-        {is_positive === '+' ? (
+        {is_positive ? (
           <ChangeHistoryOutlinedIcon sx={{
-            color: 'green',
             fontSize: '0.8rem',
             verticalAlign: 'middle',
             paddingLeft: '5px',
@@ -101,7 +102,6 @@ const StatisticBox = ({type, from_date, to_date}) => {
           }} />
         ) : (
           <ChangeHistoryOutlinedIcon sx={{
-            color: 'red',
             fontSize: '0.8rem',
             verticalAlign: 'middle',
             paddingRight: '5px',

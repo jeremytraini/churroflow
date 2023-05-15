@@ -10,8 +10,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import StarIcon from '@mui/icons-material/StarBorder';
 import Typography from '@mui/material/Typography';
-import GlobalStyles from '@mui/material/GlobalStyles';
-import Container from '@mui/material/Container';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import Link from '@mui/material/Link';
@@ -71,68 +69,16 @@ const tiers = [
   },
 ];
 
-const footers = [
-  {
-    title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
-  },
-  {
-    title: 'Features',
-    description: [
-      'Warehouse Planning',
-      'Warehouse Analytics',
-      'Inventory Actions',
-      'Invoice Data Manager',
-    ],
-  },
-  {
-    title: 'Legal',
-    description: ['Privacy Policy', 'Terms of Use'],
-  },
-];
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        ChurroFlow
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 const Plan = () => {
-  // const { user, setPlan } = useAuth();
-
   return (
     <div id="plans"  className="text-center">
       <CssBaseline />
-      {/* Hero unit */}
       <div className="section-title">
-        <h2>ChurroFlow Plans</h2>
+        <h2>Plans</h2>
         <p>
           Be on top of your warehousing strategy and inventory with our premium features.
         </p>
       </div>
-      {/* <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 0, pb: 2 }}>
-        <Typography
-          component="h1"
-          variant="h4"
-          align="center"
-          marginTop={"6em"}
-          color="text.primary"
-          gutterBottom
-        >
-          ChurroFlow Plans
-        </Typography>
-        <Typography variant="h5" align="center" color="text.secondary" component="p" marginTop={3}>
-          Be on top of your warehousing strategy and inventory with our premium features.
-        </Typography>
-      </Container> */}
-      {/* End hero unit */}
       <div className="container">
         <Grid container spacing={5} alignItems="flex-end" marginBottom={5}>
           {tiers.map((tier) => (

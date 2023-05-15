@@ -24,7 +24,7 @@ const WarehouseAnalytics = () => {
   const { user } = useAuth();
 
   return (
-    <BasicPage title="Warehouse Planning" >
+    <BasicPage title="Warehouse Analytics" >
       <Box sx={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr 1fr 1fr',

@@ -26,7 +26,6 @@ const Dashboard = () => {
   <BasicPage title="Dashboard">
     <Box sx={{
       display: 'grid',
-      // gridTemplateColumns: 'repeat(4, 1fr)',
       gridTemplateColumns: '1fr 1fr 1fr 1fr',
       gridTemplateRows: '1fr 1fr 1fr 1fr',
       gap: '20px',
@@ -47,34 +46,25 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '2 / 1 / 3 / 2'
       }}>
-        {user.tier === 'Starter'
-        ? <BlurredBox type="Delivery time stat">
-            <StatisticBox type="averageDeliveryTime" from_date={"2021-12-12"} to_date={"2023-12-12"} />
-          </BlurredBox>
-        : <StatisticBox type="averageDeliveryTime" from_date={"2021-12-12"} to_date={"2023-12-12"} />
-        }
+        <BlurredBox type="Delivery time stat" isBlurred={user.tier === 'Starter'}>
+          <StatisticBox type="averageDeliveryTime" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+        </BlurredBox>
       </Item>
 
       <Item sx={{
         gridArea: '2 / 2 / 3 / 3'
       }}>
-        {user.tier === 'Starter'
-        ? <BlurredBox type="Delivery distance stat">
-            <StatisticBox type="avgDeliveryDistance" from_date={"2021-12-12"} to_date={"2023-12-12"} />
-          </BlurredBox>
-        : <StatisticBox type="avgDeliveryDistance" from_date={"2021-12-12"} to_date={"2023-12-12"} />
-        }
+        <BlurredBox type="Delivery distance stat" isBlurred={user.tier === 'Starter'}>
+          <StatisticBox type="avgDeliveryDistance" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+        </BlurredBox>
       </Item>
 
       <Item sx={{
         gridArea: '1 / 3 / 3 / 5'
       }}>
-        {user.tier === 'Starter'
-          ? <BlurredBox type="Interactive heatmap">
-              <InteractiveMap />
-            </BlurredBox>
-          : <InteractiveMap />
-        }
+        <BlurredBox type="Interactive heatmap" isBlurred={user.tier === 'Starter'}>
+          <InteractiveMap />
+        </BlurredBox>
       </Item>
 
       <Item sx={{
@@ -86,12 +76,9 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '3 / 3 / 5 / 5'
       }}>
-      {user.tier !== 'Ultimate+'
-        ? <BlurredBox type="Suburb data table">
-            <DataTableBox type="suburbDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
-          </BlurredBox>
-        : <DataTableBox type="suburbDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
-      }
+      <BlurredBox type="Suburb data table" isBlurred={user.tier === 'Ultimate+'}>
+        <DataTableBox type="suburbDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+      </BlurredBox>
       </Item>
     </Box>
 

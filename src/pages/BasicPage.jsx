@@ -13,28 +13,21 @@ export const BasicPage = ({ title, backButton, children }) => {
 
   return (
     <Container component="main" sx={{
-      height: 'calc(100% - 35px)',
-      width: '100%',
-      // maxWidth: false,
-      minWidth: '850px',
-      marginTop: 8,
+      // height: 'calc(100% - 35px)',
+      // marginTop: 'calc(35px + 24px)',
       display: "flex",
       flexDirection: "column",
+      justifyContent: "space-between",
       alignItems: "left",
-      paddingTop: '35px',
-      paddingLeft: '5px',
     }}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
-            width: '100%',
-            height: '100%',
-            justifyContent: 'space-between',
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ paddingBottom: '10px' }}>
+          <Typography component="h1" variant="h5" sx={{ paddingBottom: '0' }}>
             {title}
           </Typography>
           {!!backButton && 
