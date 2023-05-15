@@ -25,11 +25,11 @@ const Dashboard = () => {
   return (
   <BasicPage title="Dashboard">
     <Box sx={{
+      flexGrow: 1,
       display: 'grid',
       gridTemplateColumns: '1fr 1fr 1fr 1fr',
       gridTemplateRows: '1fr 1fr 1fr 1fr',
       gap: '20px',
-      height: `calc(100vh - 200px)`
       }}>
       <Item sx={{
         gridArea: '1 / 1 / 2 / 2'

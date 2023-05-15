@@ -16,34 +16,24 @@ import Welcome from './pages/Welcome';
 
 const App = () => {
   return (
-    <>
-      <Helmet>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-          crossorigin="" />
-        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-          integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-          crossorigin=""></script>
-      </Helmet>
-      <Routes>
-        <Route path="/" element={<Welcome />} />
+    <Routes>
+      <Route path="/" element={<Welcome />} />
 
-        <Route element={<PublicLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
+      <Route element={<PublicLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
 
-        <Route element={<ProtectedLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/warehouse-planning" element={<WarehousePlanning />} />
-          <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
-          <Route path="/inventory-actions" element={<InventoryActions />} />
-          <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
-          <Route path="/invoice-validator/:invoiceId" element={<Validator />} />
-          <Route path="/upgrade-account" element={<Upgrade />} />
-        </Route>
-      </Routes>
-    </>
+      <Route element={<ProtectedLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/warehouse-planning" element={<WarehousePlanning />} />
+        <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
+        <Route path="/inventory-actions" element={<InventoryActions />} />
+        <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
+        <Route path="/invoice-validator/:invoiceId" element={<Validator />} />
+        <Route path="/upgrade-account" element={<Upgrade />} />
+      </Route>
+    </Routes>
   )
 }
 

@@ -1,8 +1,5 @@
 import React from 'react';
 import MUIDataTable from "mui-datatables";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { withStyles } from "@mui/styles";
-import { createMuiTheme } from "@mui/styles";
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import getAPI from '../../services/APIService';
@@ -66,8 +63,16 @@ const DataTableBox = ({type, from_date, to_date}) => {
       justifyContent: 'space-between',
       height: '100%',
       textAlign: 'left',
+      color: 'black',
     }}>
-      <Box>
+      <Box sx={{
+        fontSize: '0.9rem',
+        textAlign: 'left',
+        paddingBottom: '10px',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      }}>
         {title}
       </Box>
       <Box sx={{

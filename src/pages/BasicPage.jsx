@@ -13,8 +13,10 @@ export const BasicPage = ({ title, backButton, children }) => {
 
   return (
     <Container component="main" sx={{
-      // height: 'calc(100% - 35px)',
-      // marginTop: 'calc(35px + 24px)',
+      height: 'calc(100% - 70px - 24px)',
+      // height: '100%',
+      marginTop: '24px',
+      paddingBottom: '50px',
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
@@ -25,6 +27,7 @@ export const BasicPage = ({ title, backButton, children }) => {
           sx={{
             display: 'flex',
             alignItems: 'center',
+            paddingBottom: '15px',
           }}
         >
           <Typography component="h1" variant="h5" sx={{ paddingBottom: '0' }}>
