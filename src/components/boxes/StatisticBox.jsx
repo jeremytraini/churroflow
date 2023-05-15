@@ -28,12 +28,12 @@ const StatisticBox = ({type, from_date, to_date}) => {
         fetchQuery(type, true);
         break;
       case "averageDeliveryTime":
-        setTitle("Delivery Time");
+        setTitle("Avg. Delivery Time");
         setUnit(" days");
         fetchQuery(type, false);
         break;
       case "avgDeliveryDistance":
-        setTitle("Delivery Distance");
+        setTitle("Avg. Delivery Distance");
         setUnit(" km");
         setIsOpposite(true);
         fetchQuery(type, false);
@@ -78,7 +78,10 @@ const StatisticBox = ({type, from_date, to_date}) => {
       <Box sx={{
         fontSize: '0.9rem',
         textAlign: 'left',
-        paddingBottom: '10px'
+        paddingBottom: '10px',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
       }}>
         {title}
       </Box>
@@ -86,6 +89,9 @@ const StatisticBox = ({type, from_date, to_date}) => {
         fontSize: '2.2rem',
         alignItems: 'center',
         flexGrow: 1,
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
       }}>
         {value}{unit}
       </Box>
@@ -114,7 +120,10 @@ const StatisticBox = ({type, from_date, to_date}) => {
       </Box>
       <Box sx={{
         fontSize: '0.7rem',
-        color: 'grey'
+        color: 'grey',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
       }}>
         12 months
       </Box>
