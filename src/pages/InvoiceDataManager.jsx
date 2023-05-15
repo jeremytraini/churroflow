@@ -14,6 +14,20 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import ErrorIcon from '@mui/icons-material/Error';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#f5d0d4',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 260,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9',
+  },
+}));
 
 const InvoiceDataManager = () => {
   const [invalidRows, setInvalidRows] = React.useState([]);
@@ -127,12 +141,29 @@ const InvoiceDataManager = () => {
           <Typography component="h1" variant="h6">
             Awaiting Rectification
           </Typography>
-          <ErrorIcon
-            sx={{
-              marginLeft: '10px',
-              height: '100%',
-            }}
-          />
+          <HtmlTooltip
+            title={
+                <>
+                  <Typography color="inherit" variant="body2" fontWeight='bold'>Errors have been found in your invoices!</Typography>
+                  <Typography color="inherit" variant="body2">
+                    We cannot process data within invalid invoices as they are not PEPPOL compliant and may contain errors.
+                  </Typography>
+                  <Typography color="inherit" variant="body2">
+                    Such invoices will not be included in your reports until they are rectified!
+                  </Typography>
+                </>
+            }
+            arrow
+            placement="right"
+          >
+            <ErrorIcon
+              sx={{
+                marginLeft: '10px',
+                height: '100%',
+                color: '#e04f5e',
+              }}
+            />
+          </HtmlTooltip>
         </Box>
         <DataGrid
           sx={{

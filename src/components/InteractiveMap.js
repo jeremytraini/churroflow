@@ -136,9 +136,9 @@ const InteractiveMap = () => {
   var cfg = {
     radius: radius,
     gradient: gradientColors,
-    maxOpacity: 1,
+    maxOpacity: 0.9,
     scaleRadius: true,
-    useLocalExtrema: false,
+    useLocalExtrema: true,
     latField: "lat",
     lngField: "lng",
     valueField: "count"

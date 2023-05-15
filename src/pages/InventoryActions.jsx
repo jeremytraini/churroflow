@@ -55,7 +55,7 @@ const InventoryActions = () => {
             sx={{ height: 20 }}
           >
             <div>
-            <Button variant="contained" color="success" sx={{ height: 30, width: 200 }}onClick = {() => handleClick('Sent notification to Churros West warehouse to deliver 1000 units of Pens to Metro Warehouse', 'success')}>
+            <Button variant="contained" color="success" sx={{ height: 30, width: 200 }} onClick = {() => handleClick('Sent notification to Churros West warehouse to deliver 1000 units of Pens to Metro Warehouse', 'success')}>
               Notify Warehouse
             </Button>
               {alerts.map((alert) => (
@@ -97,7 +97,7 @@ const InventoryActions = () => {
             sx={{ height: 20 }}
           >
             <div>
-            <Button variant="contained" color="error" sx={{ height: 45, width: 200 }}onClick = {() => handleClick('Sent overdue payment reminder to Officeworks for payment of $1759.55.', 'error')}>
+            <Button variant="contained" color="error" sx={{ height: 45, width: 200 }} onClick = {() => handleClick('Sent overdue payment reminder to Officeworks for payment of $1759.55.', 'error')}>
               Overdue Payment Reminder Notice
             </Button>
               {alerts.map((alert) => (
@@ -144,7 +144,7 @@ const InventoryActions = () => {
               sx={{ height: 20 }}
             >
             <div>
-            <Button variant="contained" color="warning" sx={{ height: 30, width: 200 }}onClick = {() => handleClick('Sent regular payment invoice for 10,000 rubbers from OfficeGo with pickup at East Warehouse', 'warning')}>
+            <Button variant="contained" color="warning" sx={{ height: 30, width: 200 }} onClick = {() => handleClick('Sent regular payment invoice for 10,000 rubbers from OfficeGo with pickup at East Warehouse', 'warning')}>
               Send Invoice
             </Button>
               {alerts.map((alert) => (
@@ -188,7 +188,7 @@ const InventoryActions = () => {
         >
           
           <div>
-            <Button variant="contained" color="success" sx={{ height: 30, width: 200 }}onClick = {() => handleClick('Sent notification to Churros South warehouse to deliver 7000 units of Tote Bags to West Warehouse', 'success')}>
+            <Button variant="contained" color="success" sx={{ height: 30, width: 200 }} onClick = {() => handleClick('Sent notification to Churros South warehouse to deliver 7000 units of Tote Bags to West Warehouse', 'success')}>
               Notify Warehouse
             </Button>
               {alerts.map((alert) => (
@@ -230,7 +230,7 @@ const InventoryActions = () => {
           sx={{ height: 20 }}
         >
           <div>
-            <Button variant="contained" color="warning" sx={{ height: 30, width: 200 }}onClick = {() => handleClick('Sent payment invoice for 850,000 ink refills for Uniball with pickup at East Warehouse', 'warning')}>
+            <Button variant="contained" color="warning" sx={{ height: 30, width: 200 }} onClick = {() => handleClick('Sent payment invoice for 850,000 ink refills for Uniball with pickup at East Warehouse', 'warning')}>
               Send Invoice
             </Button>
               {alerts.map((alert) => (
@@ -273,7 +273,7 @@ const InventoryActions = () => {
           sx={{ height: 20 }}
         >
           <div>
-            <Button variant="contained" color="success" sx={{ height: 30, width: 200 }}onClick = {() => handleClick('Sent notification to Churros North warehouse to deliver 750 units of Notebooks to East Warehouse', 'success')}>
+            <Button variant="contained" color="success" sx={{ height: 30, width: 200 }} onClick = {() => handleClick('Sent notification to Churros North warehouse to deliver 750 units of Notebooks to East Warehouse', 'success')}>
               Notify Warehouse
             </Button>
               {alerts.map((alert) => (
