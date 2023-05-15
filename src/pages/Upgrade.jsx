@@ -119,10 +119,7 @@ const Dashboard = () => {
                     pt: 1,
                   }}
                   sx={{
-                    backgroundColor: (theme) =>
-                      theme.palette.mode === 'light'
-                        ? theme.palette.grey[200]
-                        : theme.palette.grey[700],
+                    backgroundColor: tier.title !== 'Standard' ? (theme) => theme.palette.grey[200] : (theme) => theme.palette.grey[300],
                   }}
                 />
                 <CardContent>

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 
+const baseUrl = "https://churroflow.jeremytraini.com/";
+
 const APIService = () => {
   const user = useAuth();
 
@@ -16,10 +18,14 @@ const APIService = () => {
     console.log(user)
     
     return axios.create({
-      baseURL:"https://churroflow.jeremytraini.com/",
+      baseURL:baseUrl,
       headers: headers,
       mode: 'cors',
     });
+  }
+
+  const getBaseUrl = () => {
+    return baseUrl;
   }
 
   const login = (email, password) => {
@@ -143,6 +149,14 @@ const APIService = () => {
     })
   };
 
+  const invoiceUploadText = (name, text) => {
+    return getBase().post("/invoice/upload_text/v1",
+    {
+      name: name,
+      text: text
+    });
+  };
+
   return {
     login,
     register,
@@ -153,7 +167,9 @@ const APIService = () => {
     getInvoice,
     getLintReport,
     deleteInvoice,
-    virtualWarehouseCoords
+    virtualWarehouseCoords,
+    invoiceUploadText,
+    getBaseUrl
   };
 }
 

@@ -19,6 +19,11 @@ import Grid from '@mui/material/Grid';
 import { useAuth } from "../hooks/useAuth";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import IosShareIcon from '@mui/icons-material/IosShare';
+import QRCode from "react-qr-code";
+import TextField from '@mui/material/TextField';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import IconButton from '@mui/material/IconButton';
 
 const gptAPIKey = "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";
 
@@ -40,13 +45,20 @@ const ValidatorBox = (props) => {
   const [invoiceData, setInvoiceData] = React.useState(null);
   const [invoiceExtracted, setInvoiceExtracted] = React.useState(null);
   const [invoiceChanged, setInvoiceChanged] = React.useState(true);
+  const [exportReportId, setExportReportId] = React.useState(null);
   const [errorResponse, setErrorResponse] = React.useState([]);
   const [selectedText, setSelectedText] = React.useState("");
   const [diagnostics, setDiagnostics] = React.useState(null);
   const [msgs, setMsgs] = React.useState([{message: "empty", sender: "User"}]);
+
   const [open, setOpen] = React.useState(false);
+  const [exportOpen, setExportOpen] = React.useState(false);
+
   const [gptAnswer, setGptAnswer] = React.useState(null);
+
   const [gptLoading, setGptLoading] = React.useState(false);
+  const [exportLoading, setExportLoading] = React.useState(true);
+
   const APIService = getAPI();
   const navigate = useNavigate();
 
@@ -56,6 +68,7 @@ const ValidatorBox = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleCloseUpgrade = () => setShowUpgradeModal(false);
+  const handleCloseExport = () => setExportOpen(false);
 
   React.useEffect(() => {
     APIService.getInvoice(props.invoiceId)
@@ -119,6 +132,13 @@ const ValidatorBox = (props) => {
   });
 
   const updateMarkers = React.useCallback((alternate) => {
+    console.log("user tier");
+    console.log(user.tier);
+    if (user.tier === 'Starter') {
+      setShowUpgradeModal(true);
+      return;
+    }
+
     let currInvoiceData;
 
     if (!invoiceData) {
@@ -199,6 +219,27 @@ const ValidatorBox = (props) => {
     return diagnostics;
   }
 
+  const exportReport = React.useCallback(async () => {
+    if (!invoiceData || !invoiceExtracted) {
+      return;
+    }
+
+    setExportOpen(true);
+    setExportLoading(true);
+    
+    try {
+      const response = await APIService.invoiceUploadText(invoiceExtracted.name, invoiceData);
+      const reportId = response.data.report_id;
+
+      setExportReportId(reportId);
+      setExportLoading(false);
+    } catch (err) {
+      setExportLoading(false);
+      console.log(err);
+      return;
+    }
+  }, [invoiceData]);
+
   return (
     <Box
       sx={{
@@ -273,6 +314,18 @@ const ValidatorBox = (props) => {
                   fontWeight: 'bold',
                   }}>INVALID</span>}
               </Typography>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={exportReport}
+                sx={{
+                  marginBottom: '20px',
+                  width: '100%',
+                }}
+              >
+                <IosShareIcon style={{ marginRight: '10px' }} />
+                Export Report
+              </Button>
               {invoiceExtracted.is_valid &&
                 <>
                   <Typography variant="body1" gutterBottom>
@@ -400,19 +453,119 @@ const ValidatorBox = (props) => {
                 position: 'fixed',
                 opacity: 1,
             }}
-            onClick={() => {
-              if (user.tier === 'Starter') {
-                setShowUpgradeModal(true);
-              } else {
-                updateMarkers();
-              }
-            }}
+            onClick={() => updateMarkers()}
             disabled={!invoiceChanged}
           >
             Run
             <PlayArrowIcon sx={{ ml: 1 }} />
           </Fab>
         </Box>
+
+        <Modal
+          open={exportOpen}
+          onClose={handleCloseExport}
+        >
+          <Box sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 500,
+            bgcolor: 'background.paper',
+            border: '1px solid silver',
+            borderRadius: '20px',
+            boxShadow: 24,
+            p: 4,
+          }}>
+            <Typography variant="h6" component="h3" sx={{ mb: 2 }}>
+              Exporting Report on Invoice "{invoiceExtracted.name}"
+            </Typography>
+            {(exportLoading)
+            ? <>
+              <Typography variant="body1" gutterBottom>
+                Generating report...
+              </Typography>
+              <CircularProgress />
+              </>
+            : (
+              <>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      const url = APIService.getBaseUrl() + "export/pdf_report/v1?report_id=" + exportReportId;
+                      window.open(url, '_blank');
+                    }}
+                  >
+                    Download PDF
+                  </Button>
+
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      const url = APIService.getBaseUrl() + "export/csv_report/v1?report_id=" + exportReportId;
+                      window.open(url, '_blank');
+                    }}
+                  >
+                    Download CSV
+                  </Button>
+
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      const url = APIService.getBaseUrl() + "export/json_report/v1?report_id=" + exportReportId;
+                      window.open(url, '_blank');
+                    }}
+                  >
+                    Download JSON
+                  </Button>
+                </Box>
+                <Typography variant="body1" gutterBottom sx={{ mt: 2 }}>
+                  <b>OR</b> view it online here:
+                </Typography>
+                <TextField
+                  value={APIService.getBaseUrl() + "export/html_report/v1?report_id=" + exportReportId}
+                  InputProps={{
+                    readOnly: true,
+                    endAdornment: (
+                      <IconButton
+                        onClick={ () => {
+                          const url = APIService.getBaseUrl() + "export/html_report/v1?report_id=" + exportReportId;
+                          window.open(url, '_blank');
+                        }}
+                      >
+                        <OpenInNewIcon />
+                      </IconButton>
+                    )
+                  }}
+                  sx={{ mb: 2, width: '100%' }}
+                />
+                <Typography variant="body1" gutterBottom>
+                  <b>OR</b> scan this QR code to view it on your phone:
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                >
+
+                  <QRCode
+                    value={APIService.getBaseUrl() + "export/html_report/v1?report_id=" + exportReportId}
+                  />
+                </Box>
+              </>
+            )}
+          </Box>
+        </Modal>
+
         <Modal
           open={open}
           onClose={handleClose}
@@ -537,7 +690,6 @@ const ValidatorBox = (props) => {
         />
       )
       }
-      
     </Box>
   );
 };
