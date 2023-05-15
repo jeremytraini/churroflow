@@ -3,9 +3,7 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import InteractiveMap from "../components/InteractiveMap";
-import DeliveryGraph from "../components/DeliveryGraph"
-import DistancesGraph from "../components/DistancesGraph"
-import DTimeGraph from "../components/DTimeGraph"
+import LineGraph from "../components/LineGraph";
 import BlurredBox from "../components/boxes/BlurredBox";
 import { useAuth } from '../hooks/useAuth';
 
@@ -36,49 +34,34 @@ const WarehouseAnalytics = () => {
         <Item sx={{
           gridArea: '1 / 1 / 3 / 3 ',
         }}>
-          {user.tier === 'Starter'
-          ? <BlurredBox type="Units over time graph">
-              <DeliveryGraph />
-            </BlurredBox>
-          : <DeliveryGraph />
-          }
+          <BlurredBox type="Units over time graph" isBlurred={user.tier === 'Starter'}>
+            <LineGraph type='warehouseUnitsOverTime' from_date={"2021-12-12"} to_date={"2023-12-12"} />
+          </BlurredBox>
         </Item>
 
         <Item sx={{
           gridArea: '3 / 1 / 5 / 3 ',
         }}>
-          {user.tier !== 'Ultimate'
-          ? <BlurredBox type="Delivery distance istance graph">
-              <DistancesGraph />
-            </BlurredBox>
-          : <DistancesGraph />
-          }
-          
-
+          <BlurredBox type="Delivery distance istance graph" isBlurred={user.tier !== 'Ultimate'}>
+            <LineGraph type='warehouseAvgDeliveryDistance' from_date={"2021-12-12"} to_date={"2023-12-12"} />
+          </BlurredBox>
         </Item>
 
 
         <Item sx={{
           gridArea: '5 / 1 / 8 / 3 ',
         }}>
-          {user.tier !== 'Ultimate'
-          ? <BlurredBox type="Delivery time graph">
-          <DTimeGraph />
-            </BlurredBox>
-          : <DTimeGraph />
-          }
-
+          <BlurredBox type="Delivery time graph"  isBlurred={user.tier !== 'Ultimate'}>
+            <LineGraph type='warehouseAvgDeliveryTime' from_date={"2021-12-12"} to_date={"2023-12-12"} />
+          </BlurredBox>
         </Item>
 
         <Item sx={{
           gridArea: '1 / 3 / 8 / 5 ',
         }}>
-          {user.tier !== 'Ultimate'
-          ? <BlurredBox type="Interactive heatmap">
-              <InteractiveMap />
-            </BlurredBox>
-          : <InteractiveMap />
-          }
+          <BlurredBox type="Interactive heatmap" isBlurred={user.tier !== 'Ultimate'}>
+            <InteractiveMap />
+          </BlurredBox>
         </Item>
 
       </Box>
