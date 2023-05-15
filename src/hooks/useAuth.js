@@ -31,6 +31,9 @@ export const AuthProvider = ({ children }) => {
     });
 
     navigate('/dashboard');
+    // To stop the stupid bootstrap crap from breaking everything else
+    // window.location.href = '/dashboard';
+    // window.location.replace("/dashboard");
   };
 
   const register = async (name, email, password) => {
@@ -49,6 +52,8 @@ export const AuthProvider = ({ children }) => {
     });
 
     navigate('/dashboard');
+    // window.location.href = '/dashboard';
+    // window.location.replace("/dashboard");
   };
 
   // call this function to sign out logged in user

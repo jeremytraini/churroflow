@@ -353,7 +353,15 @@ const ValidatorBox = (props) => {
                   ].map((field) => {
                     return (
                       <Typography variant="body2" gutterBottom>
-                        <b>{field[1]}: </b><pre style={{ display: 'inline' }}>{invoiceExtracted[field[0]]}</pre>
+                        <b>{field[1]}: </b>
+                        <pre
+                          style={{
+                            display: 'inline',
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                          }}>
+                          {invoiceExtracted[field[0]]}
+                        </pre>
                       </Typography>
                     )
                   })}
@@ -588,7 +596,12 @@ const ValidatorBox = (props) => {
             {(gptLoading || !gptAnswer)
             ? <CircularProgress />
             : (
-              <pre style={{ mt: 2, whiteSpace: 'pre-wrap' }}>
+              <pre style={{
+                mt: 2,
+                whiteSpace: 'pre-wrap',
+                backgroundColor: 'transparent',
+                border: 'none',
+                }}>
                 {gptAnswer}
               </pre>
             )}
