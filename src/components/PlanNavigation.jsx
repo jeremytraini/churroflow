@@ -1,5 +1,6 @@
 import React from "react";
 import Button from '@mui/material/Button';
+import { Link } from "react-router-dom";
 
 export const Navigation = (props) => {
   return (
@@ -18,9 +19,9 @@ export const Navigation = (props) => {
             <span className="icon-bar"></span>{" "}
             <span className="icon-bar"></span>{" "}
           </button>
-          <a className="navbar-brand page-scroll" href="/">
+          <Link className="navbar-brand page-scroll" to="/">
             ChurroFlow
-          </a>{" "}
+          </Link>{" "}
         </div>
 
         <div
@@ -33,11 +34,13 @@ export const Navigation = (props) => {
                 Plans
               </a>
             </li>
-            <Button href="/register" variant="contained" sx={{ my: 1.9, mx: 1.5 }}>
-              SIGN UP
-            </Button>
-            <Button href="/login" variant="contained" sx={{ my: 1.9, mx: 1.5 }}>
-              LOG ON
+            <Button
+              component={Link}
+              to="/login"
+              variant="contained"
+              sx={{ my: 1.9, mx: 1.5 }}
+            >
+              LOG IN
             </Button>
           </ul>
         </div>
