@@ -22,7 +22,7 @@ const tiers = [
     title: 'Starter',
     price: '0',
     enabled: [
-      'Upload, Store, Render, and Send 15 Invoices',
+      'Upload, Store, Render, and Send 30 Invoices/Month',
       'Invoice Data Manager',
     ],
     disabled: [
@@ -37,9 +37,10 @@ const tiers = [
   },
   {
     title: 'Standard',
+    subheader: 'Reccomended for small businesses',
     price: '39.99',
     enabled: [
-      'Upload, Store, Render, and Send 200 Invoices',
+      'Upload, Store, Render, and Send 200 Invoices/Month',
       'Invoice Data Manager',
       'Invoice Validator Interface',
       'Download Validation Report',
@@ -54,7 +55,7 @@ const tiers = [
   },
   {
     title: 'Ultimate',
-    subheader: 'Our Most Popular Plan',
+    subheader: 'Reccomended for most SMEs',
     price: '79.99',
     enabled: [
       'Upload, Store, Render, and Send Unlimited Invoices',
@@ -97,14 +98,13 @@ const Dashboard = () => {
         </Typography>
       </Container>
       <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignItems="center">
+        <Grid container spacing={3} alignItems="center">
           {tiers.map((tier) => (
-            // Enterprise card is full width at sm breakpoint
             <Grid
               item
               key={tier.title}
               xs={12}
-              sm={tier.title === 'Ultimate' ? 12 : 6}
+              sm={tier.title === 'Standard' ? 12 : 6}
               md={4}
             >
               <Card>
@@ -112,10 +112,11 @@ const Dashboard = () => {
                   title={tier.title}
                   subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
-                  action={tier.title === 'Ultimate' ? <StarIcon /> : null}
+                  action={tier.title === 'Standard' ? <StarIcon /> : null}
                   subheaderTypographyProps={{
                     align: 'center',
                     fontSize: 'small',
+                    pt: 1,
                   }}
                   sx={{
                     backgroundColor: (theme) =>
