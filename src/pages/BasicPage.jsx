@@ -13,7 +13,6 @@ export const BasicPage = ({ title, action, children }) => {
   return (
     <Container component="main" sx={{
       height: 'calc(100% - 70px - 24px)',
-      // height: '100%',
       marginTop: '24px',
       paddingBottom: '50px',
       display: "flex",
@@ -30,7 +29,7 @@ export const BasicPage = ({ title, action, children }) => {
             justifyContent: "space-between",
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ paddingBottom: '0', color: 'grey' }}>
+          <Typography component="h1" variant="h5" sx={{ paddingBottom: '0', color: '#5A5A5A' }}>
             {title}
           </Typography>
           {action}

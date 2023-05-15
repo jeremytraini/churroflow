@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import ChangeHistoryOutlinedIcon from '@mui/icons-material/ChangeHistoryOutlined';
 import getAPI from '../../services/APIService';
 
-const StatisticBox = ({type, from_date, to_date}) => {
+const StatisticBox = ({type, from_date, to_date, warehouse_lat, warehouse_long}) => {
   let timePeriod = "12 months";
 
   const [title, setTitle] = React.useState("Test");
@@ -38,11 +38,16 @@ const StatisticBox = ({type, from_date, to_date}) => {
         setIsOpposite(true);
         fetchQuery(type, false);
         break;
+      case "numUniqueCustomers":
+        setTitle("Number of unique customers");
+        setUnit("");
+        fetchQuery(type, true, warehouse_lat, warehouse_long);
+        break;
     }
   }, [update]);
 
-  async function fetchQuery (query, is_int) {
-    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date).catch((err) => {
+  async function fetchQuery (query, is_int, warehouse_lat, warehouse_long) {
+    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date, warehouse_lat, warehouse_long).catch((err) => {
       console.log(err);
       return;
     });
@@ -71,7 +76,7 @@ const StatisticBox = ({type, from_date, to_date}) => {
       margin: '10px 10px',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       height: '90%',
       color: 'black',
     }}>
@@ -86,14 +91,24 @@ const StatisticBox = ({type, from_date, to_date}) => {
         {title}
       </Box>
       <Box sx={{
-        fontSize: '2.2rem',
+        fontSize: '2.4rem',
         alignItems: 'center',
         flexGrow: 1,
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
+        margin: 'auto 0',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+
       }}>
-        {value}{unit}
+        <Box
+          sx={{
+          }}
+        >
+          {value}{unit}
+        </Box>
       </Box>
       <Box sx={{
         fontSize: '0.8rem',

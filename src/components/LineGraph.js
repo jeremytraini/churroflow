@@ -4,77 +4,72 @@ import Box from '@mui/material/Box';
 import getAPI from '../services/APIService';
 
 
-function LineGraph( {data, type, from_date, to_date} ) {
+function LineGraph( {data, type, from_date, to_date, warehouse_lat, warehouse_long} ) {
   const [title, setTitle] = React.useState("Test");
+  const [chartData, setChartData] = React.useState(null);
+  const [update, setUpdate] = React.useState(false);
+
   const APIService = getAPI();
 
   const chartRef = React.useRef(null);
 
-  async function fetchQuery (query, warehouseLat, warehouseLong) {
-    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date, warehouseLat, warehouseLong).catch((err) => {
+  async function fetchQuery (query) {
+    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date, warehouse_lat, warehouse_long).catch((err) => {
       console.log(err);
       return;
     });
     if (response == null) {
       return;
     }
-    
-    const data = response.data
 
-    if (data == null) {
+    if (response.data == null) {
       return;
     }
 
-    return data;
+    setChartData(response.data);
   }
 
   React.useEffect(() => {
-    if (chartRef.current) {
-      let data = null;
+    switch (type) {
+      case "deliveriesMadeMonthly":
+        setTitle("No. Deliveries Made Monthly");
+        fetchQuery(type);
+        break;
+      case "warehouseMonthlyAvgDeliveryDistance":
+        setTitle("Avg. Montly Delivery Distance (km)");
+        fetchQuery(type);
+        break;
+      case "warehouseMonthlyAvgDeliveryTime":
+        setTitle("Avg. Montly Delivery Time");
+        fetchQuery(type);
+        break;
+    }
+  }, [update]);
 
-      switch (type) {
-        case "warehouseUnitsOverTime":
-          setTitle("Number of active customers");
-          data = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-            data: [1200, 1900, 3000, 5000, 2000, 3000, 8000, 4000],
-          };
-          fetchQuery(type, true);
-          break;
-        case "warehouseAvgDeliveryDistance":
-          setTitle("Avg. Delivery Distance (Km)");
-          data = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-            data: [34, 28, 30, 37, 39, 35, 30, 36],
-          };
-          fetchQuery(type, true);
-          break;
-        case "warehouseAvgDeliveryTime":
-          setTitle("Avg. Delivery Time");
-          data = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-            data: [2, 3, 1, 5, 8, 3, 3, 3],
-          };
-          fetchQuery(type, false);
-          break;
-      }
-
+  React.useEffect(() => {
+    if (chartRef.current && chartData) {
       const chartInstance = new Chart(chartRef.current, {
         type: 'line',
         data: {
-          labels: data.labels,
+          labels: chartData.labels,
           datasets: [
             {
-              label: 'No Units Delivered Over Time',
-              data: data.data,
+              label: title,
+              data: chartData.data,
               fill: false,
               borderColor: 'rgb(75, 192, 192)',
               tension: 0.4,
+              
             },
           ],
         },
         options: {
-            maintainAspectRatio: false,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
         }
       });
 
@@ -82,15 +77,28 @@ function LineGraph( {data, type, from_date, to_date} ) {
         chartInstance.destroy();
       };
     }
-  }, []);
+  }, [chartRef, chartData, title]);
 
   return (
     <Box
       sx={{
-        height: '100%',
+        margin: '10px 10px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '80%',
+        color: 'black',
       }}
     >
-      <canvas ref={chartRef} style={{width: '100%', height: '100%'}}></canvas>
+      <Box sx={{
+        fontSize: '0.9rem',
+        textAlign: 'left',
+        paddingBottom: '10px',
+
+      }}>
+        {title}
+      </Box>
+      <canvas ref={chartRef} style={{width: '100%', flexGrow: 1 }}></canvas>
     </Box>
   );
 }

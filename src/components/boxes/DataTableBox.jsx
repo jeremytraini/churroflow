@@ -7,6 +7,7 @@ import getAPI from '../../services/APIService';
 const DataTableBox = ({type, from_date, to_date}) => {
   const [title, setTitle] = React.useState("Test");
   const [rows, setRows] = React.useState([]);
+  const [columns, setColumns] = React.useState([{}]);
   const [update, setUpdate] = React.useState(false);
   const APIService = getAPI();
 
@@ -14,11 +15,75 @@ const DataTableBox = ({type, from_date, to_date}) => {
     switch (type) {
       case "clientDataTable":
         setTitle("Data by client");
+        setColumns([
+          {
+            field: "name",
+            headerName: "Client",
+            type: 'string',
+            width: 120,
+          },
+          {
+            field: "total-deliveries",
+            headerName: "Total Deliveries",
+            type: 'number',
+            width: 150,
+          },
+          {
+            field: "total-revenue",
+            headerName: "Total Revenue",
+            type: 'number',
+            width: 150,
+          },
+         ]);
         fetchQuery(type);
         break;
       case "suburbDataTable":
         setTitle("Data by suburb");
         fetchQuery(type);
+        setColumns([
+          {
+            field: "name",
+            headerName: "Client",
+            type: 'string',
+            width: 120,
+          },
+          {
+            field: "total-deliveries",
+            headerName: "Total Deliveries",
+            type: 'number',
+            width: 150,
+          },
+          {
+            field: "total-revenue",
+            headerName: "Total Revenue",
+            type: 'number',
+            width: 150,
+          },
+         ]);
+        break;
+      case "warehouseProductDataTable":
+        setTitle("Data by product");
+        fetchQuery(type);
+        setColumns([
+          {
+            field: "product",
+            headerName: "Client",
+            type: 'string',
+            width: 120,
+          },
+          {
+            field: "total-units",
+            headerName: "Total Units",
+            type: 'number',
+            width: 150,
+          },
+          {
+            field: "total-value",
+            headerName: "Total Value",
+            type: 'number',
+            width: 150,
+          },
+         ]);
         break;
     }
   }, [update]);
@@ -33,27 +98,6 @@ const DataTableBox = ({type, from_date, to_date}) => {
 
     setRows(data.data);
   }
-
-  const columns = [
-    {
-      field: "name",
-      headerName: "Client",
-      type: 'string',
-      width: 120,
-    },
-    {
-      field: "total-deliveries",
-      headerName: "Total Deliveries",
-      type: 'number',
-      width: 150,
-    },
-    {
-      field: "total-revenue",
-      headerName: "Total Revenue",
-      type: 'number',
-      width: 150,
-    },
-   ];
 
   return (
     <Box sx={{

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 
-const baseUrl = "https://churroflow.jeremytraini.com/";
+// const baseUrl = "https://churroflow.jeremytraini.com/";
+const baseUrl = "http://localhost:8000/";
 
 const APIService = () => {
   const user = useAuth();
@@ -76,13 +77,15 @@ const APIService = () => {
     })
   };
 
-  const invoiceProcessingQuery = (query, from_date, to_date) => {
+  const invoiceProcessingQuery = (query, from_date, to_date, warehouse_lat, warehouse_long) => {
     return getBase().get("/invoice_processing/query/v2",
     {
       params: {
         query: query,
         from_date: from_date,
-        to_date: to_date
+        to_date: to_date,
+        warehouse_lat: warehouse_lat,
+        warehouse_long: warehouse_long,
       }
     })
   };
