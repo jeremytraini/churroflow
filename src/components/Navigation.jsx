@@ -30,11 +30,6 @@ export const Navigation = (props) => {
         >
           <ul className="nav navbar-nav navbar-right">
             <li>
-              <Link to="/plans" className="page-scroll">
-                Plans
-              </Link>
-            </li>
-            <li>
               <a href="#features" className="page-scroll">
                 Features
               </a>
@@ -50,19 +45,14 @@ export const Navigation = (props) => {
               </a>
             </li>
             <li>
-              <a href="#team" className="page-scroll">
-                Team
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="page-scroll">
-                Contact
+              <a href="#plans" className="page-scroll">
+                Plans
               </a>
             </li>
             <Button
               component={Link}
               to="/login"
-              variant="contained"
+              variant="outlined"
               sx={{ my: 1.9, mx: 1.5 }}
             >
               LOG IN

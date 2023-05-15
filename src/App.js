@@ -13,7 +13,6 @@ import { Helmet } from 'react-helmet';
 import Upgrade from './pages/Upgrade';
 import Validator from './pages/Validator';
 import Welcome from './pages/Welcome';
-import Plan from './pages/Plan';
 
 const App = () => {
   return (
@@ -27,11 +26,7 @@ const App = () => {
           crossorigin=""></script>
       </Helmet>
       <Routes>
-        <Route path="/" element={<Navigate to="/welcome" />} />
-
-        <Route path="/welcome" element={<Welcome />} />
-
-        <Route path="/plans" element={<Plan />} />
+        <Route path="/" element={<Welcome />} />
 
         <Route element={<PublicLayout />}>
           <Route path="/login" element={<Login />} />

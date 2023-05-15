@@ -18,7 +18,7 @@ export const Navigation = (props) => {
             <span className="icon-bar"></span>{" "}
             <span className="icon-bar"></span>{" "}
           </button>
-          <Link className="navbar-brand page-scroll" to="/welcome">
+          <Link className="navbar-brand page-scroll" to="/">
             ChurroFlow
           </Link>{" "}
         </div>
