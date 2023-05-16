@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 
-// const baseUrl = "https://churroflow.jeremytraini.com/";
-const baseUrl = "http://localhost:8000/";
+const baseUrl = "https://api.churroflow.com/";
 
 const APIService = () => {
   const user = useAuth();
