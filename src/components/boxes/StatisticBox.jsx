@@ -43,6 +43,11 @@ const StatisticBox = ({type, from_date, to_date, warehouse_lat, warehouse_long})
         setUnit("");
         fetchQuery(type, true, warehouse_lat, warehouse_long);
         break;
+      case "totalRevenue":
+        setTitle("Total warehouse revenue");
+        setUnit("");
+        fetchQuery(type, true, warehouse_lat, warehouse_long);
+        break;
     }
   }, [update]);
 
@@ -62,10 +67,16 @@ const StatisticBox = ({type, from_date, to_date, warehouse_lat, warehouse_long})
     }
     
     if (is_int) {
-      setValue(data.value.toFixed(0));
+      if (query === "totalRevenue") {
+        setValue(Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD' }).format(data.value));
+      } else {
+        setValue(data.value.toFixed(0));
+      }
     } else {
       setValue(Math.round(data.value * 10) / 10);
     }
+
+    
 
     setIsPositive(data.change > 0);
     setChange(data.change > 0 ? data.change : -data.change);

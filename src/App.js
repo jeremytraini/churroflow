@@ -27,7 +27,7 @@ const App = () => {
       <Route element={<ProtectedLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/warehouse-planning" element={<WarehousePlanning />} />
-        <Route path="/warehouse-analytics" element={<WarehouseAnalytics />} />
+        <Route path="/warehouse-analytics/:lat?/:long?" element={<WarehouseAnalytics />} />
         <Route path="/inventory-actions" element={<InventoryActions />} />
         <Route path="/invoice-data-manager" element={<InvoiceDataManager />} />
         <Route path="/invoice-validator/:invoiceId" element={<Validator />} />

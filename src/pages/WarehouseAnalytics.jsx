@@ -8,6 +8,7 @@ import { useAuth } from '../hooks/useAuth';
 import StatisticBox from '../components/boxes/StatisticBox';
 import DataTableBox from '../components/boxes/DataTableBox';
 import Typography from "@mui/material/Typography";
+import { useParams, useNavigate } from 'react-router-dom';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -22,6 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const WarehouseAnalytics = () => {
   const { user } = useAuth();
+  const { lat, long } = useParams();
 
   return (
     <BasicPage title="Warehouse Analytics" >
@@ -39,20 +41,20 @@ const WarehouseAnalytics = () => {
         <Item sx={{
           gridArea: '1 / 1 / 3 / 2',
         }}>
-          <StatisticBox type="numUniqueCustomers" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={'-33.84938'} warehouse_long={'150.9033'} />
+          <StatisticBox type="numUniqueCustomers" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
         </Item>
 
         <Item sx={{
           gridArea: '1 / 2 / 3 / 3',
         }}>
-          <StatisticBox type="numActiveCustomers" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={'-33.84938'} warehouse_long={'150.9033'} />
+          <StatisticBox type="totalRevenue" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
         </Item>
 
         <Item sx={{
           gridArea: '3 / 1 / 7 / 3',
         }}>
           <BlurredBox type="Warehouse product data table" isBlurred={user.tier === 'Ultimate+'}>
-            <DataTableBox type="warehouseProductDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
+            <DataTableBox type="warehouseProductDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
           </BlurredBox>
         </Item>
 
@@ -60,7 +62,7 @@ const WarehouseAnalytics = () => {
           gridArea: '1 / 3 / 3 / 5 ',
         }}>
           <BlurredBox type="Units over time graph" isBlurred={user.tier === 'Starter'}>
-            <LineGraph type='deliveriesMadeMonthly' from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={'-33.84938'} warehouse_long={'150.9033'} />
+            <LineGraph type='deliveriesMadeMonthly' from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
           </BlurredBox>
         </Item>
 
@@ -68,7 +70,7 @@ const WarehouseAnalytics = () => {
           gridArea: '3 / 3 / 5 / 5',
         }}>
           <BlurredBox type="Delivery distance istance graph" isBlurred={user.tier !== 'Ultimate'}>
-            <LineGraph type='warehouseMonthlyAvgDeliveryDistance' from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={'-33.84938'} warehouse_long={'150.9033'} />
+            <LineGraph type='warehouseMonthlyAvgDeliveryDistance' from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
           </BlurredBox>
         </Item>
 
@@ -77,7 +79,7 @@ const WarehouseAnalytics = () => {
           gridArea: '5 / 3 / 7 / 5',
         }}>
           <BlurredBox type="Delivery time graph"  isBlurred={user.tier !== 'Ultimate'}>
-            <LineGraph type='warehouseMonthlyAvgDeliveryTime' from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={'-33.84938'} warehouse_long={'150.9033'} />
+            <LineGraph type='warehouseMonthlyAvgDeliveryTime' from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
           </BlurredBox>
         </Item>
 

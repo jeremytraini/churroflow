@@ -195,7 +195,7 @@ const InteractiveMap = () => {
         icon: actualWarehouse
       }).addTo(map_init);
       var popupStuff = document.createElement('div');
-      popupStuff.innerHTML = "<p>Type: <span style=\"color: red;\">Physical Warehouse</span></p> <p>Name: "+name+"</p> <p>Coordinates: " + lat + ", " + lng + "</p><p>Total Invoices Value:</p><span style=\"color: red;\"> $" + count + "</span>";
+      popupStuff.innerHTML = "<p>Type: <span style=\"color: red;\">Physical Warehouse</span></p> <a href='/warehouse-analytics/" + lat + "/" + lng + "'>Name: "+name+"</a> <p>Coordinates: " + lat + ", " + lng + "</p><p>Total Invoices Value:</p><span style=\"color: red;\"> $" + count + "</span>";
       markerPhysical.bindPopup(popupStuff);
       markerPhysical.on('hover', function () {
         markerPhysical.openPopup();

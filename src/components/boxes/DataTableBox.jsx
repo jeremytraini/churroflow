@@ -102,9 +102,9 @@ const DataTableBox = ({type, from_date, to_date}) => {
   return (
     <Box sx={{
       margin: '10px 10px',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
+      // display: 'flex',
+      // flexDirection: 'column',
+      // justifyContent: 'space-between',
       height: '100%',
       textAlign: 'left',
       color: 'black',
@@ -120,8 +120,8 @@ const DataTableBox = ({type, from_date, to_date}) => {
         {title}
       </Box>
       <Box sx={{
-          flexGrow: 1,
-          marginBottom: '20px',
+          // flexGrow: 1,
+          height: '87%',
         }}>
         <DataGrid
           density="compact"

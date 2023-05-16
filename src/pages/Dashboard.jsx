@@ -30,6 +30,7 @@ const Dashboard = () => {
       gridTemplateColumns: '1fr 1fr 1fr 1fr',
       gridTemplateRows: '1fr 1fr 1fr 1fr',
       gap: '20px',
+      maxHeight: `calc(100vh - 200px)`
       }}>
       <Item sx={{
         gridArea: '1 / 1 / 2 / 2'
