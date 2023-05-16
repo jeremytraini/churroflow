@@ -4,7 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import getAPI from '../../services/APIService';
 
-const DataTableBox = ({type, from_date, to_date}) => {
+const DataTableBox = ({type, from_date, to_date, warehouse_lat, warehouse_long}) => {
   const [title, setTitle] = React.useState("Test");
   const [rows, setRows] = React.useState([]);
   const [columns, setColumns] = React.useState([{}]);
@@ -33,43 +33,67 @@ const DataTableBox = ({type, from_date, to_date}) => {
             headerName: "Total Revenue",
             type: 'number',
             width: 150,
+            valueFormatter: (params) => {
+              if (params.value == null) {
+                return '';
+              }
+              return `$${params.value}`;
+            },
           },
          ]);
         fetchQuery(type);
         break;
       case "suburbDataTable":
         setTitle("Data by suburb");
-        fetchQuery(type);
+        fetchQuery(type, warehouse_lat, warehouse_long);
         setColumns([
           {
             field: "name",
-            headerName: "Client",
+            headerName: "Suburb",
             type: 'string',
-            width: 120,
+            width: 90,
           },
           {
             field: "total-deliveries",
             headerName: "Total Deliveries",
             type: 'number',
-            width: 150,
+            width: 120,
           },
           {
             field: "total-revenue",
             headerName: "Total Revenue",
             type: 'number',
-            width: 150,
+            width: 120,
+            valueFormatter: (params) => {
+              if (params.value == null) {
+                return '';
+              }
+              return `$${params.value}`;
+            },
+          },
+          {
+            field: "avg-delivery-time",
+            headerName: "Avg. Delivery Time (days)",
+            type: 'number',
+            width: 140,
+            valueFormatter: (params) => {
+              if (params.value == null) {
+                return '';
+              }
+              return Math.round(params.value * 100) / 100;
+            },
           },
          ]);
         break;
       case "warehouseProductDataTable":
         setTitle("Data by product");
-        fetchQuery(type);
+        fetchQuery(type, warehouse_lat, warehouse_long);
         setColumns([
           {
-            field: "product",
-            headerName: "Client",
+            field: "name",
+            headerName: "Product",
             type: 'string',
-            width: 120,
+            width: 100,
           },
           {
             field: "total-units",
@@ -88,8 +112,8 @@ const DataTableBox = ({type, from_date, to_date}) => {
     }
   }, [update]);
 
-  async function fetchQuery (query) {
-    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date);
+  async function fetchQuery (query, warehouse_lat, warehouse_long) {
+    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date, warehouse_lat, warehouse_long);
     const data = response.data;
 
     if (data == null) {

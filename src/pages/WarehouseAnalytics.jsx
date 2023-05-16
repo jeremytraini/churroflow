@@ -38,25 +38,45 @@ const WarehouseAnalytics = () => {
         gap: '20px',
         height: `calc(100vh - 200px)`
       }}>
-        <Item sx={{
-          gridArea: '1 / 1 / 3 / 2',
-        }}>
-          <StatisticBox type="numUniqueCustomers" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
-        </Item>
 
-        <Item sx={{
-          gridArea: '1 / 2 / 3 / 3',
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gridTemplateRows: '0.8fr 1.1fr 1.1fr',
+          gap: '20px',
+          gridArea: '1 / 1 / 7 / 3',
         }}>
-          <StatisticBox type="totalRevenue" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
-        </Item>
 
-        <Item sx={{
-          gridArea: '3 / 1 / 7 / 3',
-        }}>
-          <BlurredBox type="Warehouse product data table" isBlurred={user.tier === 'Ultimate+'}>
-            <DataTableBox type="warehouseProductDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
-          </BlurredBox>
-        </Item>
+          <Item sx={{
+            gridArea: '1 / 1 / 2 / 2',
+          }}>
+            <StatisticBox type="numUniqueCustomers" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
+            
+          </Item>
+          
+          <Item sx={{
+            gridArea: '1 / 2 / 2 / 3',
+          }}>
+            <StatisticBox type="totalRevenue" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
+          </Item>
+
+          <Item sx={{
+            gridArea: '2 / 1 / 3 / 3',
+          }}>
+            <BlurredBox type="Warehouse product data table" isBlurred={user.tier !== 'Ultimate'}>
+              <DataTableBox type="warehouseProductDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
+            </BlurredBox>
+          </Item>
+
+          <Item sx={{
+            gridArea: '3 / 1 / 4 / 3',
+          }}>
+            <BlurredBox type="Suburb data table" isBlurred={user.tier !== 'Ultimate'}>
+              <DataTableBox type="suburbDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} warehouse_lat={lat} warehouse_long={long} />
+            </BlurredBox>
+          </Item>
+
+        </Box>
 
         <Item sx={{
           gridArea: '1 / 3 / 3 / 5 ',

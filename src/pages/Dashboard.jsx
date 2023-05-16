@@ -77,7 +77,7 @@ const Dashboard = () => {
       <Item sx={{
         gridArea: '3 / 3 / 5 / 5'
       }}>
-      <BlurredBox type="Suburb data table" isBlurred={user.tier === 'Ultimate+'}>
+      <BlurredBox type="Suburb data table" isBlurred={user.tier !== 'Ultimate'}>
         <DataTableBox type="suburbDataTable" from_date={"2021-12-12"} to_date={"2023-12-12"} />
       </BlurredBox>
       </Item>
