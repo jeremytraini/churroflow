@@ -2,7 +2,6 @@ import L from 'leaflet';
 import { useEffect, useRef, useState } from "react";
 import warehouseLogo from '../assets/warehouse.png';
 import physicalWarehouse from '../assets/selfWarehouse.png';
-// import APIService from '../services/APIService';
 import getAPI from '../services/APIService';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
@@ -226,54 +225,40 @@ const InteractiveMap = ({ from_date, to_date }) => {
       sx={{
         width: '100%',
         height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
+        position: 'relative',
       }}
     >
       <Box
-        sx={{
+        ref={mapRef}
+        style={{
+          flexGrow: 1,
           width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center'
+          height: '100%',
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '13px',
+          left: '13px',
+          zIndex: 999,
+          width: '150px',
         }}
       >
         <TextField
-          label="No. Virtual Warehouses"
+          label="# Virtual Warehouses"
           type="number"
           name="clusterCount"
           InputProps={{ inputProps: { min: 1, max: 10 } }}
           onChange={handleChangeClusters}
           variant="outlined"
           defaultValue={numClusters}
-        />
-        {/* <DatePicker
-          label="From Date"
-          name="startTime"
-          onChange={handleChangeDateStart}
           sx={{
-            marginLeft: '10px'
+            width: '100%',
+            backgroundColor: 'white',
           }}
         />
-        <DatePicker
-          label="To Date"
-          name="endTime"
-          onChange={handleChangeDateEnd}
-          sx={{
-            marginLeft: '10px'
-          }}
-        /> */}
       </Box>
-      <Box
-        ref={mapRef}
-        style={{
-          flexGrow: 1,
-          width: '100%',
-        }}
-      />
     </Box>
   );
 };

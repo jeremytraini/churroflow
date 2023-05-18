@@ -80,6 +80,7 @@ const Dashboard = () => {
       </Select>
     }
   >
+  {dateRange &&
     <Box sx={{
       flexGrow: 1,
       display: 'grid',
@@ -138,7 +139,7 @@ const Dashboard = () => {
       </BlurredBox>
       </Item>
     </Box>
-
+    }
   </BasicPage>
   );
 };
