@@ -110,7 +110,7 @@ const DataTableBox = ({type, from_date, to_date, warehouse_lat, warehouse_long})
          ]);
         break;
     }
-  }, [update, from_date, to_date]);
+  }, [update, from_date, to_date, warehouse_lat, warehouse_long]);
 
   async function fetchQuery (query, warehouse_lat, warehouse_long) {
     const response = await APIService.invoiceProcessingQuery(query, from_date, to_date, warehouse_lat, warehouse_long).catch((err) => {
@@ -153,7 +153,8 @@ const DataTableBox = ({type, from_date, to_date, warehouse_lat, warehouse_long})
       </Box>
       <Box sx={{
           // flexGrow: 1,
-          height: '87%',
+          height: '90%',
+          paddingBottom: '20px',
         }}>
         <DataGrid
           density="compact"
@@ -187,8 +188,7 @@ const DataTableBox = ({type, from_date, to_date, warehouse_lat, warehouse_long})
               borderBottom: 'none',
             },
             // Remove the outer borders
-            border: 0
-
+            border: 0,
           }}
         />
       </Box>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'chart.js/auto';
 import Box from '@mui/material/Box';
-import getAPI from '../services/APIService';
+import getAPI from '../../services/APIService';
 
 
 function LineGraph( {data, type, from_date, to_date, warehouse_lat, warehouse_long} ) {
@@ -44,7 +44,7 @@ function LineGraph( {data, type, from_date, to_date, warehouse_lat, warehouse_lo
         fetchQuery(type);
         break;
     }
-  }, [update, from_date, to_date]);
+  }, [update, from_date, to_date, warehouse_lat, warehouse_long]);
 
   React.useEffect(() => {
     if (chartRef.current && chartData) {

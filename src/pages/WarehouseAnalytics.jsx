@@ -3,7 +3,7 @@ import { BasicPage } from "./BasicPage";
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import LineGraph from "../components/LineGraph";
+import LineGraph from "../components/boxes/LineGraphBox";
 import BlurredBox from "../components/boxes/BlurredBox";
 import { useAuth } from '../hooks/useAuth';
 import StatisticBox from '../components/boxes/StatisticBox';
@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useParams, useNavigate } from 'react-router-dom';
+import getAPI from '../services/APIService';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -27,9 +28,16 @@ const Item = styled(Paper)(({ theme }) => ({
 const WarehouseAnalytics = () => {
   const { user } = useAuth();
   const { lat, long } = useParams();
+  const APIService = getAPI();
+  const navigate = useNavigate();
 
+  const [currentWarehouse, setCurrentWarehouse] = React.useState({
+        lat: null,
+        lon: null,
+        name: "Loading..."
+      });
+  const [allWarehouses, setAllWarehouses] = React.useState([]);
   const [ sampleFrom, setSampleFrom ] = React.useState("All time");
-
   const [ dateRange, setDateRange ] = React.useState(null);
 
   React.useEffect(() => {
@@ -68,6 +76,50 @@ const WarehouseAnalytics = () => {
     }
   }, [sampleFrom]);
 
+  React.useEffect(() => {
+    console.log(lat, long, dateRange);
+    if (dateRange) {
+      // fetch warehouse data
+      APIService.invoiceProcessingQuery("warehouseCoords", dateRange.from_date, dateRange.to_date).catch((err) => {
+        setCurrentWarehouse({
+          lat: null,
+          lon: null,
+          name: "All Warehouses"
+        });
+      }).then((response) => {
+        const warehouses = response.data.data;
+
+        if (lat && long) {
+          const warehouse = warehouses.find((warehouse) => {
+            // Find warehouse using tolerance of 0.0001
+            return Math.abs(warehouse.lat - lat) < 0.0001 && Math.abs(warehouse.lon - long) < 0.0001;
+          });
+          setCurrentWarehouse(warehouse);
+
+          // set all warehouses for select. remove current warehouse from list
+          // setAllWarehouses(warehouses.filter((warehouse) => {
+          //   console.log(warehouse.lat, lat, warehouse.lon, long);
+          //   console.log(Math.abs(warehouse.lat - lat) < 0.0001 && Math.abs(warehouse.lon - long) < 0.0001);
+          //   return !(Math.abs(warehouse.lat - lat) < 0.0001 && Math.abs(warehouse.lon - long) < 0.0001);
+          // }));
+        } else {
+          setCurrentWarehouse({
+            lat: null,
+            lon: null,
+            name: "All Warehouses"
+          });
+        }
+        setAllWarehouses(warehouses);
+      });
+    } else {
+      setCurrentWarehouse({
+        lat: null,
+        lon: null,
+        name: "All Warehouses"
+      });
+    }
+  }, [lat, long, dateRange]);
+
   return (
     <BasicPage
       title="Warehouse Analytics"
@@ -85,18 +137,55 @@ const WarehouseAnalytics = () => {
         </Select>
       }
     >
-      <Typography component="h1" variant="h5" sx={{ color: 'grey', mb: 1, fontSize: '1.4em' }}>
-        All Warehouses
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          mb: 2
+        }}
+      >
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{
+            color: 'grey',
+            mr: 1,
+            fontSize: '1.4em'
+          }}
+          >
+          Current Warehouse:
+        </Typography>
+        {!!allWarehouses.length &&
+          <Select
+            value={currentWarehouse.lat+'/'+currentWarehouse.lon}
+            onChange={(e) => {
+              navigate("/warehouse-analytics/"+e.target.value);
+              }}
+            size="small"
+            sx={{
+              color: 'grey',
+              backgroundColor: 'white',
+              width: '300px',
+            }}
+          >
+            {/* Select another warehouse */}
+            {/* <MenuItem value='' disabled>Select another warehouse</MenuItem> */}
+            {allWarehouses.map((warehouse) => {
+              return <MenuItem value={warehouse.lat + "/" + warehouse.lon}>{warehouse.name}</MenuItem>
+            })}
+          </Select>
+        }
+      </Box>
 
-      {dateRange &&
+      {!!dateRange && !!currentWarehouse &&
         <Box sx={{
           flexGrow: 1,
           display: 'grid',
           gridTemplateColumns: '1fr 1fr 1fr 1fr',
           gridTemplateRows: '1fr 1fr 1fr 1fr 1fr 1fr',
           gap: '20px',
-          height: `calc(100vh - 200px)`
+          maxHeight: `calc(100vh - 250px)`
         }}>
 
           <Box sx={{
@@ -110,20 +199,20 @@ const WarehouseAnalytics = () => {
             <Item sx={{
               gridArea: '1 / 1 / 2 / 2',
             }}>
-              <StatisticBox type="numUniqueCustomers" from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={lat} warehouse_long={long} />
+              <StatisticBox type="numUniqueCustomers" from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={currentWarehouse.lat} warehouse_long={currentWarehouse.lon} />
             </Item>
             
             <Item sx={{
               gridArea: '1 / 2 / 2 / 3',
             }}>
-              <StatisticBox type="totalRevenue" from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={lat} warehouse_long={long} />
+              <StatisticBox type="totalRevenue" from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={currentWarehouse.lat} warehouse_long={currentWarehouse.lon} />
             </Item>
 
             <Item sx={{
               gridArea: '2 / 1 / 3 / 3',
             }}>
               <BlurredBox type="Warehouse product data table" isBlurred={user.tier !== 'Ultimate'}>
-                <DataTableBox type="warehouseProductDataTable" from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={lat} warehouse_long={long} />
+                <DataTableBox type="warehouseProductDataTable" from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={currentWarehouse.lat} warehouse_long={currentWarehouse.lon} />
               </BlurredBox>
             </Item>
 
@@ -131,7 +220,7 @@ const WarehouseAnalytics = () => {
               gridArea: '3 / 1 / 4 / 3',
             }}>
               <BlurredBox type="Suburb data table" isBlurred={user.tier !== 'Ultimate'}>
-                <DataTableBox type="suburbDataTable" from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={lat} warehouse_long={long} />
+                <DataTableBox type="suburbDataTable" from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={currentWarehouse.lat} warehouse_long={currentWarehouse.lon} />
               </BlurredBox>
             </Item>
 
@@ -141,7 +230,7 @@ const WarehouseAnalytics = () => {
             gridArea: '1 / 3 / 3 / 5 ',
           }}>
             <BlurredBox type="Units over time graph" isBlurred={user.tier === 'Starter'}>
-              <LineGraph type='deliveriesMadeMonthly' from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={lat} warehouse_long={long} />
+              <LineGraph type='deliveriesMadeMonthly' from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={currentWarehouse.lat} warehouse_long={currentWarehouse.lon} />
             </BlurredBox>
           </Item>
 
@@ -149,7 +238,7 @@ const WarehouseAnalytics = () => {
             gridArea: '3 / 3 / 5 / 5',
           }}>
             <BlurredBox type="Delivery distance istance graph" isBlurred={user.tier !== 'Ultimate'}>
-              <LineGraph type='warehouseMonthlyAvgDeliveryDistance' from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={lat} warehouse_long={long} />
+              <LineGraph type='warehouseMonthlyAvgDeliveryDistance' from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={currentWarehouse.lat} warehouse_long={currentWarehouse.lon} />
             </BlurredBox>
           </Item>
 
@@ -158,7 +247,7 @@ const WarehouseAnalytics = () => {
             gridArea: '5 / 3 / 7 / 5',
           }}>
             <BlurredBox type="Delivery time graph"  isBlurred={user.tier !== 'Ultimate'}>
-              <LineGraph type='warehouseMonthlyAvgDeliveryTime' from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={lat} warehouse_long={long} />
+              <LineGraph type='warehouseMonthlyAvgDeliveryTime' from_date={dateRange.from_date} to_date={dateRange.to_date} warehouse_lat={currentWarehouse.lat} warehouse_long={currentWarehouse.lon} />
             </BlurredBox>
           </Item>
 
