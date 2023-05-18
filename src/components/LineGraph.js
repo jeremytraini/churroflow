@@ -44,7 +44,7 @@ function LineGraph( {data, type, from_date, to_date, warehouse_lat, warehouse_lo
         fetchQuery(type);
         break;
     }
-  }, [update]);
+  }, [update, from_date, to_date]);
 
   React.useEffect(() => {
     if (chartRef.current && chartData) {

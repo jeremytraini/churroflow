@@ -49,7 +49,7 @@ const StatisticBox = ({type, from_date, to_date, warehouse_lat, warehouse_long})
         fetchQuery(type, true, warehouse_lat, warehouse_long);
         break;
     }
-  }, [update]);
+  }, [update, from_date, to_date]);
 
   async function fetchQuery (query, is_int, warehouse_lat, warehouse_long) {
     const response = await APIService.invoiceProcessingQuery(query, from_date, to_date, warehouse_lat, warehouse_long).catch((err) => {

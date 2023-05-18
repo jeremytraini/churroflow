@@ -22,7 +22,7 @@ const tiers = [
     title: 'Starter',
     price: '0',
     enabled: [
-      'Upload, Store, Render, and Send 30 Invoices/Month',
+      'Process 30 Invoices per Month',
       'Invoice Data Manager',
     ],
     disabled: [
@@ -37,10 +37,10 @@ const tiers = [
   },
   {
     title: 'Standard',
-    subheader: 'Reccomended for small businesses',
+    subheader: 'Recommended for small businesses',
     price: '39.99',
     enabled: [
-      'Upload, Store, Render, and Send 200 Invoices/Month',
+      'Process 200 Invoices per Month',
       'Invoice Data Manager',
       'Invoice Validator Interface',
       'Download Validation Report',
@@ -55,10 +55,10 @@ const tiers = [
   },
   {
     title: 'Ultimate',
-    subheader: 'Reccomended for most SMEs',
+    subheader: 'Recommended for most SMEs',
     price: '79.99',
     enabled: [
-      'Upload, Store, Render, and Send Unlimited Invoices',
+      'Process Unlimited Invoices',
       'Invoice Data Manager',
       'Invoice Validator Interface',
       'Download Validation Report',

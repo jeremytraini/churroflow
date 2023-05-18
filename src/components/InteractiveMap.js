@@ -12,29 +12,27 @@ import HeatmapOverlay from "leaflet-heatmap";
 const max = 4000;
 const radius = 0.04;
 
-const InteractiveMap = () => {
+const InteractiveMap = ({ from_date, to_date }) => {
   const [heatmapData, setHeatmapData] = useState({ max: max, data: [] });
   const [virtualWarehouseCoords, setVirutalWarehouseCoords] = useState({});
   const [actualWarehousesCoords, setActualWarehousesCoords] = useState([]);
   const [numClusters, setNumClusters] = useState(2);
-  const [startDate, setStartDate] = useState('2000-1-1');
-  const [endDate, setEndDate] = useState('2023-4-4');
+  // const [startDate, setStartDate] = useState('2000-1-1');
+  // const [endDate, setEndDate] = useState('2023-4-4');
   const mapRef = useRef(null);
   const APIService = getAPI();
 
 
-  async function getHeatmapData(startDate, endDate) {
-    if (startDate !== '' && endDate !== '') {
-      try {
-        const a = await APIService.invoiceProcessingQuery("heatmapCoords", startDate, endDate)
-          .then(data => {
-            return { max: max, data: data.data.data.map((item) => { return { lat: item.lat, lng: item.lng, count: item.count } }) }; // This is fun
-          });
-        setHeatmapData(a);
+  async function getHeatmapData() {
+    try {
+      const a = await APIService.invoiceProcessingQuery("heatmapCoords", from_date, to_date)
+        .then(data => {
+          return { max: max, data: data.data.data.map((item) => { return { lat: item.lat, lng: item.lng, count: item.count } }) }; // This is fun
+        });
+      setHeatmapData(a);
 
-      } catch (err) {
-        console.log("Heatmap data Error");
-      }
+    } catch (err) {
+      console.log("Heatmap data Error");
     }
   }
 
@@ -52,39 +50,39 @@ const InteractiveMap = () => {
     }
   }
 
-  let cooldown_c2 = false;
-  function handleChangeDateStart(event) {
-    if (!cooldown_c2) {
-      cooldown_c2 = true;
-      setTimeout(() => {
-        if (event.target.value !== '') {
-          console.log(event.target.value);
-          setStartDate(event.target.value);
-        }
-        cooldown_c2 = false;
-      }, 500);
-    }
-  }
+  // let cooldown_c2 = false;
+  // function handleChangeDateStart(event) {
+  //   if (!cooldown_c2) {
+  //     cooldown_c2 = true;
+  //     setTimeout(() => {
+  //       if (event.target.value !== '') {
+  //         console.log(event.target.value);
+  //         setStartDate(event.target.value);
+  //       }
+  //       cooldown_c2 = false;
+  //     }, 500);
+  //   }
+  // }
 
-  let cooldown_c3 = false;
-  function handleChangeDateEnd(event) {
-    if (!cooldown_c3) {
-      cooldown_c3 = true;
-      setTimeout(() => {
-        if (event.target.value !== '') {
-          console.log(event.target.value);
-          setEndDate(event.target.value);
-        }
-        cooldown_c3 = false;
-      }, 500);
-    }
-  }
+  // let cooldown_c3 = false;
+  // function handleChangeDateEnd(event) {
+  //   if (!cooldown_c3) {
+  //     cooldown_c3 = true;
+  //     setTimeout(() => {
+  //       if (event.target.value !== '') {
+  //         console.log(event.target.value);
+  //         setEndDate(event.target.value);
+  //       }
+  //       cooldown_c3 = false;
+  //     }, 500);
+  //   }
+  // }
 
 
-  async function getVirutalWarehouseCoords(clusterCount, startDate, endDate) {
-    if (startDate !== '' && endDate !== '' && clusterCount !== '') {
+  async function getVirutalWarehouseCoords(clusterCount) {
+    if (clusterCount !== '') {
       try {
-        await APIService.virtualWarehouseCoords(clusterCount, startDate, endDate)
+        await APIService.virtualWarehouseCoords(clusterCount, from_date, to_date)
           .then(data => {
             setVirutalWarehouseCoords(data.data.content.centers);
           });
@@ -95,27 +93,25 @@ const InteractiveMap = () => {
   }
 
 
-  async function GetSelfWarehouseCoords(startDate, endDate) {
-    if (startDate !== '' && endDate !== '') {
-      try {
-        const a = await APIService.invoiceProcessingQuery("warehouseCoords", startDate, endDate)
-          .then(data => {
-            return data.data.data.map((item) => { return { lat: item.lat, lng: item.lon, count: item.value, name: item.name } });
-          });
-        setActualWarehousesCoords(a);
-      } catch (err) {
-        console.log("Heatmap data Error");
-      }
+  async function GetSelfWarehouseCoords() {
+    try {
+      const a = await APIService.invoiceProcessingQuery("warehouseCoords", from_date, to_date)
+        .then(data => {
+          return data.data.data.map((item) => { return { lat: item.lat, lng: item.lon, count: item.value, name: item.name } });
+        });
+      setActualWarehousesCoords(a);
+    } catch (err) {
+      console.log("Heatmap data Error");
     }
   }
 
 
   useEffect(() => {
-    getHeatmapData(startDate, endDate);
-    getVirutalWarehouseCoords(numClusters, startDate, endDate);
-    GetSelfWarehouseCoords(startDate, endDate);
+    getHeatmapData();
+    getVirutalWarehouseCoords(numClusters);
+    GetSelfWarehouseCoords();
 
-  }, [startDate, endDate, numClusters]);
+  }, [from_date, to_date, numClusters]);
 
   const b = heatmapData;
 
@@ -254,7 +250,7 @@ const InteractiveMap = () => {
           variant="outlined"
           defaultValue={numClusters}
         />
-        <DatePicker
+        {/* <DatePicker
           label="From Date"
           name="startTime"
           onChange={handleChangeDateStart}
@@ -269,7 +265,7 @@ const InteractiveMap = () => {
           sx={{
             marginLeft: '10px'
           }}
-        />
+        /> */}
       </Box>
       <Box
         ref={mapRef}

@@ -110,10 +110,18 @@ const DataTableBox = ({type, from_date, to_date, warehouse_lat, warehouse_long})
          ]);
         break;
     }
-  }, [update]);
+  }, [update, from_date, to_date]);
 
   async function fetchQuery (query, warehouse_lat, warehouse_long) {
-    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date, warehouse_lat, warehouse_long);
+    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date, warehouse_lat, warehouse_long).catch((err) => {
+      console.log(err);
+      return;
+    });
+
+    if (response == null) {
+      return;
+    }
+    
     const data = response.data;
 
     if (data == null) {
