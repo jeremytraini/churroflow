@@ -8,8 +8,8 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import HeatmapOverlay from "leaflet-heatmap";
 
-const max = 4000;
-const radius = 0.04;
+const max = 1700;
+const radius = 0.045;
 
 const InteractiveMap = ({ from_date, to_date }) => {
   const [heatmapData, setHeatmapData] = useState({ max: max, data: [] });
@@ -20,7 +20,6 @@ const InteractiveMap = ({ from_date, to_date }) => {
   // const [endDate, setEndDate] = useState('2023-4-4');
   const mapRef = useRef(null);
   const APIService = getAPI();
-
 
   async function getHeatmapData() {
     try {
@@ -121,9 +120,8 @@ const InteractiveMap = ({ from_date, to_date }) => {
 
   var gradientColors = {
     0: '#00FF00',
-    0.1: '#00FF00',
-    0.35: '#FFFF00',
-    0.6: '#FFA500',
+    0.5: '#FFFF00',
+    0.7: '#FFA500',
     1.0: '#FF0000'
   };
 
@@ -131,9 +129,9 @@ const InteractiveMap = ({ from_date, to_date }) => {
   var cfg = {
     radius: radius,
     gradient: gradientColors,
-    maxOpacity: 0.9,
+    maxOpacity: 0.8,
     scaleRadius: true,
-    useLocalExtrema: true,
+    useLocalExtrema: false,
     latField: "lat",
     lngField: "lng",
     valueField: "count"
@@ -172,7 +170,7 @@ const InteractiveMap = ({ from_date, to_date }) => {
         icon: warehouseIcon
       }).addTo(map_init);
       var popupContent = document.createElement('div');
-      popupContent.innerHTML = "<p>Type: <span style=\"color: red;\">Virtual Warehouse</span></p> <p>Coordinates: " + lat + ", " + lng + "</p>";
+      popupContent.innerHTML = "<b style='color: red; font-size: 1.2em'>Virtual Warehouse</b> <p>Lattitude: " + lat + "</p><p>Longitude: " + lng + "</p>";
       marker.bindPopup(popupContent);
       marker.on('hover', function () {
         marker.openPopup();
@@ -190,7 +188,7 @@ const InteractiveMap = ({ from_date, to_date }) => {
         icon: actualWarehouse
       }).addTo(map_init);
       var popupStuff = document.createElement('div');
-      popupStuff.innerHTML = "<p>Type: <span style=\"color: red;\">Physical Warehouse</span></p> <a href='/warehouse-analytics/" + lat + "/" + lng + "'>Name: "+name+"</a> <p>Coordinates: " + lat + ", " + lng + "</p><p>Total Invoices Value:</p><span style=\"color: red;\"> $" + count + "</span>";
+      popupStuff.innerHTML = "<b style='font-size: 1.2em'>"+name+"</b><p>Lattitude: " + lat + "</p><p>Longitude: " + lng + "</p><p>Total Revenue: $" + count + "</p>"+"<a style='font-size: 1.2em' href='/warehouse-analytics/" + lat + "/" + lng + "'>View analytics...</a>";
       markerPhysical.bindPopup(popupStuff);
       markerPhysical.on('hover', function () {
         markerPhysical.openPopup();
