@@ -204,7 +204,11 @@ const InvoiceDataManager = () => {
               renderCell: (params) => {
                   const onDelete = () => {
                     const currentRow = params.row;
-                    APIService.deleteInvoice(currentRow.id);
+                    try {
+                      APIService.deleteInvoice(currentRow.id);
+                    } catch (error) {
+                      console.log(error);
+                    }
                     setInvalidRows((rows) => rows.filter((row) => row.id !== currentRow.id));
                   };
 
@@ -287,7 +291,11 @@ const InvoiceDataManager = () => {
             renderCell: (params) => {
                 const onDelete = () => {
                   const currentRow = params.row;
-                  APIService.deleteInvoice(currentRow.id);
+                  try {
+                    APIService.deleteInvoice(currentRow.id);
+                  } catch (error) {
+                    console.log(error);
+                  }
                   setProcessedRows(processedRows.filter((row) => row.id !== currentRow.id));
                 };
 
