@@ -158,7 +158,8 @@ const WarehouseAnalytics = () => {
         </Typography>
         {!!allWarehouses.length &&
           <Select
-            value={currentWarehouse.lat+'/'+currentWarehouse.lon}
+            defaultValue={''}
+            value={currentWarehouse.lat !== null ? currentWarehouse.lat+'/'+currentWarehouse.lon : ''}
             onChange={(e) => {
               navigate("/warehouse-analytics/"+e.target.value);
               }}
@@ -168,9 +169,10 @@ const WarehouseAnalytics = () => {
               backgroundColor: 'white',
               width: '300px',
             }}
+            displayEmpty
           >
-            {/* Select another warehouse */}
-            {/* <MenuItem value='' disabled>Select another warehouse</MenuItem> */}
+            {console.log(currentWarehouse.lat !== null ? currentWarehouse.lat+'/'+currentWarehouse.lon : '')}
+            <MenuItem value={''}>All Warehouses</MenuItem>
             {allWarehouses.map((warehouse) => {
               return <MenuItem value={warehouse.lat + "/" + warehouse.lon}>{warehouse.name}</MenuItem>
             })}
