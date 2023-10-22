@@ -33,7 +33,7 @@ With ChurroFlow, there's no need for a dedicated team of data analysts or comple
 ### Architecture
 
 - **Tech:** React, FastAPI, PostgreSQL, Python, AWS Amplify, AWS Elastic Beanstalk.
-- **APIs:** ChurroFlow makes use of multiple APIs, including our own [https://github.com/jeremytraini/churroflow-api](Churros Service API) for api orchestration and data processing.
+- **APIs:** ChurroFlow makes use of multiple APIs, including our own [Churros Service API](https://github.com/jeremytraini/churroflow-api) for api orchestration and data processing.
 
 ---
 
@@ -49,7 +49,7 @@ We pride ourselves on our teamwork and collaboration:
 
 ### Demo
 
-For a live demo of our application, visit: [ChurroFlow.com](www.churroflow.com)
+For a live demo of our application, visit: [ChurroFlow.com](https://www.churroflow.com/)
 
 Demo highlights:
 - Dashboard Overview
@@ -58,11 +58,13 @@ Demo highlights:
 - Warehouse Planning & Management
 - Dynamic Insights and Predictions
 
+If you would like demo credentials, please [contact us](mailto:hi@jeremytraini.com "ChurroFlow Demo Credentials").
+
 ---
 
 ### Conclusion
 
-ChurroFlow isn’t merely an application; it's a paradigm shift in how businesses view and utilize their invoices. By converting everyday invoices into deep insights, ChurroFlow promises operational efficiency, cost-saving opportunities, and a pathway to strategic growth.
+ChurroFlow isn’t merely an application; it's a paradigm shift in how businesses view and utilise their invoices. By converting everyday invoices into deep insights, ChurroFlow promises operational efficiency, cost-saving opportunities, and a pathway to strategic growth.
 
 ---
 
