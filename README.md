@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+## www.ChurroFlow.com
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+### Welcome to ChurroFlow! 🚀
 
-In the project directory, you can run:
+**ChurroFlow** is a ground-breaking application designed to transform the overlooked potential of routine invoices into actionable business intelligence. Using advanced machine learning and data analytics, ChurroFlow offers businesses unparalleled insights into logistics and inventory management, effortlessly.
 
-### `npm start`
+In 2023, the ChurroFlow team was awarded the **Maquarie Group Software Engineering Prize** for their innovative use of data analytics and its potential to revolutionise the logistics industry.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Table of Contents
+1. [Introduction](#introduction)
+2. [Architecture](#architecture)
+3. [Collaborative Tools](#collaborative-tools)
+4. [Demo](#demo)
+5. [Conclusion](#conclusion)
+6. [Credits](#credits)
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Introduction
 
-### `npm run build`
+In the age of digital acceleration, data has emerged as the new oil, driving decision-making and strategy across industries. However, despite the abundance of data, businesses often struggle to extract meaningful insights from it. This is especially true for logistics and inventory management, where data is often siloed and fragmented. As a result, businesses are unable to leverage the full potential of their data, leading to vast inefficiencies and lost opportunities.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ChurroFlow is the solution to this problem. It is a data analytics platform that automatically extracts information from business invoices and transforms them into deep, actionable insights.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+With ChurroFlow, there's no need for a dedicated team of data analysts or complex training. Simply upload your invoices and let ChurroFlow do the rest.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+### Architecture
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Tech:** React, FastAPI, PostgreSQL, Python, AWS Amplify, AWS Elastic Beanstalk.
+- **APIs:** ChurroFlow makes use of multiple APIs, including our own [Churros Service API](https://github.com/jeremytraini/churroflow-api) for api orchestration and data processing.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Collaborative Tools
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+We pride ourselves on our teamwork and collaboration:
 
-## Learn More
+1. **GitHub**: Our primary version control platform, for seamless collaboration and code management.
+2. **Confluence**: Used for documentation, allowing our team to keep track of everything, from project requirements to deployment.
+3. **Jira**: Our project management tool of choice, aiding in task tracking, sprints, and overall project progress.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Demo
 
-### Code Splitting
+For a live demo of our application, visit: [ChurroFlow.com](https://www.churroflow.com/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Demo highlights:
+- Dashboard Overview
+- Invoice Management & Validation
+- In-depth Analytics
+- Warehouse Planning & Management
+- Dynamic Insights and Predictions
 
-### Analyzing the Bundle Size
+If you would like demo credentials, please [contact us](mailto:hi@jeremytraini.com "ChurroFlow Demo Credentials").
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+### Conclusion
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+ChurroFlow isn’t merely an application; it's a paradigm shift in how businesses view and utilise their invoices. By converting everyday invoices into deep insights, ChurroFlow promises operational efficiency, cost-saving opportunities, and a pathway to strategic growth.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Credits
 
-### Deployment
+- **Team Lead**: Jeremy Traini
+- **Product Owner**: Ricardo Alkazzi
+- **Scrum Master**: Ahona Dutta
+- **Delivery Manager**: Denzel Iskandar
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Join us in shaping the future of efficient business operations with ChurroFlow.
