@@ -11,6 +11,23 @@ import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import ErrorIcon from '@mui/icons-material/Error';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#f5d0d4',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 260,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9',
+  },
+}));
 
 const InvoiceDataManager = () => {
   const [invalidRows, setInvalidRows] = React.useState([]);
@@ -50,11 +67,6 @@ const InvoiceDataManager = () => {
     setNumberToUpload(event.target.files.length);
 
     const reader = new FileReader();
-    // reader.onload = function (e) {
-    //   APIService.uploadInvoice(normaliseLineEndings(e.target.result));
-    // };
-
-    const formData = new FormData();
     for (let i = 0; i < event.target.files.length; i++) {
       reader.onloadend = (function(file) {
         return function(evt) {
@@ -73,24 +85,30 @@ const InvoiceDataManager = () => {
   }
 
   return (
-    <BasicPage title="Invoice Data Manager"> 
-      <Button
-        variant="outlined"
-        component="label"
-        sx={{ marginBottom: '20px' }}
-      >
-        Upload Your Invoices
-        <input
-          type="file"
-          hidden
-          className='hidden'
-          multiple
-          accept='xml/*'
-          name="invoices"
-          onChange={(event) => {
-            uploadInvoices(event);
-          }} />
-      </Button>
+    <BasicPage
+      title="Invoice Data Manager"
+      action={
+        <Button
+          variant="contained"
+          component="label"
+          disableElevation
+        >
+          <CloudUploadIcon sx={{ marginRight: '10px' }} />
+          Upload Invoices
+          <input
+            type="file"
+            hidden
+            className='hidden'
+            multiple
+            accept='xml/*'
+            name="invoices"
+            onChange={(event) => {
+              uploadInvoices(event);
+            }} />
+        </Button>
+      }
+    > 
+      
       {numberToUpload !== 0 &&
         <Box
           sx={{
@@ -110,76 +128,117 @@ const InvoiceDataManager = () => {
           />
         </Box>
       }
-      <Typography component="h1" variant="h6" sx={{ marginBottom: '10px' }}>
-        Invalid Invoices
-      </Typography>
-      <DataGrid
-        sx={{
-          marginBottom: '20px',
-          minHeight: '300px',
-          backgroundColor: 'white',
+      {invalidRows.length !== 0 &&
+      <>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            marginBottom: '10px',
           }}
-        onCellClick={(event)=> event.stopPropagation}
-        columns={[
-          {
-            field: 'name',
-            hideable: false,
-            headerName: 'Filename',
-            width: 200,
-          },
-          {
-            field: 'num_errors',
-            headerName: 'Errors'
-          },
-          {
-            field: 'num_warnings',
-            headerName: 'Warnings'
-          },
-          {
-            field: 'date_added',
-            headerName: 'Date Added'
-          },
-          {
-            field: 'date_last_modified',
-            headerName: 'Last Modified'
-          },
-          {
-            field: "actions",
-            headerName: "",
-            width: 150,
-            sortable: false,
-            disableClickEventBubbling: true,
-            renderCell: (params) => {
-                const onDelete = () => {
-                  const currentRow = params.row;
-                  APIService.deleteInvoice(currentRow.id);
-                  setInvalidRows((rows) => rows.filter((row) => row.id !== currentRow.id));
-                };
-
-                const onView = () => {
-                  navigate('/invoice-validator/' + params.row.id);
-                };
-                
-                return (
-                  <Stack direction="row" >
-                    <IconButton size="large" onClick={onDelete}>
-                      <DeleteIcon />
-                    </IconButton>
-
-                    <IconButton size="large" onClick={onView}>
-                      <PlayArrowIcon />
-                    </IconButton>
-                  </Stack>
-                );
+        >
+          <Typography component="h1" variant="h6">
+            Awaiting Rectification
+          </Typography>
+          <HtmlTooltip
+            title={
+                <>
+                  <Typography color="inherit" variant="body2" fontWeight='bold'>Errors have been found in your invoices!</Typography>
+                  <Typography color="inherit" variant="body2">
+                    We cannot process data within invalid invoices as they are not PEPPOL compliant and may contain errors.
+                  </Typography>
+                  <Typography color="inherit" variant="body2">
+                    Such invoices will not be included in your reports until they are rectified!
+                  </Typography>
+                </>
+            }
+            arrow
+            placement="right"
+          >
+            <ErrorIcon
+              sx={{
+                marginLeft: '10px',
+                height: '100%',
+                color: '#e04f5e',
+              }}
+            />
+          </HtmlTooltip>
+        </Box>
+        <DataGrid
+          sx={{
+            marginBottom: '20px',
+            minHeight: '300px',
+            backgroundColor: 'white',
+            }}
+          onCellClick={(event)=> event.stopPropagation}
+          columns={[
+            {
+              field: 'name',
+              hideable: false,
+              headerName: 'Filename',
+              width: 200,
             },
-          },
-        ]}
-        rows={invalidRows}
-        disableRowSelectionOnClick
-        hideFooterSelectedRowCount
-      />
+            {
+              field: 'num_errors',
+              headerName: 'Errors'
+            },
+            {
+              field: 'num_warnings',
+              headerName: 'Warnings'
+            },
+            {
+              field: 'date_added',
+              headerName: 'Date Added'
+            },
+            {
+              field: 'date_last_modified',
+              headerName: 'Last Modified'
+            },
+            {
+              field: "actions",
+              headerName: "",
+              width: 150,
+              sortable: false,
+              disableClickEventBubbling: true,
+              renderCell: (params) => {
+                  const onDelete = () => {
+                    const currentRow = params.row;
+                    try {
+                      APIService.deleteInvoice(currentRow.id);
+                    } catch (error) {
+                      console.log(error);
+                    }
+                    setInvalidRows((rows) => rows.filter((row) => row.id !== currentRow.id));
+                  };
+
+                  const onView = () => {
+                    navigate('/invoice-validator/' + params.row.id);
+                  };
+                  
+                  return (
+                    <Stack direction="row" >
+                      <IconButton size="large" onClick={onDelete}>
+                        <DeleteIcon />
+                      </IconButton>
+
+                      <IconButton size="large" onClick={onView}>
+                        <PlayArrowIcon />
+                      </IconButton>
+                    </Stack>
+                  );
+              },
+            },
+          ]}
+          rows={invalidRows}
+          disableRowSelectionOnClick
+          hideFooterSelectedRowCount
+        />
+      </>
+      }
+      
       <Typography component="h1" variant="h6" sx={{ marginBottom: '10px' }}>
-        Processed Invoices
+        Processed Invoices ({processedRows.length})
       </Typography>
       <DataGrid
         sx={{
@@ -232,7 +291,11 @@ const InvoiceDataManager = () => {
             renderCell: (params) => {
                 const onDelete = () => {
                   const currentRow = params.row;
-                  APIService.deleteInvoice(currentRow.id);
+                  try {
+                    APIService.deleteInvoice(currentRow.id);
+                  } catch (error) {
+                    console.log(error);
+                  }
                   setProcessedRows(processedRows.filter((row) => row.id !== currentRow.id));
                 };
 

@@ -3,11 +3,12 @@ import Box from '@mui/material/Box';
 import ChangeHistoryOutlinedIcon from '@mui/icons-material/ChangeHistoryOutlined';
 import getAPI from '../../services/APIService';
 
-const StatisticBox = ({type, from_date, to_date}) => {
+const StatisticBox = ({type, from_date, to_date, warehouse_lat, warehouse_long}) => {
   let timePeriod = "12 months";
 
   const [title, setTitle] = React.useState("Test");
   const [unit, setUnit] = React.useState("");
+  const [isOpposite, setIsOpposite] = React.useState(false);
   const [value, setValue] = React.useState("-");
   const [change, setChange] = React.useState("-");
   const [is_positive, setIsPositive] = React.useState("+");
@@ -27,34 +28,58 @@ const StatisticBox = ({type, from_date, to_date}) => {
         fetchQuery(type, true);
         break;
       case "averageDeliveryTime":
-        setTitle("Delivery Time");
+        setTitle("Avg. Delivery Time");
         setUnit(" days");
         fetchQuery(type, false);
         break;
       case "avgDeliveryDistance":
-        setTitle("Delivery Distance");
+        setTitle("Avg. Delivery Distance");
         setUnit(" km");
+        setIsOpposite(true);
         fetchQuery(type, false);
         break;
+      case "numUniqueCustomers":
+        setTitle("Number of unique customers");
+        setUnit("");
+        fetchQuery(type, true, warehouse_lat, warehouse_long);
+        break;
+      case "totalRevenue":
+        setTitle("Total warehouse revenue");
+        setUnit("");
+        fetchQuery(type, true, warehouse_lat, warehouse_long);
+        break;
     }
-  }, [update]);
+  }, [update, from_date, to_date, warehouse_lat, warehouse_long]);
 
-  async function fetchQuery (query, is_int) {
-    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date);
-    const data = response.data;
+  async function fetchQuery (query, is_int, warehouse_lat, warehouse_long) {
+    const response = await APIService.invoiceProcessingQuery(query, from_date, to_date, warehouse_lat, warehouse_long).catch((err) => {
+      console.log(err);
+      return;
+    });
+    if (response == null) {
+      return;
+    }
+    
+    const data = response.data
 
     if (data == null) {
       return;
     }
     
     if (is_int) {
-      setValue(data.value.toFixed(0));
+      if (query === "totalRevenue") {
+        setValue(Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD' }).format(data.value));
+      } else {
+        setValue(data.value.toFixed(0));
+      }
     } else {
       setValue(Math.round(data.value * 10) / 10);
     }
 
-    setChange(data.change);
-    setIsPositive(data.change > 0 ? "+" : "-")
+    
+
+    setIsPositive(data.change > 0);
+    setChange(data.change > 0 ? data.change : -data.change);
   }
 
   return (
@@ -62,31 +87,46 @@ const StatisticBox = ({type, from_date, to_date}) => {
       margin: '10px 10px',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       height: '90%',
       color: 'black',
     }}>
       <Box sx={{
         fontSize: '0.9rem',
         textAlign: 'left',
-        paddingBottom: '10px'
+        paddingBottom: '10px',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
       }}>
         {title}
       </Box>
       <Box sx={{
-        fontSize: '2rem',
+        fontSize: '2.4rem',
         alignItems: 'center',
         flexGrow: 1,
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        margin: 'auto 0',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+
       }}>
-        {value}{unit}
+        <Box
+          sx={{
+          }}
+        >
+          {value}{unit}
+        </Box>
       </Box>
       <Box sx={{
         fontSize: '0.8rem',
-        color: is_positive === '+' ? 'green' : 'red',
+        color: (is_positive && !isOpposite) || (!is_positive && !isOpposite) ? 'green' : 'red',
       }}>
-        {is_positive === '+' ? (
+        {is_positive ? (
           <ChangeHistoryOutlinedIcon sx={{
-            color: 'green',
             fontSize: '0.8rem',
             verticalAlign: 'middle',
             paddingLeft: '5px',
@@ -94,7 +134,6 @@ const StatisticBox = ({type, from_date, to_date}) => {
           }} />
         ) : (
           <ChangeHistoryOutlinedIcon sx={{
-            color: 'red',
             fontSize: '0.8rem',
             verticalAlign: 'middle',
             paddingRight: '5px',
@@ -107,8 +146,12 @@ const StatisticBox = ({type, from_date, to_date}) => {
       </Box>
       <Box sx={{
         fontSize: '0.7rem',
-        color: 'grey'
+        color: 'grey',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
       }}>
+        12 months
       </Box>
     </Box>
   );

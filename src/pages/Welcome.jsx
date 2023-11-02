@@ -4,8 +4,7 @@ import { Header } from "../components/Header";
 import { Features } from "../components/Feature";
 import { About } from "../components/About";
 import { Services } from "../components/Service";
-import { Team } from "../components/Team";
-import { Contact } from "../components/Contact";
+import Plan from "../components/Plan";
 import JsonData from "../data/data.json";
 import SmoothScroll from "smooth-scroll";
 import "../App.css";
@@ -28,8 +27,7 @@ const Welcome = () => {
       <Features data={landingPageData.Features} />
       <About data={landingPageData.About} />
       <Services data={landingPageData.Services} />
-      <Team data={landingPageData.Team} />
-      <Contact data={landingPageData.Contact} />
+      <Plan />
     </div>
   );
 };

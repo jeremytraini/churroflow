@@ -29,7 +29,7 @@ const Register = () => {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: "10em",
+          paddingTop: "10em",
           display: "flex",
           flexDirection: "column",
           alignItems: "center"

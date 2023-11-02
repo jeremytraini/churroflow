@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 
+const baseUrl = "https://api.churroflow.com/";
+
 const APIService = () => {
   const user = useAuth();
 
@@ -16,11 +18,14 @@ const APIService = () => {
     console.log(user)
     
     return axios.create({
-      baseURL: "http://churros.eba-pyyazat7.ap-southeast-2.elasticbeanstalk.com/",
-      // baseURL:"http://localhost:8000/",
+      baseURL:baseUrl,
       headers: headers,
       mode: 'cors',
     });
+  }
+
+  const getBaseUrl = () => {
+    return baseUrl;
   }
 
   const login = (email, password) => {
@@ -71,13 +76,15 @@ const APIService = () => {
     })
   };
 
-  const invoiceProcessingQuery = (query, from_date, to_date) => {
+  const invoiceProcessingQuery = (query, from_date, to_date, warehouse_lat, warehouse_long) => {
     return getBase().get("/invoice_processing/query/v2",
     {
       params: {
         query: query,
         from_date: from_date,
-        to_date: to_date
+        to_date: to_date,
+        warehouse_lat: warehouse_lat,
+        warehouse_long: warehouse_long,
       }
     })
   };
@@ -144,6 +151,14 @@ const APIService = () => {
     })
   };
 
+  const invoiceUploadText = (name, text) => {
+    return getBase().post("/invoice/upload_text/v1",
+    {
+      name: name,
+      text: text
+    });
+  };
+
   return {
     login,
     register,
@@ -154,7 +169,9 @@ const APIService = () => {
     getInvoice,
     getLintReport,
     deleteInvoice,
-    virtualWarehouseCoords
+    virtualWarehouseCoords,
+    invoiceUploadText,
+    getBaseUrl
   };
 }
 

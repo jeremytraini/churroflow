@@ -4,45 +4,38 @@ import useTitle from '../useTitle';
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { useNavigate } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
-export const BasicPage = ({ title, backButton, children }) => {
+export const BasicPage = ({ title, action, children }) => {
   useTitle("ChurroFlow - " + title);
-  const navigate = useNavigate();
 
   return (
     <Container component="main" sx={{
-      height: '100%',
-      width: '100%',
-      // maxWidth: false,
-      minWidth: '850px',
-      marginTop: 8,
+      height: 'calc(100% - 70px - 24px)',
+      marginTop: '24px',
+      paddingBottom: '50px',
       display: "flex",
       flexDirection: "column",
+      justifyContent: "space-between",
       alignItems: "left",
-      paddingTop: '35px',
-      paddingLeft: '5px',
     }}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          width: '100%',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Typography component="h1" variant="h5" sx={{ paddingBottom: '10px' }}>
-          {title}
-        </Typography>
-        {!!backButton && 
-          <Button
-            variant="outlined"
-            onClick={() => navigate(-1)}
-          >
-            Back
-          </Button>
-        }
-      </Box>
-      {children}
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            paddingBottom: '15px',
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography component="h1" variant="h5" sx={{ paddingBottom: '0', color: '#5A5A5A' }}>
+            {title}
+          </Typography>
+          {action}
+        </Box>
+        {children}
+      </LocalizationProvider>
     </Container>
   );
 };

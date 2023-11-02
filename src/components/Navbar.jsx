@@ -68,7 +68,13 @@ export default function Navbar({ drawerWidth }) {
             const clickFn = route ? () => navigate(route) : () => handleClick(key)
             return (
                 <ListItemButton onClick={clickFn} key={key} >
-                  <ListItemIcon>
+                  <ListItemIcon
+                    sx={{
+                      color: 'white',
+                      minWidth: '45px',
+                      pl: 1,
+                    }}
+                  >
                     <Icon style={{fill: 'white'}} />
                   </ListItemIcon>
                   <ListItemText

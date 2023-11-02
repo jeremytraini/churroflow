@@ -1,5 +1,6 @@
 import React from "react";
 import Button from '@mui/material/Button';
+import { Link } from "react-router-dom";
 
 export const Navigation = (props) => {
   return (
@@ -29,11 +30,6 @@ export const Navigation = (props) => {
         >
           <ul className="nav navbar-nav navbar-right">
             <li>
-              <a href="/plans" className="page-scroll">
-                Plans
-              </a>
-            </li>
-            <li>
               <a href="#features" className="page-scroll">
                 Features
               </a>
@@ -49,20 +45,17 @@ export const Navigation = (props) => {
               </a>
             </li>
             <li>
-              <a href="#team" className="page-scroll">
-                Team
+              <a href="#plans" className="page-scroll">
+                Plans
               </a>
             </li>
-            <li>
-              <a href="#contact" className="page-scroll">
-                Contact
-              </a>
-            </li>
-            <Button href="/register" variant="contained" sx={{ my: 1.9, mx: 1.5 }}>
-              SIGN UP
-            </Button>
-            <Button href="/login" variant="contained" sx={{ my: 1.9, mx: 1.5 }}>
-              LOG ON
+            <Button
+              component={Link}
+              to="/login"
+              variant="outlined"
+              sx={{ my: 1.9, mx: 1.5 }}
+            >
+              LOG IN
             </Button>
           </ul>
         </div>

@@ -16,7 +16,7 @@ const ProtectedLayout = () => {
   const navBarHeight = "70px";
 
   return (
-    <>
+    <Box>
       <AppBar
         sidebarWidth={sidebarWidth}
         navBarHeight={navBarHeight}
@@ -24,14 +24,15 @@ const ProtectedLayout = () => {
       <Navbar drawerWidth={sidebarWidth}  />
       <Box sx={{
         marginLeft: sidebarWidth,
-        marginTop: navBarHeight,
+        paddingTop: navBarHeight,
+        // minHeight: `calc(100vh - ${navBarHeight})`,
         minHeight: `calc(100vh - ${navBarHeight})`,
         width: `calc(100% - ${sidebarWidth})`,
         background: 'linear-gradient(180deg, rgba(243, 244, 246, 100), rgb(186 209 255 / 48%))',
       }}>
         {outlet}
       </Box>
-    </>
+    </Box>
   );
 };
 

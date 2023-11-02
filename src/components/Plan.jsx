@@ -1,5 +1,5 @@
 import React from 'react';
-import { BasicPage } from "./BasicPage";
+import { Navigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -10,11 +10,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import StarIcon from '@mui/icons-material/StarBorder';
 import Typography from '@mui/material/Typography';
-import GlobalStyles from '@mui/material/GlobalStyles';
-import Container from '@mui/material/Container';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
-import { useAuth } from "../hooks/useAuth";
+import Link from '@mui/material/Link';
 
 // Inspired by https://mui.com/material-ui/getting-started/templates/pricing/
 const tiers = [
@@ -22,7 +20,7 @@ const tiers = [
     title: 'Starter',
     price: '0',
     enabled: [
-      'Process 30 Invoices per Month',
+      'Upload, Store, Render, and Send 15 Invoices',
       'Invoice Data Manager',
     ],
     disabled: [
@@ -37,10 +35,9 @@ const tiers = [
   },
   {
     title: 'Standard',
-    subheader: 'Recommended for small businesses',
     price: '39.99',
     enabled: [
-      'Process 200 Invoices per Month',
+      'Upload, Store, Render, and Send 200 Invoices',
       'Invoice Data Manager',
       'Invoice Validator Interface',
       'Download Validation Report',
@@ -55,10 +52,10 @@ const tiers = [
   },
   {
     title: 'Ultimate',
-    subheader: 'Recommended for most SMEs',
+    subheader: 'Our Most Popular Plan',
     price: '79.99',
     enabled: [
-      'Process Unlimited Invoices',
+      'Upload, Store, Render, and Send Unlimited Invoices',
       'Invoice Data Manager',
       'Invoice Validator Interface',
       'Download Validation Report',
@@ -72,39 +69,25 @@ const tiers = [
   },
 ];
 
-const Dashboard = () => {
-  const { user, setPlan } = useAuth();
-
+const Plan = () => {
   return (
-  <BasicPage title="">
-    <Box
-      sx={{
-        flexGrow: 1,
-      }}
-    >
-      <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
-      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 0, pb: 3 }}>
-        <Typography
-          component="h1"
-          variant="h4"
-          align="center"
-          color="text.primary"
-          gutterBottom
-        >
-          Our Plans
-        </Typography>
-        <Typography variant="h5" align="center" color="text.secondary" component="p">
+    <div id="plans"  className="text-center">
+      <CssBaseline />
+      <div className="section-title">
+        <h2>Plans</h2>
+        <p>
           Be on top of your warehousing strategy and inventory with our premium features.
-        </Typography>
-      </Container>
-      <Container maxWidth="md" component="main">
-        <Grid container spacing={3} alignItems="center">
+        </p>
+      </div>
+      <div className="container">
+        <Grid container spacing={5} alignItems="flex-end" marginBottom={5}>
           {tiers.map((tier) => (
+            // Enterprise card is full width at sm breakpoint
             <Grid
               item
               key={tier.title}
               xs={12}
-              sm={tier.title === 'Standard' ? 12 : 6}
+              sm={tier.title === 'Ultimate' ? 12 : 6}
               md={4}
             >
               <Card>
@@ -112,14 +95,16 @@ const Dashboard = () => {
                   title={tier.title}
                   subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
-                  action={tier.title === 'Standard' ? <StarIcon /> : null}
+                  action={tier.title === 'Ultimate' ? <StarIcon /> : null}
                   subheaderTypographyProps={{
                     align: 'center',
                     fontSize: 'small',
-                    pt: 1,
                   }}
                   sx={{
-                    backgroundColor: tier.title !== 'Standard' ? (theme) => theme.palette.grey[200] : (theme) => theme.palette.grey[300],
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === 'light'
+                        ? theme.palette.grey[200]
+                        : theme.palette.grey[700],
                   }}
                 />
                 <CardContent>
@@ -172,20 +157,21 @@ const Dashboard = () => {
                 <CardActions>
                   <Button
                     fullWidth
-                    variant={user.tier === tier.title ? "outlined" : "contained"}
-                    onClick={() => setPlan(tier.title)}
+                    variant={"contained"}
+                    onClick={() => <Navigate to="/register" />}
                   >
-                    {user.tier === tier.title ? "Currently active" : "Select Plan"}
+                    <Link color="inherit" href="/register">
+                      Sign up now
+                    </Link>{' '}
                   </Button>
                 </CardActions>
               </Card>
             </Grid>
           ))}
         </Grid>
-      </Container>
-    </Box>
-  </BasicPage>
+      </div>
+  </div>
   );
 };
 
-export default Dashboard;
+export default Plan;
